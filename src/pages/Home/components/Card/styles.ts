@@ -10,6 +10,8 @@ export const CardContainer = styled.div`
   text-align: center;
   justify-content: center;
 
+  border: 1px solid ${({ theme }) => theme.colors['yellow-light']};
+
   background-color: ${({ theme }) => theme.colors['base-card']};
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -22,8 +24,14 @@ export const CardContainer = styled.div`
 
   > img {
     padding: 0 4.25rem;
+
+    width: 15rem;
+    height: 6.25rem;
+
+    border-radius: 100%;
     transform: translateY(-10%);
   }
+
   > p {
     ${mixins.fonts.textS}
     padding: 0 1.25rem;
@@ -31,8 +39,8 @@ export const CardContainer = styled.div`
   }
 
   @media screen and (max-width: 1440px) {
-    width: 210px;
-    height: 290px;
+    width: 13.125rem;
+    height: 18.125rem;
 
     > img {
       width: 240px;
@@ -65,7 +73,7 @@ export const Tags = styled.div`
 
 export const Controler = styled.div`
   display: flex;
-  max-height: 38px;
+  max-height: 2.375rem;
   padding: 0 1.5rem 0.75rem;
   align-items: center;
   gap: 1.4375rem;
@@ -98,14 +106,14 @@ export const AddToCartButton = styled.button`
   svg {
     border-radius: 6px;
     padding: 0.5rem;
-    height: 32px;
-    width: 32px;
+    height: 2rem;
+    width: 2rem;
     color: ${({ theme }) => theme.colors['base-card']};
-    background: ${({ theme }) => theme.colors['purple-dark']};
+    background: ${({ theme }) => theme.colors.brown};
     transition: 0.2s;
 
     &:hover {
-      background: ${({ theme }) => theme.colors['purple']};
+      background: ${({ theme }) => theme.colors['brown-dark']};
     }
   }
 `

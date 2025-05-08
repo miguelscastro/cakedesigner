@@ -30,6 +30,7 @@ export const ProductContainer = styled.div`
   > img {
     width: 4rem;
     height: 4rem;
+    border-radius: 100%;
   }
 
   h3 {
@@ -61,7 +62,7 @@ export const RemoveProduct = styled.button`
   background: ${({ theme }) => theme.colors['base-button']};
 
   > svg {
-    color: ${({ theme }) => theme.colors['purple']};
+    color: ${({ theme }) => theme.colors.brown};
   }
 
   > p {

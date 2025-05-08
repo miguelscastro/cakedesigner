@@ -26,7 +26,7 @@ export const Address = styled(baseInfoContainer)`
 `
 export const PaymentOptions = styled(baseInfoContainer)`
   svg {
-    color: ${({ theme }) => theme.colors['purple']};
+    color: ${({ theme }) => theme.colors['brown-dark']};
   }
 `
 
@@ -151,6 +151,10 @@ export const PaymentOption = styled.label`
   cursor: pointer;
   user-select: none;
 
+  svg {
+    color: ${({ theme }) => theme.colors.brown};
+  }
+
   > input[type='radio'] {
     position: absolute;
     opacity: 0;
@@ -162,8 +166,8 @@ export const PaymentOption = styled.label`
   }
 
   &:has(input:checked) > div {
-    background-color: ${({ theme }) => theme.colors['purple-light']};
-    border: 1px solid ${({ theme }) => theme.colors['purple']};
+    background-color: ${({ theme }) => theme.colors['yellow-light']};
+    border: 1px solid ${({ theme }) => theme.colors.yellow};
   }
 
   > div {
@@ -180,6 +184,7 @@ export const PaymentOption = styled.label`
 
     p {
       ${mixins.fonts.buttonM}
+      font-size: 65%;
     }
   }
   > div:hover {

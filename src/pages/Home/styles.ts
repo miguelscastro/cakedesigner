@@ -20,8 +20,8 @@ export const BannerContent = styled.div`
   align-items: center;
 
   img {
-    width: 400px;
-    height: 300px;
+    width: 25rem;
+    height: 18.75rem;
     user-select: none;
   }
 

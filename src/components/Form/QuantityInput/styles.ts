@@ -12,22 +12,18 @@ export const Container = styled.div`
   align-items: center;
   gap: 4px;
 
-  &:hover {
-    background: ${({ theme }) => theme.colors['base-hover']};
-  }
-
   button {
     background-color: transparent;
     display: flex;
   }
 
   button svg {
-    color: ${({ theme }) => theme.colors.purple};
+    color: ${({ theme }) => theme.colors.brown};
 
     transition: all 0.2s;
 
     &:hover {
-      color: ${({ theme }) => theme.colors['purple-dark']};
+      color: ${({ theme }) => theme.colors['brown-dark']};
     }
   }
 

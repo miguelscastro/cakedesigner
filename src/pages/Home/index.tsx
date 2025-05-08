@@ -27,9 +27,11 @@ export function Home() {
   const [productsData, setProductsData] = useState<ItemProps[]>([])
   useEffect(() => {
     const fetchCoffees = async () => {
-      const response = await fetch('/coffees.json')
+      const response = await fetch('/products.json')
       const data = await response.json()
-      setProductsData(data.coffees)
+      console.log(data)
+
+      setProductsData(data.products)
     }
     fetchCoffees()
   }, [])
@@ -93,8 +95,8 @@ export function Home() {
       <ProductList>
         <h2>Nossos produtos</h2>
         <Products>
-          {productsData.map((coffee) => {
-            return <Card key={coffee.id} product={coffee} />
+          {productsData.map((product) => {
+            return <Card key={product.id} product={product} />
           })}
         </Products>
       </ProductList>

@@ -19,7 +19,7 @@ interface CardProps {
 }
 
 export function Card({ product }: CardProps) {
-  const { addCoffeeToCart } = useCart()
+  const { addProductToCart } = useCart()
 
   const [quantity, setQuantity] = useState<number>(1)
 
@@ -33,13 +33,13 @@ export function Card({ product }: CardProps) {
   }
 
   function handleAddToCart() {
-    addCoffeeToCart({ ...product, quantity })
+    addProductToCart({ ...product, quantity })
     setQuantity(1)
   }
 
   return (
     <CardContainer>
-      <img src={product.image} alt={product.title} />
+      <img src={product.image} alt={product.title} loading="lazy" />
 
       <Tags>
         {product.tags.map((tag) => (
