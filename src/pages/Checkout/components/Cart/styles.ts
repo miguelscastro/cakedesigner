@@ -67,4 +67,15 @@ export const Total = styled.div`
       cursor: not-allowed;
     }
   }
+
+  @media screen and (max-width: 1440px) {
+    ${mixins.fonts.textS};
+
+    > div:nth-child(3) {
+      color: ${({ theme }) => theme.colors['base-subtitle']};
+
+      ${mixins.fonts.textM}
+      font-weight: bold;
+    }
+  }
 `

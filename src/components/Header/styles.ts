@@ -45,15 +45,15 @@ export const Aside = styled.aside`
     cursor: inherit;
     user-select: none;
 
-    background-color: ${({ theme }) => theme.colors['purple-light']};
+    background-color: ${({ theme }) => theme.colors['brown-light']};
 
     svg {
-      color: ${({ theme }) => theme.colors.purple};
+      color: ${({ theme }) => theme.colors.brown};
     }
 
     span {
       ${mixins.fonts.textS}
-      color: ${({ theme }) => theme.colors['purple-dark']};
+      color: ${({ theme }) => theme.colors['brown-dark']};
     }
 
     padding: 0.5rem;

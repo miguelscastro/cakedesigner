@@ -8,6 +8,7 @@ export const defaultTheme = {
     purple: '#8047F8',
     'purple-light': '#EBE5F9',
 
+    'brown-light': 'rgb(245, 229, 217)',
     brown: '#8d7360',
     'brown-dark': 'rgba(192, 132, 87, 0.8)',
 

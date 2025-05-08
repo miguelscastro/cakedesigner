@@ -50,12 +50,16 @@ export const Controller = styled.div`
 export const ProductPrice = styled.span`
   ${mixins.fonts.textM}
   font-weight: bold;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 80%;
+  }
 `
 export const RemoveProduct = styled.button`
   display: flex;
   gap: 0.25rem;
 
-  max-width: 5.6875rem;
+  max-width: 5.6825rem;
 
   padding: 0.5rem 0.5rem;
   border-radius: 6px;
