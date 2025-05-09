@@ -99,9 +99,15 @@ export const ProductList = styled.main`
   padding: 0 10rem;
   margin: 0 auto 9.8125rem;
 
-  h2 {
-    ${mixins.fonts.titleL}
+  > div#SelectTypeContainer {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 3.375rem;
+
+    h2 {
+      ${mixins.fonts.titleL}
+      display: inline;
+    }
   }
 
   @media screen and (max-width: 1440px) {
@@ -109,12 +115,49 @@ export const ProductList = styled.main`
     padding: 0;
     margin-bottom: 1.5rem;
 
-    h2 {
-      ${mixins.fonts.titleM}
+    > div#SelectTypeContainer {
       margin-bottom: 2rem;
+
+      > h2 {
+        ${mixins.fonts.titleM}
+        display: inline;
+      }
     }
   }
 `
+
+export const SelectTypeOfProduct = styled.select`
+  all: unset;
+  margin-right: 2rem;
+  padding: 0.5rem 1rem;
+
+  color: ${({ theme }) => theme.colors['base-title']};
+  background: ${({ theme }) => theme.colors.background};
+  ${mixins.fonts.textXS};
+
+  border-bottom: 2px solid ${({ theme }) => theme.colors['brown-dark']};
+  /* border-radius: 6px; */
+
+  appearance: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    border 0.3s;
+
+  /* text-align: center; */
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0;
+  }
+
+  option {
+    color: ${({ theme }) => theme.colors['base-title']};
+    background: ${({ theme }) => theme.colors.background};
+    padding-left: 1rem;
+  }
+`
+
 export const Products = styled.div`
   display: flex;
 

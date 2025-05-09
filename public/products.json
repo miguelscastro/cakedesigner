@@ -15,7 +15,7 @@
             "title": "Bolo 1",
             "description": "Delicioso bolo número 1",
             "tags": [
-                "BOLO"
+                "BOLO DE POTE"
             ],
             "price": 9.9,
             "image": "/images/cakes/bolo1.png"
@@ -25,7 +25,7 @@
             "title": "Bolo 2",
             "description": "Delicioso bolo número 2",
             "tags": [
-                "BOLO"
+                "BOLO DE POTE"
             ],
             "price": 9.9,
             "image": "/images/cakes/bolo2.png"
@@ -35,7 +35,7 @@
             "title": "Bolo 3",
             "description": "Delicioso bolo número 3",
             "tags": [
-                "BOLO"
+                "DOCE", "BOLO", "BOLO DE POTE", "CUPCAKE"
             ],
             "price": 9.9,
             "image": "/images/cakes/bolo3.png"
@@ -45,7 +45,7 @@
             "title": "Bolo 4",
             "description": "Delicioso bolo número 4",
             "tags": [
-                "BOLO"
+                "CUPCAKE"
             ],
             "price": 9.9,
             "image": "/images/cakes/bolo4.png"
@@ -55,7 +55,7 @@
             "title": "Bolo 5",
             "description": "Delicioso bolo número 5",
             "tags": [
-                "BOLO"
+                "CUPCAKE"
             ],
             "price": 9.9,
             "image": "/images/cakes/bolo5.png"

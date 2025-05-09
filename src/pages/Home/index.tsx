@@ -8,11 +8,12 @@ import {
   BannerContent,
   ProductList,
   Products,
+  SelectTypeOfProduct,
 } from './styles'
 import coffeDeliveryBanner from '../../assets/images/banner/cakedesigner-banner.png'
 import backgroundEffect from '../../assets/images/banner/background-effect.png'
 import { Card } from './components/Card'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 export interface ItemProps {
   id: string
@@ -25,6 +26,9 @@ export interface ItemProps {
 
 export function Home() {
   const [productsData, setProductsData] = useState<ItemProps[]>([])
+  const [displayedProductsData, setDisplayedProductsData] = useState<
+    ItemProps[]
+  >([])
   useEffect(() => {
     const fetchCoffees = async () => {
       const response = await fetch('/products.json')
@@ -37,6 +41,52 @@ export function Home() {
   }, [])
 
   const theme = useTheme()
+
+  function handleChangeDisplayedProducts(
+    event: ChangeEvent<HTMLSelectElement>,
+  ) {
+    const selectedTypeOfProduct = event.target.value
+    let productsToDisplay: ItemProps[] = []
+
+    switch (selectedTypeOfProduct) {
+      case '/bolos':
+        productsData.map((product) => {
+          if (product.tags.find((tag) => tag == 'BOLO')) {
+            productsToDisplay.push(product)
+          }
+          setDisplayedProductsData(productsToDisplay)
+        })
+        break
+      case '/bolos-de-pote':
+        productsData.map((product) => {
+          if (product.tags.find((tag) => tag == 'BOLO DE POTE')) {
+            productsToDisplay.push(product)
+          }
+          setDisplayedProductsData(productsToDisplay)
+        })
+        break
+      case '/doces':
+        productsData.map((product) => {
+          if (product.tags.find((tag) => tag == 'DOCE')) {
+            productsToDisplay.push(product)
+          }
+          setDisplayedProductsData(productsToDisplay)
+        })
+        break
+      case '/cupcakes':
+        productsData.map((product) => {
+          if (product.tags.find((tag) => tag == 'CUPCAKE')) {
+            productsToDisplay.push(product)
+          }
+          setDisplayedProductsData(productsToDisplay)
+        })
+        break
+      default:
+        productsToDisplay = productsData
+        break
+    }
+  }
+
   return (
     <>
       <Banner>
@@ -90,12 +140,25 @@ export function Home() {
           </div>
           <img src={coffeDeliveryBanner} alt="" />
         </BannerContent>
-        <img src={backgroundEffect} id="banner-bg" alt="" />
+        {/* <img src={backgroundEffect} id="banner-bg" alt="" /> */}
       </Banner>
       <ProductList>
-        <h2>Nossos produtos</h2>
+        <div id="SelectTypeContainer">
+          <h2>Nossos produtos</h2>
+          <SelectTypeOfProduct
+            id="dropdown"
+            onChange={handleChangeDisplayedProducts}
+            defaultValue={'/'}
+          >
+            <option value="/">Escolha uma categoria</option>
+            <option value="/bolos">Bolos</option>
+            <option value="/bolos-de-pote">Bolos de pote</option>
+            <option value="/doces">Doces</option>
+            <option value="/cupcakes">Cupcakes</option>
+          </SelectTypeOfProduct>
+        </div>
         <Products>
-          {productsData.map((product) => {
+          {displayedProductsData.map((product) => {
             return <Card key={product.id} product={product} />
           })}
         </Products>

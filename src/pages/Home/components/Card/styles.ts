@@ -29,7 +29,7 @@ export const CardContainer = styled.div`
     height: 6.25rem;
 
     border-radius: 100%;
-    transform: translateY(-10%);
+    transform: translateY(-20%);
   }
 
   > p {
@@ -61,6 +61,9 @@ export const Tags = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
+
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
 
   span {
     ${mixins.fonts.tag}
