@@ -4,7 +4,9 @@ import { mixins } from '../../../../styles/mixins'
 export const CardContainer = styled.div`
   display: flex;
   max-width: 256px;
+  width: 256px;
   max-height: 310px;
+  height: 310px;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -39,7 +41,7 @@ export const CardContainer = styled.div`
   }
 
   @media screen and (max-width: 1440px) {
-    width: 13.125rem;
+    width: 14.0625rem;
     height: 18.125rem;
 
     > img {

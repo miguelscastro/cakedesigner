@@ -132,19 +132,16 @@ export const SelectTypeOfProduct = styled.select`
   padding: 0.5rem 1rem;
 
   color: ${({ theme }) => theme.colors['base-title']};
-  background: ${({ theme }) => theme.colors.background};
-  ${mixins.fonts.textXS};
+  ${mixins.fonts.titleM};
+  font-size: 1rem;
 
   border-bottom: 2px solid ${({ theme }) => theme.colors['brown-dark']};
-  /* border-radius: 6px; */
 
   appearance: none;
   cursor: pointer;
   transition:
     background-color 0.3s,
     border 0.3s;
-
-  /* text-align: center; */
 
   &:focus {
     outline: 0;
@@ -165,7 +162,7 @@ export const Products = styled.div`
   gap: 2rem;
 
   @media screen and (max-width: 1440px) {
-    gap: 2rem;
-    padding: 0 2rem;
+    gap: 1.5rem;
+    padding: 0;
   }
 `
