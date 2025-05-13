@@ -1739,6 +1739,196 @@
       ],
       "price": 9.9,
       "image": "/images/products/sweets/doce25.png"
+    },
+    {
+      "id": "174",
+      "title": "Bolo de Pote 0",
+      "description": "Delicioso bolo de pote número 0",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote0.png"
+    },
+    {
+      "id": "175",
+      "title": "Bolo de Pote 1",
+      "description": "Delicioso bolo de pote número 1",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote1.png"
+    },
+    {
+      "id": "176",
+      "title": "Bolo de Pote 2",
+      "description": "Delicioso bolo de pote número 2",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote2.png"
+    },
+    {
+      "id": "177",
+      "title": "Bolo de Pote 3",
+      "description": "Delicioso bolo de pote número 3",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote3.png"
+    },
+    {
+      "id": "178",
+      "title": "Bolo de Pote 4",
+      "description": "Delicioso bolo de pote número 4",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote4.png"
+    },
+    {
+      "id": "179",
+      "title": "Bolo de Pote 5",
+      "description": "Delicioso bolo de pote número 5",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote5.png"
+    },
+    {
+      "id": "180",
+      "title": "Bolo de Pote 6",
+      "description": "Delicioso bolo de pote número 6",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote6.png"
+    },
+    {
+      "id": "181",
+      "title": "Bolo de Pote 7",
+      "description": "Delicioso bolo de pote número 7",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote7.png"
+    },
+    {
+      "id": "182",
+      "title": "Bolo de Pote 8",
+      "description": "Delicioso bolo de pote número 8",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote8.png"
+    },
+    {
+      "id": "183",
+      "title": "Bolo de Pote 9",
+      "description": "Delicioso bolo de pote número 9",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote9.png"
+    },
+    {
+      "id": "184",
+      "title": "Bolo de Pote 10",
+      "description": "Delicioso bolo de pote número 10",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote10.png"
+    },
+    {
+      "id": "185",
+      "title": "Bolo de Pote 11",
+      "description": "Delicioso bolo de pote número 11",
+      "tags": [
+        "BOLO DE POTE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/pot-cakes/bolo-de-pote11.png"
+    },
+    {
+      "id": "186",
+      "title": "Cupcake 0",
+      "description": "Delicioso cupcake número 0",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake0.png"
+    },
+    {
+      "id": "187",
+      "title": "Cupcake 1",
+      "description": "Delicioso cupcake número 1",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake1.png"
+    },
+    {
+      "id": "188",
+      "title": "Cupcake 2",
+      "description": "Delicioso cupcake número 2",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake2.png"
+    },
+    {
+      "id": "189",
+      "title": "Cupcake 3",
+      "description": "Delicioso cupcake número 3",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake3.png"
+    },
+    {
+      "id": "190",
+      "title": "Cupcake 4",
+      "description": "Delicioso cupcake número 4",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake4.png"
+    },
+    {
+      "id": "191",
+      "title": "Cupcake 5",
+      "description": "Delicioso cupcake número 5",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake5.png"
+    },
+    {
+      "id": "192",
+      "title": "Cupcake 6",
+      "description": "Delicioso cupcake número 6",
+      "tags": [
+        "CUPCAKE"
+      ],
+      "price": 9.9,
+      "image": "/images/products/cupcakes/cupcake6.png"
     }
   ]
 }
