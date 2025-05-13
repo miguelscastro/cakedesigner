@@ -8,13 +8,12 @@ import {
   BannerContent,
   ProductList,
   Products,
-  SelectTypeOfProduct,
-  FilterProducts,
 } from './styles'
 import coffeDeliveryBanner from '../../assets/images/banner/cakedesigner-banner.png'
 import backgroundEffect from '../../assets/images/banner/background-effect.png'
 import { Card } from './components/Card'
 import { ChangeEvent, useEffect, useState } from 'react'
+import { FilterProducts } from './components/FilterProducts'
 
 export interface ItemProps {
   id: string
@@ -41,12 +40,12 @@ export function Home() {
   }, [])
 
   useEffect(() => {
-    handleDisplaySelectedProducts('/')
+    displaySelectedProducts('/')
   }, [productsData])
 
   const theme = useTheme()
 
-  function handleDisplaySelectedProducts(
+  function displaySelectedProducts(
     input: ChangeEvent<HTMLSelectElement> | string,
   ) {
     const selectedTypeOfProduct =
@@ -127,20 +126,8 @@ export function Home() {
       <ProductList>
         <div id="SelectTypeContainer">
           <h2>Nossos produtos</h2>
-          <FilterProducts>
-            {/* <Filters /> */}
-            <SelectTypeOfProduct
-              id="dropdown"
-              onChange={handleDisplaySelectedProducts}
-              defaultValue={'/'}
-            >
-              <option value="/">Selecione a categoria</option>
-              <option value="/bolos">Bolos</option>
-              <option value="/bolos-de-pote">Bolos de pote</option>
-              <option value="/doces">Doces</option>
-              <option value="/cupcakes">Cupcakes</option>
-            </SelectTypeOfProduct>
-          </FilterProducts>
+
+          <FilterProducts displaySelectedProducts={displaySelectedProducts} />
         </div>
         <Products>
           {displayedProductsData.map((product) => {
