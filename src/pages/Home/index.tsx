@@ -9,6 +9,7 @@ import {
   ProductList,
   Products,
   SelectTypeOfProduct,
+  FilterProducts,
 } from './styles'
 import coffeDeliveryBanner from '../../assets/images/banner/cakedesigner-banner.png'
 import backgroundEffect from '../../assets/images/banner/background-effect.png'
@@ -30,61 +31,42 @@ export function Home() {
     ItemProps[]
   >([])
   useEffect(() => {
-    const fetchCoffees = async () => {
+    const fetchProducts = async () => {
       const response = await fetch('/products.json')
       const data = await response.json()
-      console.log(data)
 
       setProductsData(data.products)
     }
-    fetchCoffees()
+    fetchProducts()
   }, [])
+
+  useEffect(() => {
+    handleDisplaySelectedProducts('/')
+  }, [productsData])
 
   const theme = useTheme()
 
-  function handleChangeDisplayedProducts(
-    event: ChangeEvent<HTMLSelectElement>,
+  function handleDisplaySelectedProducts(
+    input: ChangeEvent<HTMLSelectElement> | string,
   ) {
-    const selectedTypeOfProduct = event.target.value
-    let productsToDisplay: ItemProps[] = []
+    const selectedTypeOfProduct =
+      typeof input === 'string' ? input : input.target.value
 
-    switch (selectedTypeOfProduct) {
-      case '/bolos':
-        productsData.map((product) => {
-          if (product.tags.find((tag) => tag == 'BOLO')) {
-            productsToDisplay.push(product)
-          }
-          setDisplayedProductsData(productsToDisplay)
-        })
-        break
-      case '/bolos-de-pote':
-        productsData.map((product) => {
-          if (product.tags.find((tag) => tag == 'BOLO DE POTE')) {
-            productsToDisplay.push(product)
-          }
-          setDisplayedProductsData(productsToDisplay)
-        })
-        break
-      case '/doces':
-        productsData.map((product) => {
-          if (product.tags.find((tag) => tag == 'DOCE')) {
-            productsToDisplay.push(product)
-          }
-          setDisplayedProductsData(productsToDisplay)
-        })
-        break
-      case '/cupcakes':
-        productsData.map((product) => {
-          if (product.tags.find((tag) => tag == 'CUPCAKE')) {
-            productsToDisplay.push(product)
-          }
-          setDisplayedProductsData(productsToDisplay)
-        })
-        break
-      default:
-        productsToDisplay = productsData
-        break
+    const typesOfProduct: { [key: string]: string } = {
+      '/bolos': 'BOLO',
+      '/bolos-de-pote': 'BOLO DE POTE',
+      '/doces': 'DOCE',
+      '/cupcakes': 'CUPCAKE',
     }
+
+    const selectedType = typesOfProduct[selectedTypeOfProduct]
+
+    const filteredProducts =
+      selectedType != undefined
+        ? productsData.filter((product) => product.tags.includes(selectedType))
+        : productsData
+
+    setDisplayedProductsData(filteredProducts)
   }
 
   return (
@@ -140,22 +122,25 @@ export function Home() {
           </div>
           <img src={coffeDeliveryBanner} alt="" />
         </BannerContent>
-        {/* <img src={backgroundEffect} id="banner-bg" alt="" /> */}
+        <img src={backgroundEffect} id="banner-bg" alt="" />
       </Banner>
       <ProductList>
         <div id="SelectTypeContainer">
           <h2>Nossos produtos</h2>
-          <SelectTypeOfProduct
-            id="dropdown"
-            onChange={handleChangeDisplayedProducts}
-            defaultValue={'/'}
-          >
-            <option value="/">Escolha uma categoria</option>
-            <option value="/bolos">Bolos</option>
-            <option value="/bolos-de-pote">Bolos de pote</option>
-            <option value="/doces">Doces</option>
-            <option value="/cupcakes">Cupcakes</option>
-          </SelectTypeOfProduct>
+          <FilterProducts>
+            {/* <Filters /> */}
+            <SelectTypeOfProduct
+              id="dropdown"
+              onChange={handleDisplaySelectedProducts}
+              defaultValue={'/'}
+            >
+              <option value="/">Selecione a categoria</option>
+              <option value="/bolos">Bolos</option>
+              <option value="/bolos-de-pote">Bolos de pote</option>
+              <option value="/doces">Doces</option>
+              <option value="/cupcakes">Cupcakes</option>
+            </SelectTypeOfProduct>
+          </FilterProducts>
         </div>
         <Products>
           {displayedProductsData.map((product) => {

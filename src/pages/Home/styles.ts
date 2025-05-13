@@ -126,6 +126,10 @@ export const ProductList = styled.main`
   }
 `
 
+export const FilterProducts = styled.div`
+  z-index: 1;
+`
+
 export const SelectTypeOfProduct = styled.select`
   all: unset;
   margin-right: 2rem;
