@@ -107,6 +107,7 @@ export const Order = styled.div`
   margin-top: 0.5rem;
   border-radius: 4px;
   width: 100%;
+  z-index: 1;
 
   background: ${({ theme }) => theme.colors['brown-dark']};
 `
