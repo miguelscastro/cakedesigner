@@ -28,7 +28,9 @@ export function Card({ product }: CardProps) {
   }
 
   function handleSeeMore() {
-    navigate(`/produto/${product.id}`)
+    navigate(`/product/${product.id}`, {
+      state: product,
+    })
   }
 
   return (

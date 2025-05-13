@@ -102,8 +102,6 @@ export const Price = styled.div`
 export const Order = styled.div`
   display: flex;
   align-items: center;
-  /* padding: 0 1rem; */
-  /* gap: 1rem; */
   margin-top: 0.5rem;
   border-radius: 4px;
   width: 100%;
@@ -120,7 +118,7 @@ export const GoToProductPage = styled.button`
 
   background: transparent;
   color: ${({ theme }) => theme.colors.white};
-
+  transition: 0.2s;
   border-right: 2px solid ${({ theme }) => theme.colors.background};
 
   &:hover {

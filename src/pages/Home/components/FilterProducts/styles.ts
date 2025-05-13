@@ -28,6 +28,11 @@ export const SelectTypeOfProduct = styled.select`
     padding-left: 1rem;
   }
 
+  &:focus-visible {
+    outline: 0;
+    box-shadow: 0;
+  }
+
   @media screen and (max-width: 1440px) {
     margin-right: 2rem;
   }
