@@ -61,7 +61,8 @@ export const RemoveProduct = styled.button`
 
   max-width: 5.6825rem;
 
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 0.25rem;
+  text-align: center;
   border-radius: 6px;
   background: ${({ theme }) => theme.colors['base-button']};
 
