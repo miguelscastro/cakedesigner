@@ -9,8 +9,8 @@ export const defaultTheme = {
     'purple-light': '#EBE5F9',
 
     'brown-light': 'rgb(245, 229, 217)',
-    brown: '#8d7360',
-    'brown-dark': 'rgba(192, 132, 87, 0.8)',
+    'brown-dark': '#8d7360',
+    brown: 'rgba(192, 132, 87, 0.8)',
 
     'base-title': '#272221',
     'base-subtitle': '#403937',

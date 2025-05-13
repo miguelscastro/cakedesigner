@@ -4,13 +4,12 @@ import { mixins } from '../../../../styles/mixins'
 export const CardContainer = styled.div`
   display: flex;
   max-width: 256px;
-  width: 256px;
+  width: 16.25rem;
   max-height: 310px;
-  height: 310px;
+  height: 16.25rem;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: center;
 
   border: 1px solid ${({ theme }) => theme.colors['yellow-light']};
 
@@ -42,7 +41,7 @@ export const CardContainer = styled.div`
 
   @media screen and (max-width: 1440px) {
     width: 14.0625rem;
-    height: 18.125rem;
+    height: 16.25rem;
 
     > img {
       width: 240px;
@@ -79,9 +78,10 @@ export const Tags = styled.div`
 export const Controler = styled.div`
   display: flex;
   max-height: 2.375rem;
-  padding: 0 1.5rem 0.75rem;
+  padding: 0.75rem 1.5rem 0.75rem;
   align-items: center;
-  gap: 1.4375rem;
+  gap: 0.5rem;
+  flex-direction: column;
 `
 export const Price = styled.div`
   display: flex;
@@ -102,23 +102,45 @@ export const Price = styled.div`
 export const Order = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  /* padding: 0 1rem; */
+  /* gap: 1rem; */
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+
+  background: ${({ theme }) => theme.colors['brown-dark']};
+`
+
+export const GoToProductPage = styled.button`
+  ${mixins.fonts.textS}
+
+  padding: 0.5rem 0.75rem;
+  height: 2rem;
+
+  background: transparent;
+  color: ${({ theme }) => theme.colors.white};
+
+  border-right: 2px solid ${({ theme }) => theme.colors.background};
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.brown};
+  }
 `
 
 export const AddToCartButton = styled.button`
   display: flex;
+  background: transparent;
 
   svg {
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 0.5rem;
     height: 2rem;
     width: 2rem;
     color: ${({ theme }) => theme.colors['base-card']};
-    background: ${({ theme }) => theme.colors.brown};
     transition: 0.2s;
 
     &:hover {
-      background: ${({ theme }) => theme.colors['brown-dark']};
+      background: ${({ theme }) => theme.colors.brown};
     }
   }
 `

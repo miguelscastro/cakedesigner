@@ -12,7 +12,9 @@ import {
   Tags,
   Order,
   Price,
+  GoToProductPage,
 } from './styles'
+import { useNavigate } from 'react-router-dom'
 
 interface CardProps {
   product: ProductProps
@@ -20,21 +22,15 @@ interface CardProps {
 
 export function Card({ product }: CardProps) {
   const { addProductToCart } = useCart()
-
-  const [quantity, setQuantity] = useState<number>(1)
-
-  function handleDecrementQuantity() {
-    if (quantity > 1) {
-      setQuantity((state) => state - 1)
-    }
-  }
-  function handleIncrementQuantity() {
-    setQuantity((state) => state + 1)
-  }
+  const navigate = useNavigate()
 
   function handleAddToCart() {
+    const quantity = 1
     addProductToCart({ ...product, quantity })
-    setQuantity(1)
+  }
+
+  function handleSeeMore() {
+    navigate(`/produto/${product.id}`)
   }
 
   return (
@@ -49,7 +45,7 @@ export function Card({ product }: CardProps) {
 
       <h3>{product.title}</h3>
 
-      <p>{product.description}</p>
+      {/* <p>{product.description}</p> */}
 
       <Controler>
         <Price>
@@ -58,11 +54,7 @@ export function Card({ product }: CardProps) {
         </Price>
 
         <Order>
-          <QuantityInput
-            decrementQuantity={handleDecrementQuantity}
-            quantity={quantity}
-            incrementQuantity={handleIncrementQuantity}
-          />
+          <GoToProductPage onClick={handleSeeMore}>VER MAIS</GoToProductPage>
           <AddToCartButton onClick={handleAddToCart}>
             <ShoppingCartSimple weight="fill" size={22} />
           </AddToCartButton>

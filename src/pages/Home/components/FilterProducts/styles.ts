@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const SelectTypeOfProduct = styled.select`
   all: unset;
-  margin-right: 2rem;
+
   padding: 0.5rem 1rem;
 
   color: ${({ theme }) => theme.colors['base-title']};
@@ -26,5 +26,9 @@ export const SelectTypeOfProduct = styled.select`
     color: ${({ theme }) => theme.colors['base-title']};
     background: ${({ theme }) => theme.colors.background};
     padding-left: 1rem;
+  }
+
+  @media screen and (max-width: 1440px) {
+    margin-right: 2rem;
   }
 `
