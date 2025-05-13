@@ -115,7 +115,7 @@ export function Home() {
                   color={theme.colors.background}
                   style={{ backgroundColor: theme.colors['purple'] }}
                 />
-                Ingredientes frescos e de alta qualidade
+                Ingredientes frescos e de qualidade
               </li>
             </Info>
           </div>
@@ -126,7 +126,6 @@ export function Home() {
       <ProductList>
         <div id="SelectTypeContainer">
           <h2>Nossos produtos</h2>
-
           <FilterProducts displaySelectedProducts={displaySelectedProducts} />
         </div>
         <Products>
