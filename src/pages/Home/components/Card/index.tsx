@@ -1,7 +1,5 @@
 import { ShoppingCartSimple } from '@phosphor-icons/react'
 
-import { QuantityInput } from '../../../../components/Form/QuantityInput'
-import { useState } from 'react'
 import { useCart } from '../../../../hooks/useCart'
 import { ProductProps } from '../../../../reducers/cart/reducer'
 
@@ -44,8 +42,6 @@ export function Card({ product }: CardProps) {
       </Tags>
 
       <h3>{product.title}</h3>
-
-      {/* <p>{product.description}</p> */}
 
       <Controler>
         <Price>
