@@ -34,6 +34,7 @@ export function Home() {
   const [displayedProductsData, setDisplayedProductsData] = useState<
     ItemProps[]
   >([])
+  const [visibleCount, setVisibleCount] = useState(10)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,7 +42,7 @@ export function Home() {
       const response = await fetch('/products.json')
       const data = await response.json()
 
-      setProductsData(data.slice(0, 10))
+      setProductsData(data)
     }
     fetchProducts()
   }, [])
@@ -49,6 +50,20 @@ export function Home() {
   useEffect(() => {
     displaySelectedProducts('/')
   })
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
+
+      if (bottom) {
+        setVisibleCount((prev) => prev + 10) // carrega mais 10
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const theme = useTheme()
 
@@ -136,7 +151,7 @@ export function Home() {
           <FilterProducts displaySelectedProducts={displaySelectedProducts} />
         </div>
         <Products>
-          {displayedProductsData.map((product) => {
+          {displayedProductsData.slice(0, visibleCount).map((product) => {
             return <Card key={product.id} product={product} />
           })}
         </Products>
