@@ -1,5 +1,4 @@
-{
-  "products": [
+ [
     {
       "id": "0",
       "title": "Bolo 0",
@@ -1931,4 +1930,3 @@
       "image": "/images/products/cupcakes/cupcake6.png"
     }
   ]
-}
