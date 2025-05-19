@@ -1,4 +1,4 @@
-import { ShoppingCartSimple } from '@phosphor-icons/react'
+import { ShoppingCartSimpleIcon } from '@phosphor-icons/react'
 
 import { useCart } from '../../../../hooks/useCart'
 import { ProductProps } from '../../../../reducers/cart/reducer'
@@ -54,7 +54,7 @@ export function Card({ product }: CardProps) {
         <Order>
           <GoToProductPage onClick={handleSeeMore}>VER MAIS</GoToProductPage>
           <AddToCartButton onClick={handleAddToCart}>
-            <ShoppingCartSimple weight="fill" size={22} />
+            <ShoppingCartSimpleIcon weight="fill" size={22} />
           </AddToCartButton>
         </Order>
       </Controler>

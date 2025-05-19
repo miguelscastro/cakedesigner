@@ -28,7 +28,7 @@ export const SelectTypeOfProduct = styled.select`
     padding-left: 1rem;
   }
 
-  &:focus-visible {
+  &:focus {
     outline: 0;
     box-shadow: 0;
   }

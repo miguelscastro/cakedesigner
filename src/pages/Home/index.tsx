@@ -1,4 +1,9 @@
-import { Coffee, Package, ShoppingCart, Timer } from '@phosphor-icons/react'
+import {
+  CoffeeIcon,
+  PackageIcon,
+  ShoppingCartIcon,
+  TimerIcon,
+} from '@phosphor-icons/react'
 import { useTheme } from 'styled-components'
 
 import {
@@ -29,19 +34,21 @@ export function Home() {
   const [displayedProductsData, setDisplayedProductsData] = useState<
     ItemProps[]
   >([])
+
   useEffect(() => {
     const fetchProducts = async () => {
+      // const response = await fetch('http://localhost:8080/manage/product/')
       const response = await fetch('/products.json')
       const data = await response.json()
 
-      setProductsData(data.products)
+      setProductsData(data.slice(0, 10))
     }
     fetchProducts()
   }, [])
 
   useEffect(() => {
     displaySelectedProducts('/')
-  }, [productsData])
+  })
 
   const theme = useTheme()
 
@@ -82,7 +89,7 @@ export function Home() {
             </Heading>
             <Info>
               <li>
-                <ShoppingCart
+                <ShoppingCartIcon
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
@@ -91,7 +98,7 @@ export function Home() {
                 Compra simples e segura
               </li>
               <li>
-                <Package
+                <PackageIcon
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
@@ -100,7 +107,7 @@ export function Home() {
                 Produtos bem protegidos até a entrega.
               </li>
               <li>
-                <Timer
+                <TimerIcon
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
@@ -109,7 +116,7 @@ export function Home() {
                 Agendamento com, no mínimo, 3 dias de antecedência.
               </li>
               <li>
-                <Coffee
+                <CoffeeIcon
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
