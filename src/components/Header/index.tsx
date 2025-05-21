@@ -1,11 +1,16 @@
 import { Aside, Container, HeaderContainer } from './styles'
 import CompanyLogo from '../../assets/images/logo/logo-cakedesigner.png'
-import { MapPin, ShoppingCart } from '@phosphor-icons/react'
+import {
+  MapPinIcon,
+  ShoppingCartIcon,
+  UserCircleIcon,
+} from '@phosphor-icons/react'
 import { NavLink } from 'react-router-dom'
 import { useCart } from '../../hooks/useCart'
 
 export function Header() {
   const { products } = useCart()
+
   return (
     <Container>
       <HeaderContainer>
@@ -14,12 +19,15 @@ export function Header() {
         </NavLink>
         <Aside>
           <div>
-            <MapPin size={22} weight="fill" />
+            <MapPinIcon size={22} weight="fill" />
             <span>Porto Alegre, RS</span>
           </div>
           <NavLink to="/checkout">
-            <ShoppingCart size={22} weight="fill" />
+            <ShoppingCartIcon size={22} weight="fill" />
             {products.length > 0 ? <span>{products.length}</span> : null}
+          </NavLink>
+          <NavLink to="/login">
+            <UserCircleIcon size="22" weight="fill" />
           </NavLink>
         </Aside>
       </HeaderContainer>

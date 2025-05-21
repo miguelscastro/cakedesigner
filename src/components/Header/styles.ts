@@ -38,8 +38,9 @@ export const Aside = styled.aside`
   gap: 0.75rem;
   align-items: center;
 
+  // disabled for now. Calculate delivery will be added later on
   div {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 0.25rem;
     cursor: inherit;
@@ -75,6 +76,7 @@ export const Aside = styled.aside`
     &[aria-disabled='true'] {
       pointer-events: none;
     }
+
     span {
       ${mixins.fonts.textS};
       font-weight: bold;
