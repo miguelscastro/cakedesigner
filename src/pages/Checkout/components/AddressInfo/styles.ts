@@ -170,8 +170,8 @@ export const PaymentOption = styled.label`
   }
 
   &:has(input:checked) > div {
-    background-color: ${({ theme }) => theme.colors['yellow-light']};
-    border: 1px solid ${({ theme }) => theme.colors.yellow};
+    background-color: ${({ theme }) => theme.colors['brown-light']};
+    border: 1px solid ${({ theme }) => theme.colors.brown};
   }
 
   > div {
