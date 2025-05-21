@@ -50,7 +50,7 @@ export const Total = styled.div`
     font-weight: bold;
   }
   > button {
-    background: ${({ theme }) => theme.colors['yellow']};
+    background: ${({ theme }) => theme.colors['brown']};
     color: ${({ theme }) => theme.colors.white};
     margin-top: 1.5rem;
     padding: 0.75rem 0.5rem;
@@ -58,7 +58,7 @@ export const Total = styled.div`
     ${mixins.fonts.buttonG}
 
     &:not(:disabled):hover {
-      background: ${({ theme }) => theme.colors['yellow-dark']};
+      background: ${({ theme }) => theme.colors['brown-dark']};
       transition: 0.1s;
     }
 

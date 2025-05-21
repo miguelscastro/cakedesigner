@@ -65,8 +65,8 @@ export const Aside = styled.aside`
     display: flex;
     align-items: center;
 
-    background-color: ${({ theme }) => theme.colors['yellow-light']};
-    color: ${({ theme }) => theme.colors['yellow-dark']};
+    background-color: ${({ theme }) => theme.colors['brown-light']};
+    color: ${({ theme }) => theme.colors['brown-dark']};
 
     position: relative;
 
@@ -81,7 +81,7 @@ export const Aside = styled.aside`
       ${mixins.fonts.textS};
       font-weight: bold;
       color: ${({ theme }) => theme.colors.white};
-      background-color: ${({ theme }) => theme.colors['yellow-dark']};
+      background-color: ${({ theme }) => theme.colors['brown-dark']};
       border-radius: 50%;
       width: 20px;
       height: 20px;
