@@ -13,6 +13,7 @@ import {
   GoToProductPage,
 } from './styles'
 import { useNavigate } from 'react-router-dom'
+import { formatMoney } from '../../../../utils/formatMoney'
 
 interface CardProps {
   product: ProductProps
@@ -48,7 +49,7 @@ export function Card({ product }: CardProps) {
       <Controler>
         <Price>
           <span>R$</span>
-          <span>{product.price.toFixed(2)}</span>
+          <span>{formatMoney(product.price)}</span>
         </Price>
 
         <Order>

@@ -5,8 +5,8 @@ export const Container = styled.section`
   width: 448px;
   padding: 2.5rem;
 
-  border-bottom-left-radius: 6px;
-  border-top-right-radius: 6px;
+  border-bottom-left-radius: 32px;
+  border-top-right-radius: 32px;
 
   background: ${({ theme }) => theme.colors['base-card']};
 

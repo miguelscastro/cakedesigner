@@ -1,9 +1,54 @@
 import { useLocation } from 'react-router-dom'
-import { Container } from './styles'
+import { AddToCart, Container, InfoContainer, ProductContainer } from './styles'
+import { QuantityInput } from '../../components/Form/QuantityInput'
+import { useState } from 'react'
+import { useCart } from '../../hooks/useCart'
 
 export function ProductDetails() {
+  const [quantity, setQuantity] = useState<number>(1)
+  const { addProductToCart } = useCart()
   const { state } = useLocation()
-  console.log(state)
+  const product = state
 
-  return <Container />
+  function handleDecrementQuantity() {
+    if (quantity > 1) {
+      setQuantity((state) => state - 1)
+    }
+  }
+  function handleIncrementQuantity() {
+    setQuantity((state) => state + 1)
+  }
+
+  function handleAddToCart() {
+    addProductToCart({ ...product, quantity })
+    setQuantity(1)
+  }
+
+  return (
+    <Container>
+      <ProductContainer>
+        <picture>
+          <img src={product.image} alt="" />
+        </picture>
+        <InfoContainer>
+          <h3>Características do Produto</h3>
+          <p>{product.description}</p>
+        </InfoContainer>
+      </ProductContainer>
+      <AddToCart>
+        <h1>{product.title}</h1>
+        <div>
+          <span>R$ {product.price.toFixed(2)}</span>
+          <QuantityInput
+            decrementQuantity={handleDecrementQuantity}
+            quantity={quantity}
+            incrementQuantity={handleIncrementQuantity}
+          />
+        </div>
+        <button type="submit" onClick={handleAddToCart}>
+          CONFIRMAR PEDIDO
+        </button>
+      </AddToCart>
+    </Container>
+  )
 }
