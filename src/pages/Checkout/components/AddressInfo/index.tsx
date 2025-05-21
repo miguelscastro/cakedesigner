@@ -18,6 +18,7 @@ import {
   TextInput,
 } from './styles'
 import { useFormContext } from 'react-hook-form'
+import { ChangeEvent } from 'react'
 
 interface ErrorType {
   errors: {
@@ -27,11 +28,29 @@ interface ErrorType {
   }
 }
 export function AddressInfo() {
-  const { register, watch, formState } = useFormContext()
+  const { register, watch, formState, setValue } = useFormContext()
 
   const isFilled = watch('fullAddress')
 
   const { errors } = formState as unknown as ErrorType
+
+  function handleCheckCEP(event: ChangeEvent<HTMLInputElement>) {
+    const cep = event.target.value
+    if (cep.length !== 8) return
+
+    let url = 'https://viacep.com.br/ws/' + cep + '/json/'
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.erro) return
+        setValue('cep', data.cep || '')
+        setValue('street', data.logradouro || '')
+        setValue('fullAddress', data.complemento || '')
+        setValue('neighborhood', data.bairro || '')
+        setValue('city', data.localidade || '')
+        setValue('state', data.uf || '')
+      })
+  }
 
   return (
     <Container>
@@ -48,8 +67,9 @@ export function AddressInfo() {
             <TextInput
               placeholder="CEP"
               {...register('cep')}
-              type="number"
+              type="text"
               required
+              onChange={handleCheckCEP}
             />
             {errors.cep?.message && <ErrorText>{errors.cep.message}</ErrorText>}
           </InputWrapper>
