@@ -1,9 +1,9 @@
 import {
-  Bank,
-  CreditCard,
-  CurrencyDollar,
-  MapPinLine,
-  Money,
+  BankIcon,
+  CreditCardIcon,
+  CurrencyDollarIcon,
+  MapPinLineIcon,
+  MoneyIcon,
 } from '@phosphor-icons/react'
 import {
   Address,
@@ -18,7 +18,7 @@ import {
   TextInput,
 } from './styles'
 import { useFormContext } from 'react-hook-form'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 interface ErrorType {
   errors: {
@@ -28,7 +28,8 @@ interface ErrorType {
   }
 }
 export function AddressInfo() {
-  const { register, watch, formState, setValue } = useFormContext()
+  const [isCepRight, setIsCepRight] = useState(false)
+  const { register, watch, formState, reset } = useFormContext()
 
   const isFilled = watch('fullAddress')
 
@@ -36,27 +37,38 @@ export function AddressInfo() {
 
   function handleCheckCEP(event: ChangeEvent<HTMLInputElement>) {
     const cep = event.target.value
-    if (cep.length !== 8) return
 
-    let url = 'https://viacep.com.br/ws/' + cep + '/json/'
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.erro) return
-        setValue('cep', data.cep || '')
-        setValue('street', data.logradouro || '')
-        setValue('fullAddress', data.complemento || '')
-        setValue('neighborhood', data.bairro || '')
-        setValue('city', data.localidade || '')
-        setValue('state', data.uf || '')
-      })
+    if (cep.length === 8) {
+      let url = 'https://viacep.com.br/ws/' + cep + '/json/'
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data.erro) {
+            reset({
+              cep: data.cep,
+              street: data.logradouro,
+              fullAddress: data.complemento,
+              neighborhood: data.bairro,
+              city: data.localidade,
+              state: data.uf,
+            })
+
+            setIsCepRight(true)
+          }
+        })
+    }
+    if (cep.length < 9) {
+      reset({ cep })
+      setIsCepRight(false)
+      return
+    }
   }
 
   return (
     <Container>
       <Address>
         <InfoHeader>
-          <MapPinLine size={22} />
+          <MapPinLineIcon size={22} />
           <div>
             <h3>Endereço de Entrega</h3>
             <p>Informe o endereço onde deseja receber seu pedido</p>
@@ -80,6 +92,7 @@ export function AddressInfo() {
               type="text"
               maxLength={61}
               required
+              disabled={isCepRight}
             />
             {errors.street?.message && (
               <ErrorText>{errors.street.message}</ErrorText>
@@ -98,7 +111,11 @@ export function AddressInfo() {
             )}
           </InputWrapper>
           <InputWrapper $area="fullAddress">
-            <TextInput placeholder="Complemento" {...register('fullAddress')} />
+            <TextInput
+              placeholder="Complemento"
+              {...register('fullAddress')}
+              disabled={isCepRight}
+            />
             {isFilled === '' && <OptionalText>Opcional</OptionalText>}
           </InputWrapper>
           <InputWrapper $area="neighborhood">
@@ -107,6 +124,7 @@ export function AddressInfo() {
               {...register('neighborhood')}
               type="text"
               required
+              disabled={isCepRight}
             />
             {errors.neighborhood?.message && (
               <ErrorText>{errors.neighborhood.message}</ErrorText>
@@ -118,6 +136,7 @@ export function AddressInfo() {
               {...register('city')}
               type="text"
               required
+              disabled={isCepRight}
             />
             {errors.city?.message && (
               <ErrorText>{errors.city.message}</ErrorText>
@@ -131,6 +150,7 @@ export function AddressInfo() {
               required
               minLength={2}
               maxLength={2}
+              disabled={isCepRight}
             />
             {errors.state?.message && (
               <ErrorText>{errors.state.message}</ErrorText>
@@ -140,7 +160,7 @@ export function AddressInfo() {
       </Address>
       <PaymentOptions>
         <InfoHeader>
-          <CurrencyDollar size={22} />
+          <CurrencyDollarIcon size={22} />
           <div>
             <h3>Pagamento</h3>
             <p>
@@ -158,7 +178,7 @@ export function AddressInfo() {
                 {...register('paymentMethod')}
               />
               <div>
-                <CreditCard />
+                <CreditCardIcon />
                 <p>CARTÃO DE CRÉDITO</p>
               </div>
             </PaymentOption>
@@ -169,7 +189,7 @@ export function AddressInfo() {
                 {...register('paymentMethod')}
               />
               <div>
-                <Bank />
+                <BankIcon />
                 <p>CARTÃO DE DÉBITO</p>
               </div>
             </PaymentOption>
@@ -180,7 +200,7 @@ export function AddressInfo() {
                 {...register('paymentMethod')}
               />
               <div>
-                <Money />
+                <MoneyIcon />
                 <p>DINHEIRO</p>
               </div>
             </PaymentOption>

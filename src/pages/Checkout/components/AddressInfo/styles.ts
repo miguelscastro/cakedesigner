@@ -105,9 +105,9 @@ export const InputWrapper = styled.div<{ $area?: string }>`
   flex-direction: column;
 `
 
-export const TextInput = styled.input<{ $error?: string }>`
+export const TextInput = styled.input<{ $error?: string; disabled?: boolean }>`
   color: ${({ theme }) => theme.colors['base-label']};
-  background: ${({ theme }) => theme.colors['base-input']};
+  background: ${({ theme }) => theme.colors['base-card']};
 
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors['base-button']};
@@ -123,6 +123,10 @@ export const TextInput = styled.input<{ $error?: string }>`
   &[type='number'] {
     -moz-appearance: textfield;
     appearance: none;
+  }
+
+  &:disabled {
+    background: ${({ theme }) => theme.colors['base-input']};
   }
 `
 
