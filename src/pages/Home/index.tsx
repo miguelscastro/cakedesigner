@@ -48,8 +48,10 @@ export function Home() {
   }, [])
 
   useEffect(() => {
-    displaySelectedProducts('/')
-  })
+    if (productsData.length > 0) {
+      displaySelectedProducts('/')
+    }
+  }, [productsData])
 
   useEffect(() => {
     const handleScroll = () => {
