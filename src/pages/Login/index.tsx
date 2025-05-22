@@ -34,7 +34,7 @@ export function Login() {
       password: '',
     },
   })
-  const { register, handleSubmit, reset, formState } = LoginInfoForm
+  const { register, handleSubmit, formState } = LoginInfoForm
 
   const { errors } = formState as unknown as ErrorType
 
