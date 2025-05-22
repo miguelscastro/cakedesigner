@@ -11,13 +11,13 @@ export function Router() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/success" element={<Success />} />
+        <Route index element={<Home />} />
+        <Route path="product/:id" element={<ProductDetails />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="success" element={<Success />} />
       </Route>
-      <Route path="/login" element={<AuthLayout />}>
-        <Route path="/login/" element={<Login />} />
+      <Route path="/auth" element={<AuthLayout />}>
+        <Route path="sign-in" element={<Login />} />
       </Route>
     </Routes>
   )

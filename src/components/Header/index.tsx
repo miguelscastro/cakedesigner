@@ -26,7 +26,7 @@ export function Header() {
             <ShoppingCartIcon size={22} weight="fill" />
             {products.length > 0 ? <span>{products.length}</span> : null}
           </NavLink>
-          <NavLink to="/login">
+          <NavLink to="/auth/sign-in">
             <UserCircleIcon size="22" weight="fill" />
           </NavLink>
         </Aside>
