@@ -10,10 +10,10 @@ export const LayoutContainer = styled.div`
 
 export const Header = styled.header`
   display: flex;
-  justify-content: space-between;
-  text-align: center;
 
-  padding: 0.5rem 0 0 5rem;
+  margin: 0 auto;
+
+  padding: 0.5rem 2rem;
   max-width: 1440px;
   height: 4rem;
 
@@ -29,6 +29,6 @@ export const Header = styled.header`
 
   @media screen and (max-width: 1440px) {
     max-width: 1000px;
-    padding: 0.5rem 0 0 5rem;
+    padding: 0.5rem 2rem;
   }
 `
