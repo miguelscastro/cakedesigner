@@ -38,8 +38,28 @@ export function Login() {
 
   const { errors } = formState as unknown as ErrorType
 
-  function authLogin(data: LoginInfoData) {
-    console.log(data)
+  async function authLogin(data: LoginInfoData) {
+    try {
+      const response = await fetch('http://localhost:8080/auth/sign-in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Credenciais inválidas')
+      }
+
+      const authData = await response.json()
+      const { access_token, expires_in } = authData
+
+      localStorage.setItem('token', access_token)
+      localStorage.setItem('token_expiration', expires_in)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
