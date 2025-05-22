@@ -5,6 +5,7 @@ import { ProductDetails } from './pages/ProductDetails'
 import { Checkout } from './pages/Checkout'
 import { Success } from './pages/Success'
 import { Login } from './pages/Login'
+import { AuthLayout } from './layouts/AuthLayout'
 
 export function Router() {
   return (
@@ -15,7 +16,7 @@ export function Router() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
       </Route>
-      <Route path="/login">
+      <Route path="/login" element={<AuthLayout />}>
         <Route path="/login/" element={<Login />} />
       </Route>
     </Routes>
