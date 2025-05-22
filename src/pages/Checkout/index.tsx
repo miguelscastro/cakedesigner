@@ -67,6 +67,7 @@ export function Checkout() {
         <OrderForm
           id="order"
           autoComplete="off"
+          autoSave="off"
           onSubmit={handleSubmit(confirmOrder)}
         >
           <Address>

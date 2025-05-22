@@ -12,7 +12,6 @@ export const Container = styled.main`
     display: flex;
     width: 100%;
     justify-content: space-between;
-    /* margin: 0 auto; */
 
     padding: 8rem 0rem;
     border-radius: 10px;

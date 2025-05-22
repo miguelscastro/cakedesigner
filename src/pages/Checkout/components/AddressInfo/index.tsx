@@ -20,7 +20,7 @@ import {
 import { useFormContext } from 'react-hook-form'
 import { ChangeEvent, useState } from 'react'
 
-interface ErrorType {
+export interface ErrorType {
   errors: {
     [key: string]: {
       message: string
@@ -82,6 +82,7 @@ export function AddressInfo() {
               type="text"
               required
               onChange={handleCheckCEP}
+              autoComplete="postal-code"
             />
             {errors.cep?.message && <ErrorText>{errors.cep.message}</ErrorText>}
           </InputWrapper>
@@ -93,6 +94,7 @@ export function AddressInfo() {
               maxLength={61}
               required
               disabled={isCepRight}
+              autoComplete="address-line1"
             />
             {errors.street?.message && (
               <ErrorText>{errors.street.message}</ErrorText>
@@ -105,6 +107,7 @@ export function AddressInfo() {
               type="number"
               required
               maxLength={8}
+              autoComplete="address-line2"
             />
             {errors.number?.message && (
               <ErrorText>{errors.number.message}</ErrorText>
@@ -115,6 +118,7 @@ export function AddressInfo() {
               placeholder="Complemento"
               {...register('fullAddress')}
               disabled={isCepRight}
+              autoComplete="address-line2"
             />
             {isFilled === '' && <OptionalText>Opcional</OptionalText>}
           </InputWrapper>
@@ -125,6 +129,7 @@ export function AddressInfo() {
               type="text"
               required
               disabled={isCepRight}
+              autoComplete="address-level3"
             />
             {errors.neighborhood?.message && (
               <ErrorText>{errors.neighborhood.message}</ErrorText>
@@ -137,6 +142,7 @@ export function AddressInfo() {
               type="text"
               required
               disabled={isCepRight}
+              autoComplete="address-level2"
             />
             {errors.city?.message && (
               <ErrorText>{errors.city.message}</ErrorText>
@@ -151,6 +157,7 @@ export function AddressInfo() {
               minLength={2}
               maxLength={2}
               disabled={isCepRight}
+              autoComplete="address-level1"
             />
             {errors.state?.message && (
               <ErrorText>{errors.state.message}</ErrorText>
