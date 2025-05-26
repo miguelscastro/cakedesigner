@@ -30,6 +30,7 @@ export function Card({ product }: CardProps) {
       const quantity = 1
       addProductToCart({ ...product, quantity })
     }
+    navigate('/auth/sign-in')
   }
 
   function handleSeeMore() {

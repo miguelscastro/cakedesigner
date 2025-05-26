@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AddToCart, Container, InfoContainer, ProductContainer } from './styles'
 import { QuantityInput } from '../../components/Form/QuantityInput'
 import { useState } from 'react'
@@ -7,8 +7,11 @@ import { useAuth } from '../../hooks/useAuth'
 
 export function ProductDetails() {
   const [quantity, setQuantity] = useState<number>(1)
+
   const { addProductToCart } = useCart()
   const { isTokenValid } = useAuth()
+
+  const navigate = useNavigate()
   const { state } = useLocation()
   const product = state
 
@@ -26,6 +29,7 @@ export function ProductDetails() {
       addProductToCart({ ...product, quantity })
       setQuantity(1)
     }
+    navigate('/auth/sign-in')
   }
 
   return (

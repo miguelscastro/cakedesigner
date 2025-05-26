@@ -21,7 +21,7 @@ export const HeaderContainer = styled.header`
     height: 40px;
   }
 
-  img:first-of-type {
+  img#logo {
     width: 150px;
     height: auto;
     transform: translateY(10%);
