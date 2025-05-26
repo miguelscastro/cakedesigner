@@ -5,13 +5,16 @@ import { GlobalStyle } from './styles/global'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
 import { CartContextProvider } from './contexts/CartContext'
+import { AuthContextProvider } from './contexts/AuthContext'
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
         <CartContextProvider>
-          <Router />
+          <AuthContextProvider>
+            <Router />
+          </AuthContextProvider>
         </CartContextProvider>
       </BrowserRouter>
       <GlobalStyle />

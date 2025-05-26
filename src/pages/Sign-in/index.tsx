@@ -82,6 +82,8 @@ export function Sign_in() {
       localStorage.setItem('token_expiration', expires_in)
     } catch (error) {
       console.error(error)
+    } finally {
+      navigate('/')
     }
   }
 

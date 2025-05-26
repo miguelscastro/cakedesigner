@@ -1,6 +1,7 @@
 import { ShoppingCartSimpleIcon } from '@phosphor-icons/react'
 
 import { useCart } from '../../../../hooks/useCart'
+import { useAuth } from '../../../../hooks/useAuth'
 import { ProductProps } from '../../../../reducers/cart/reducer'
 
 import {
@@ -21,11 +22,14 @@ interface CardProps {
 
 export function Card({ product }: CardProps) {
   const { addProductToCart } = useCart()
+  const { isTokenValid } = useAuth()
   const navigate = useNavigate()
 
   function handleAddToCart() {
-    const quantity = 1
-    addProductToCart({ ...product, quantity })
+    if (isTokenValid()) {
+      const quantity = 1
+      addProductToCart({ ...product, quantity })
+    }
   }
 
   function handleSeeMore() {

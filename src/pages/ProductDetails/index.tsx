@@ -3,10 +3,12 @@ import { AddToCart, Container, InfoContainer, ProductContainer } from './styles'
 import { QuantityInput } from '../../components/Form/QuantityInput'
 import { useState } from 'react'
 import { useCart } from '../../hooks/useCart'
+import { useAuth } from '../../hooks/useAuth'
 
 export function ProductDetails() {
   const [quantity, setQuantity] = useState<number>(1)
   const { addProductToCart } = useCart()
+  const { isTokenValid } = useAuth()
   const { state } = useLocation()
   const product = state
 
@@ -20,8 +22,10 @@ export function ProductDetails() {
   }
 
   function handleAddToCart() {
-    addProductToCart({ ...product, quantity })
-    setQuantity(1)
+    if (isTokenValid()) {
+      addProductToCart({ ...product, quantity })
+      setQuantity(1)
+    }
   }
 
   return (
