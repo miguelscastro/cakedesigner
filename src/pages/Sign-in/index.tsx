@@ -6,6 +6,7 @@ import { ErrorType } from '../Checkout/components/AddressInfo'
 import { ErrorText } from '../Checkout/components/AddressInfo/styles'
 import { MouseEvent, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
 const allowedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']
 
@@ -37,6 +38,7 @@ const SignInInfoValidationSchema = z.object({
 export type SignInInfoData = z.infer<typeof SignInInfoValidationSchema>
 
 export function Sign_in() {
+  const { authLogin } = useAuth()
   const navigate = useNavigate()
   const { state } = useLocation()
 
@@ -61,30 +63,8 @@ export function Sign_in() {
     }
   }, [state, reset])
 
-  async function authLogin(data: SignInInfoData) {
-    try {
-      const response = await fetch('http://localhost:8080/auth/sign-in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-
-      if (!response.ok) {
-        throw new Error('Credenciais inválidas')
-      }
-
-      const authData = await response.json()
-      const { access_token, expires_in } = authData
-
-      localStorage.setItem('token', access_token)
-      localStorage.setItem('token_expiration', expires_in)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      navigate('/')
-    }
+  function handleAuthLogin(data: SignInInfoData) {
+    authLogin(data)
   }
 
   function handleCreateAccount(event: MouseEvent<HTMLButtonElement>) {
@@ -97,7 +77,7 @@ export function Sign_in() {
       <div>
         <h1>Digite seu email e senha para iniciar a sessão</h1>
         <AuthForm
-          onSubmit={handleSubmit(authLogin)}
+          onSubmit={handleSubmit(handleAuthLogin)}
           id="sign_in"
           autoComplete="off"
           autoSave="off"

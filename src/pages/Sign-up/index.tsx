@@ -4,7 +4,8 @@ import { AuthForm, Container, InputWrapper, TextInput } from './styles'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ErrorType } from '../Checkout/components/AddressInfo'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
 const allowedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']
 
@@ -40,8 +41,7 @@ const SignUpInfoValidationSchema = z.object({
 export type SignUpInfoData = z.infer<typeof SignUpInfoValidationSchema>
 
 export function Sign_up() {
-  const navigate = useNavigate()
-
+  const { createAccount } = useAuth()
   const LoginInfoForm = useForm<SignUpInfoData>({
     resolver: zodResolver(SignUpInfoValidationSchema),
     defaultValues: {
@@ -54,33 +54,16 @@ export function Sign_up() {
 
   const { errors } = formState as unknown as ErrorType
 
-  async function createAccount(data: SignUpInfoData) {
-    try {
-      const response = await fetch('http://localhost:8080/auth/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-
-      if (!response.ok) {
-        throw new Error('Credenciais inválidas')
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      navigate('/auth/sign-in', {
-        state: { email: data.email },
-      })
-    }
+  function handleCreateAccount(data: SignUpInfoData) {
+    createAccount(data)
   }
+
   return (
     <>
       <Container>
         <div>
           <AuthForm
-            onSubmit={handleSubmit(createAccount)}
+            onSubmit={handleSubmit(handleCreateAccount)}
             id="sign_up"
             autoComplete="off"
             autoSave="off"
