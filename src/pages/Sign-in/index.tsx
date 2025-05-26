@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ErrorType } from '../Checkout/components/AddressInfo'
 import { ErrorText } from '../Checkout/components/AddressInfo/styles'
+import { MouseEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const LoginInfoValidationSchema = z.object({
   email: z
@@ -26,7 +28,9 @@ const LoginInfoValidationSchema = z.object({
 })
 export type LoginInfoData = z.infer<typeof LoginInfoValidationSchema>
 
-export function Login() {
+export function Sign_in() {
+  const navigate = useNavigate()
+
   const LoginInfoForm = useForm<LoginInfoData>({
     resolver: zodResolver(LoginInfoValidationSchema),
     defaultValues: {
@@ -60,6 +64,11 @@ export function Login() {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function handleCreateAccount(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
+    navigate('/auth/sign-up')
   }
 
   return (
@@ -97,7 +106,9 @@ export function Login() {
           <button type="submit" form="login">
             Confirmar
           </button>
-          <button>Criar conta</button>
+          <button type="button" onClick={handleCreateAccount}>
+            Criar conta
+          </button>
         </AuthForm>
       </div>
     </Container>

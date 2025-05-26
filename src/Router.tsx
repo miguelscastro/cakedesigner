@@ -4,7 +4,7 @@ import { Home } from './pages/Home'
 import { ProductDetails } from './pages/ProductDetails'
 import { Checkout } from './pages/Checkout'
 import { Success } from './pages/Success'
-import { Login } from './pages/Login'
+import { Sign_in } from './pages/Sign-in'
 import { AuthLayout } from './layouts/AuthLayout'
 
 export function Router() {
@@ -17,7 +17,7 @@ export function Router() {
         <Route path="success" element={<Success />} />
       </Route>
       <Route path="/auth" element={<AuthLayout />}>
-        <Route path="sign-in" element={<Login />} />
+        <Route path="sign-in" element={<Sign_in />} />
       </Route>
     </Routes>
   )
