@@ -11,7 +11,7 @@ export const Container = styled.main`
   > div {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
 
     padding: 8rem 0rem;
     border-radius: 10px;
@@ -32,7 +32,7 @@ export const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
 
-  width: 600px;
+  width: 448px;
   height: fit-content;
   padding: 2.5rem;
 
@@ -63,6 +63,18 @@ export const AuthForm = styled.form`
     &:hover {
       background: ${({ theme }) => theme.colors['brown-light']};
       transition: 0.1s;
+    }
+  }
+
+  a {
+    text-align: center;
+    ${mixins.fonts.textS}
+    text-decoration: none;
+
+    color: ${({ theme }) => theme.colors['brown-dark']};
+
+    &:hover {
+      color: ${({ theme }) => theme.colors['base-hover']};
     }
   }
 `

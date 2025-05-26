@@ -6,6 +6,7 @@ import { Checkout } from './pages/Checkout'
 import { Success } from './pages/Success'
 import { Sign_in } from './pages/Sign-in'
 import { AuthLayout } from './layouts/AuthLayout'
+import { Sign_up } from './pages/Sign-up'
 
 export function Router() {
   return (
@@ -18,6 +19,7 @@ export function Router() {
       </Route>
       <Route path="/auth" element={<AuthLayout />}>
         <Route path="sign-in" element={<Sign_in />} />
+        <Route path="sign-up" element={<Sign_up />} />
       </Route>
     </Routes>
   )

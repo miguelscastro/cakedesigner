@@ -4,16 +4,24 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ErrorType } from '../Checkout/components/AddressInfo'
 import { ErrorText } from '../Checkout/components/AddressInfo/styles'
-import { MouseEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { MouseEvent, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-const LoginInfoValidationSchema = z.object({
+const allowedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']
+
+const SignInInfoValidationSchema = z.object({
   email: z
     .string({ required_error: 'Informe o e-mail' })
     .email('Formato de e-mail inválido')
-    .refine((email) => !/^((teste|admin|user)[0-9]*@.*)$/i.test(email), {
-      message: 'Informe um e-mail válido e real',
-    }),
+    .refine(
+      (email) => {
+        const domain = email.split('@')[1]?.toLowerCase()
+        return allowedDomains.includes(domain)
+      },
+      {
+        message: 'Insira um e-mail válido',
+      },
+    ),
 
   password: z
     .string({ required_error: 'Informe a senha' })
@@ -26,23 +34,34 @@ const LoginInfoValidationSchema = z.object({
       'A senha deve conter pelo menos um caractere especial',
     ),
 })
-export type LoginInfoData = z.infer<typeof LoginInfoValidationSchema>
+export type SignInInfoData = z.infer<typeof SignInInfoValidationSchema>
 
 export function Sign_in() {
   const navigate = useNavigate()
+  const { state } = useLocation()
 
-  const LoginInfoForm = useForm<LoginInfoData>({
-    resolver: zodResolver(LoginInfoValidationSchema),
+  const LoginInfoForm = useForm<SignInInfoData>({
+    resolver: zodResolver(SignInInfoValidationSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   })
-  const { register, handleSubmit, formState } = LoginInfoForm
+  const { register, handleSubmit, formState, reset } = LoginInfoForm
 
   const { errors } = formState as unknown as ErrorType
 
-  async function authLogin(data: LoginInfoData) {
+  useEffect(() => {
+    if (state?.email) {
+      console.log(state.email)
+
+      reset({
+        email: state.email,
+      })
+    }
+  }, [state, reset])
+
+  async function authLogin(data: SignInInfoData) {
     try {
       const response = await fetch('http://localhost:8080/auth/sign-in', {
         method: 'POST',
@@ -74,10 +93,10 @@ export function Sign_in() {
   return (
     <Container>
       <div>
-        <h1>Digite seu email para iniciar a sessão</h1>
+        <h1>Digite seu email e senha para iniciar a sessão</h1>
         <AuthForm
           onSubmit={handleSubmit(authLogin)}
-          id="login"
+          id="sign_in"
           autoComplete="off"
           autoSave="off"
         >
@@ -103,7 +122,7 @@ export function Sign_in() {
               <ErrorText>{errors.password.message}</ErrorText>
             )}
           </InputWrapper>
-          <button type="submit" form="login">
+          <button type="submit" form="sign_in">
             Confirmar
           </button>
           <button type="button" onClick={handleCreateAccount}>
