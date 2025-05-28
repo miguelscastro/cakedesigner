@@ -28,6 +28,7 @@ export function ProductDetails() {
     if (isTokenValid()) {
       addProductToCart({ ...product, quantity })
       setQuantity(1)
+      return
     }
     navigate('/auth/sign-in')
   }
