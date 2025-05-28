@@ -11,7 +11,7 @@ import { useAuth } from '../../hooks/useAuth'
 
 export function Header() {
   const { products } = useCart()
-  const { user } = useAuth()
+  const { authenticatedUser } = useAuth()
 
   return (
     <Container>
@@ -25,11 +25,11 @@ export function Header() {
             <span>Porto Alegre, RS</span>
           </div>
 
-          {user ? (
+          {authenticatedUser ? (
             <NavLink to="/dashboard">
-              {user.photoUrl ? (
+              {authenticatedUser.photoUrl ? (
                 <img
-                  src={user.photoUrl}
+                  src={authenticatedUser.photoUrl}
                   alt="Foto do usuário"
                   style={{
                     width: '40px',

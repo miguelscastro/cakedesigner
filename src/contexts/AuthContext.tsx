@@ -10,8 +10,13 @@ interface User {
   photoUrl?: string
 }
 
+interface Jwt {
+  token: string
+  expires_in: string
+}
+
 interface AuthContextType {
-  user: User | null
+  authenticatedUser: User | null
   createAccount: (data: {
     name: string
     email: string
@@ -29,32 +34,46 @@ interface AuthContextProviderProps {
 export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User | null>(null)
+  const [authenticatedUser, setAuthenticatedUser] = useState<User | null>(null)
   const navigate = useNavigate()
 
-  const token = localStorage.getItem('token')
+  const tokenString = localStorage.getItem('token')
 
   useEffect(() => {
-    if (!token) {
-      setUser(null)
-      return
+    const fetchUser = async () => {
+      if (!tokenString) {
+        setAuthenticatedUser(null)
+        return
+      }
+
+      try {
+        const response = await fetch('/api/users/me', {
+          headers: {
+            Authorization: `Bearer ${tokenString}`,
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error('Token inválido ou expirado')
+        }
+
+        const userData = await response.json()
+        const { user } = userData
+
+        setAuthenticatedUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          photoUrl: user.profileImage,
+        })
+      } catch {
+        setAuthenticatedUser(null)
+        localStorage.removeItem('token')
+      }
     }
 
-    fetch('/api/users/me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error('Token inválido ou expirado')
-        return res.json()
-      })
-      .then((data) => setUser(data))
-      .catch(() => {
-        setUser(null)
-        localStorage.removeItem('token')
-      })
-  }, [token])
+    fetchUser()
+  }, [tokenString])
 
   async function createAccount(data: SignUpInfoData) {
     try {
@@ -93,10 +112,16 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       }
 
       const authData = await response.json()
-      const { access_token, expires_in } = authData
+      const { access_token, user } = authData
 
-      localStorage.setItem('token', access_token)
-      localStorage.setItem('token_expiration', expires_in)
+      localStorage.setItem('token', JSON.stringify(access_token))
+      setAuthenticatedUser({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        photoUrl: user.profileImage,
+      })
+      console.log(authenticatedUser)
     } catch (error) {
       console.error(error)
     } finally {
@@ -105,22 +130,26 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   function isTokenValid() {
-    const expiration = localStorage.getItem('token_expiration')
+    if (!tokenString) return false
 
-    if (!token || !expiration) return false
-
-    const expiresAt = new Date(expiration).getTime()
-    return Date.now() < expiresAt
+    try {
+      const accessToken: Jwt = JSON.parse(tokenString)
+      const expiresAt = new Date(accessToken.expires_in).getTime()
+      return Date.now() < expiresAt
+    } catch (error) {
+      console.error('Erro ao validar token:', error)
+      return false
+    }
   }
 
   function logout() {
     localStorage.removeItem('token')
-    setUser(null)
+    setAuthenticatedUser(null)
   }
   return (
     <AuthContext.Provider
       value={{
-        user,
+        authenticatedUser,
         createAccount,
         authLogin,
         isTokenValid,
