@@ -1,13 +1,16 @@
 import { Routes, Route } from 'react-router-dom'
+
 import { DefaultLayout } from './layouts/DefaultLayout'
-import { Home } from './pages/Home'
-import { ProductDetails } from './pages/ProductDetails'
-import { Checkout } from './pages/Checkout'
-import { Success } from './pages/Success'
-import { Sign_in } from './pages/Sign-in'
 import { AuthLayout } from './layouts/AuthLayout'
-import { Sign_up } from './pages/Sign-up'
+
 import { PrivateRoute } from './components/Private'
+
+import { Sign_in } from './pages/auth/Sign-in'
+import { Sign_up } from './pages/auth/Sign-up'
+import { Checkout } from './pages/app/Checkout'
+import { Success } from './pages/app/Success'
+import { Home } from './pages/public/Home'
+import { ProductDetails } from './pages/public/ProductDetails'
 
 export function Router() {
   return (

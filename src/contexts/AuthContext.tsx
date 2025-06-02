@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { SignInInfoData } from '../pages/Sign-in'
+import { SignInInfoData } from '../pages/auth/Sign-in'
 import { useNavigate } from 'react-router-dom'
-import { SignUpInfoData } from '../pages/Sign-up'
+import { SignUpInfoData } from '../pages/auth/Sign-up'
 
 interface User {
   id: string
