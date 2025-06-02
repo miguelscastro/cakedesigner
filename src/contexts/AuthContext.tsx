@@ -37,19 +37,28 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [authenticatedUser, setAuthenticatedUser] = useState<User | null>(null)
   const navigate = useNavigate()
 
-  const tokenString = localStorage.getItem('token')
-
   useEffect(() => {
-    const fetchUser = async () => {
-      if (!tokenString) {
-        setAuthenticatedUser(null)
-        return
-      }
+    const tokenString = localStorage.getItem('token')
 
+    if (!tokenString) {
+      setAuthenticatedUser(null)
+      return
+    }
+
+    let tokenData: Jwt
+    try {
+      tokenData = JSON.parse(tokenString)
+    } catch {
+      setAuthenticatedUser(null)
+      localStorage.removeItem('token')
+      return
+    }
+
+    const fetchUser = async () => {
       try {
-        const response = await fetch('/api/users/me', {
+        const response = await fetch('http://localhost:8080/user/profile', {
           headers: {
-            Authorization: `Bearer ${tokenString}`,
+            Authorization: `Bearer ${tokenData.token}`,
           },
         })
 
@@ -58,13 +67,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         }
 
         const userData = await response.json()
-        const { user } = userData
 
         setAuthenticatedUser({
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          photoUrl: user.profileImage,
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+          photoUrl: userData.profileImage,
         })
       } catch {
         setAuthenticatedUser(null)
@@ -73,7 +81,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
 
     fetchUser()
-  }, [tokenString])
+
+    const verifyTokenExpireDate = setInterval(() => {
+      if (!isTokenValid()) {
+        logout()
+      }
+    }, 60 * 1000)
+    return () => clearInterval(verifyTokenExpireDate)
+  }, [])
 
   async function createAccount(data: SignUpInfoData) {
     try {
@@ -121,7 +136,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         email: user.email,
         photoUrl: user.profileImage,
       })
-      console.log(authenticatedUser)
     } catch (error) {
       console.error(error)
     } finally {
@@ -130,11 +144,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }
 
   function isTokenValid() {
+    const tokenString = localStorage.getItem('token')
     if (!tokenString) return false
 
     try {
-      const accessToken: Jwt = JSON.parse(tokenString)
-      const expiresAt = new Date(accessToken.expires_in).getTime()
+      const tokenData: Jwt = JSON.parse(tokenString)
+      const expiresAt = new Date(tokenData.expires_in).getTime()
       return Date.now() < expiresAt
     } catch (error) {
       console.error('Erro ao validar token:', error)

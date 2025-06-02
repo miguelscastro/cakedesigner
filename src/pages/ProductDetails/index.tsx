@@ -25,12 +25,12 @@ export function ProductDetails() {
   }
 
   function handleAddToCart() {
-    if (isTokenValid()) {
-      addProductToCart({ ...product, quantity })
-      setQuantity(1)
+    if (!isTokenValid()) {
+      navigate('/auth/sign-in')
       return
     }
-    navigate('/auth/sign-in')
+    addProductToCart({ ...product, quantity })
+    setQuantity(1)
   }
 
   return (
