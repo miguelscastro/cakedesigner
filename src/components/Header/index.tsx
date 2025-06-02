@@ -1,10 +1,6 @@
 import { Aside, Container, HeaderContainer } from './styles'
 import CompanyLogo from '../../assets/images/logo/logo-cakedesigner.png'
-import {
-  MapPinIcon,
-  ShoppingCartIcon,
-  UserCircleIcon,
-} from '@phosphor-icons/react'
+import { ShoppingCartIcon, UserCircleIcon } from '@phosphor-icons/react'
 import { NavLink } from 'react-router-dom'
 import { useCart } from '../../hooks/useCart'
 import { useAuth } from '../../hooks/useAuth'
@@ -20,38 +16,32 @@ export function Header() {
           <img src={CompanyLogo} alt="Cakedesigner Logo" id="logo" />
         </NavLink>
         <Aside>
-          <div>
-            <MapPinIcon size={22} weight="fill" />
-            <span>Porto Alegre, RS</span>
-          </div>
-
           {authenticatedUser ? (
-            <NavLink to="/dashboard">
-              {authenticatedUser.photoUrl ? (
-                <img
-                  src={authenticatedUser.photoUrl}
-                  alt="Foto do usuário"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                  }}
-                  onError={(e) => {
-                    e.currentTarget.src = '/icons/user-default.svg'
-                  }}
-                />
-              ) : (
-                <UserCircleIcon size={22} weight="fill" />
-              )}
-            </NavLink>
+            <div>
+              <NavLink to="/dashboard">
+                <span>
+                  {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
+                </span>
+                {authenticatedUser.photoUrl ? (
+                  <img
+                    src={authenticatedUser.photoUrl}
+                    alt="Foto do usuário"
+                    onError={(e) => {
+                      e.currentTarget.src = '/icons/user-default.svg'
+                    }}
+                  />
+                ) : (
+                  <UserCircleIcon size={22} weight="fill" />
+                )}
+              </NavLink>
+            </div>
           ) : (
             <NavLink to="/auth/sign-in">
               <UserCircleIcon size={22} weight="fill" />
             </NavLink>
           )}
 
-          <NavLink to="/checkout">
+          <NavLink to="/checkout" className="cart">
             <ShoppingCartIcon size={22} weight="fill" />
             {products.length > 0 ? <span>{products.length}</span> : null}
           </NavLink>

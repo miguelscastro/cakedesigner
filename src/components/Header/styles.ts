@@ -35,30 +35,41 @@ export const HeaderContainer = styled.header`
 
 export const Aside = styled.aside`
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: center;
 
-  // disabled for now. Calculate delivery will be added later on
-  div {
-    display: none;
-    align-items: center;
-    gap: 0.25rem;
-    cursor: inherit;
-    user-select: none;
-
-    background-color: ${({ theme }) => theme.colors['brown-light']};
-
-    svg {
-      color: ${({ theme }) => theme.colors.brown};
-    }
-
-    span {
-      ${mixins.fonts.textS}
-      color: ${({ theme }) => theme.colors['brown-dark']};
-    }
-
-    padding: 0.5rem;
+  div:first-of-type {
+    background: ${({ theme }) => theme.colors['brown-light']};
     border-radius: 6px;
+
+    > a {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.125rem 0.5rem 0.5rem;
+
+      border-radius: 6px;
+      gap: 0.5rem;
+      text-decoration: none;
+
+      background: transparent;
+
+      span {
+        ${mixins.fonts.textS}
+        color: ${({ theme }) => theme.colors['brown-dark']};
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: inherit;
+        object-fit: cover;
+
+        padding: 0;
+        border-radius: 50%;
+
+        border: 0.5px solid ${({ theme }) => theme.colors['brown-dark']};
+      }
+    }
   }
 
   a {
@@ -77,7 +88,7 @@ export const Aside = styled.aside`
       pointer-events: none;
     }
 
-    span {
+    &.cart span {
       ${mixins.fonts.textS};
       font-weight: bold;
       color: ${({ theme }) => theme.colors.white};
