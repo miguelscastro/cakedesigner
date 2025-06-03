@@ -8,6 +8,7 @@ interface User {
   name: string
   email: string
   photoUrl?: string
+  role: string
 }
 
 interface Jwt {
@@ -73,6 +74,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           name: userData.name,
           email: userData.email,
           photoUrl: userData.profileImage,
+          role: userData.role,
         })
       } catch {
         setAuthenticatedUser(null)
@@ -135,6 +137,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         name: user.name,
         email: user.email,
         photoUrl: user.profileImage,
+        role: user.role,
       })
     } catch (error) {
       console.error(error)

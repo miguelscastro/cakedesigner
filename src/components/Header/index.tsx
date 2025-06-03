@@ -16,20 +16,14 @@ export function Header() {
           <img src={CompanyLogo} alt="Cakedesigner Logo" id="logo" />
         </NavLink>
         <Aside>
-          {authenticatedUser ? (
+          {authenticatedUser?.role == 'USER' ? (
             <div>
-              <NavLink to="/dashboard">
+              <NavLink to="/profile">
                 <span>
                   {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
                 </span>
                 {authenticatedUser.photoUrl ? (
-                  <img
-                    src={authenticatedUser.photoUrl}
-                    alt="Foto do usuário"
-                    onError={(e) => {
-                      e.currentTarget.src = '/icons/user-default.svg'
-                    }}
-                  />
+                  <img src={authenticatedUser.photoUrl} alt="Foto do usuário" />
                 ) : (
                   <UserCircleIcon size={22} weight="fill" />
                 )}

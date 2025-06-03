@@ -7,8 +7,11 @@ import { PrivateRoute } from './components/Private'
 
 import { Sign_in } from './pages/auth/Sign-in'
 import { Sign_up } from './pages/auth/Sign-up'
+
 import { Checkout } from './pages/app/Checkout'
 import { Success } from './pages/app/Success'
+import { Profile } from './pages/app/Profile'
+
 import { Home } from './pages/public/Home'
 import { ProductDetails } from './pages/public/ProductDetails'
 
@@ -21,6 +24,7 @@ export function Router() {
         <Route element={<PrivateRoute />}>
           <Route path="checkout" element={<Checkout />} />
           <Route path="success" element={<Success />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Route>
       <Route path="/auth" element={<AuthLayout />}>
