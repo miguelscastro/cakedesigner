@@ -18,7 +18,7 @@ export function Header() {
         <Aside>
           {authenticatedUser?.role == 'USER' ? (
             <div>
-              <NavLink to="/profile">
+              <NavLink to="/user/profile">
                 <span>
                   {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
                 </span>

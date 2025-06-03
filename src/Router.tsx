@@ -10,10 +10,10 @@ import { Sign_up } from './pages/auth/Sign-up'
 
 import { Checkout } from './pages/app/Checkout'
 import { Success } from './pages/app/Success'
-import { Profile } from './pages/app/Profile'
 
 import { Home } from './pages/public/Home'
 import { ProductDetails } from './pages/public/ProductDetails'
+import { User } from './pages/app/User'
 
 export function Router() {
   return (
@@ -24,7 +24,7 @@ export function Router() {
         <Route element={<PrivateRoute />}>
           <Route path="checkout" element={<Checkout />} />
           <Route path="success" element={<Success />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="/user/profile" element={<User />} />
         </Route>
       </Route>
       <Route path="/auth" element={<AuthLayout />}>

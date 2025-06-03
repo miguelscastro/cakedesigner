@@ -4,7 +4,6 @@ import { mixins } from '../../../../../styles/mixins'
 export const Container = styled.main``
 export const ProfileHeader = styled.header`
   display: flex;
-  text-align: center;
   align-items: center;
   gap: 1rem;
   padding: 3rem 5rem;
@@ -13,6 +12,11 @@ export const ProfileHeader = styled.header`
     height: 100px;
     width: 100px;
     border-radius: 50%;
+  }
+
+  > svg {
+    height: 100px;
+    width: 100px;
   }
 
   h2 {
@@ -30,6 +34,9 @@ export const InfoContainer = styled.div`
     flex-direction: column;
     text-align: start;
     gap: 0.5rem;
+
+    box-shadow: 0.5px 0.5px 0.5px ${({ theme }) => theme.colors['base-text']};
+    border-radius: 6px;
 
     width: 300px;
     padding: 1rem 1rem 2rem 1rem;
