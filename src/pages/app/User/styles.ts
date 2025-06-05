@@ -35,7 +35,7 @@ export const Menu = styled.aside`
         border-left-color: ${({ theme }) => theme.colors['brown-dark']};
       }
 
-      > button {
+      > a {
         display: flex;
         gap: 0.5rem;
         align-items: center;
@@ -45,8 +45,11 @@ export const Menu = styled.aside`
         background: transparent;
         ${mixins.fonts.textS}
         cursor: pointer;
+        text-decoration: none;
 
         transition: border-color 0.1s;
+
+        color: ${({ theme }) => theme.colors['base-text']};
 
         &.active svg {
           color: ${({ theme }) => theme.colors['brown-dark']};

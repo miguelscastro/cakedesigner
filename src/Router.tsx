@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { DefaultLayout } from './layouts/DefaultLayout'
 import { AuthLayout } from './layouts/AuthLayout'
@@ -14,6 +14,11 @@ import { Success } from './pages/app/Success'
 import { Home } from './pages/public/Home'
 import { ProductDetails } from './pages/public/ProductDetails'
 import { User } from './pages/app/User'
+import { Purchases } from './pages/app/User/components/Purchases'
+import { MyProfile } from './pages/app/User/components/MyProfile'
+import { PersonalInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo'
+import { AccountInfo } from './pages/app/User/components/MyProfile/components/AccountInfo'
+import { SecuritySettings } from './pages/app/User/components/MyProfile/components/SecuritySettings'
 
 export function Router() {
   return (
@@ -21,12 +26,25 @@ export function Router() {
       <Route path="/" element={<DefaultLayout />}>
         <Route index element={<Home />} />
         <Route path="product/:id" element={<ProductDetails />} />
+
         <Route element={<PrivateRoute />}>
           <Route path="checkout" element={<Checkout />} />
           <Route path="success" element={<Success />} />
-          <Route path="/user/profile" element={<User />} />
+
+          <Route path="/user" element={<User />}>
+            <Route index element={<Navigate to="profile" />} />
+
+            <Route path="purchases" element={<Purchases />} />
+
+            <Route path="profile" element={<MyProfile />}>
+              <Route path="personal" element={<PersonalInfo />} />
+              <Route path="account" element={<AccountInfo />} />
+              <Route path="security" element={<SecuritySettings />} />
+            </Route>
+          </Route>
         </Route>
       </Route>
+
       <Route path="/auth" element={<AuthLayout />}>
         <Route path="sign-in" element={<Sign_in />} />
         <Route path="sign-up" element={<Sign_up />} />

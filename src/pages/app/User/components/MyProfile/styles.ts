@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { mixins } from '../../../../../styles/mixins'
 
-export const Container = styled.main``
+export const Container = styled.div``
 export const ProfileHeader = styled.header`
   display: flex;
   align-items: center;
@@ -56,5 +56,20 @@ export const InfoContainer = styled.div`
     p {
       ${mixins.fonts.textS}
     }
+  }
+`
+export const Breadcrumb = styled.div`
+  font-size: 14px;
+  margin-bottom: 16px;
+
+  span {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  strong {
+    font-weight: 600;
+    margin-left: 4px;
   }
 `

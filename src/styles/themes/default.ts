@@ -25,5 +25,7 @@ export const defaultTheme = {
     error: '#dc2626',
 
     white: '#FFF',
+
+    link: '#0243C2',
   },
 }

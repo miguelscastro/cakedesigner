@@ -5,23 +5,13 @@ import {
   UserCircleIcon,
 } from '@phosphor-icons/react'
 import { Container, Info, Menu } from './styles'
-import { useState } from 'react'
-import { Purchases } from './components/Purchases'
-import { MyProfile } from './components/MyProfile'
+
 import { useAuth } from '../../../hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 
 export function User() {
   const { logout } = useAuth()
   const navigate = useNavigate()
-  const [selectedItem, setSelectedItem] = useState<'purchases' | 'profile'>(
-    'profile',
-  )
-
-  const pages = {
-    purchases: <Purchases />,
-    profile: <MyProfile />,
-  }
 
   return (
     <Container>
@@ -32,25 +22,25 @@ export function User() {
         </div>
         <ul>
           <li>
-            <button
-              onClick={() => setSelectedItem('purchases')}
-              className={selectedItem === 'purchases' ? 'active' : ''}
+            <NavLink
+              to="purchases"
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               <ShoppingBagIcon size={30} />
               Compras
-            </button>
+            </NavLink>
           </li>
           <li>
-            <button
-              onClick={() => setSelectedItem('profile')}
-              className={selectedItem === 'profile' ? 'active' : ''}
+            <NavLink
+              to="profile"
+              className={({ isActive }) => (isActive ? 'active' : '')}
             >
               <UserCircleIcon size={30} />
               Meu perfil
-            </button>
+            </NavLink>
           </li>
           <li>
-            <button
+            <a
               onClick={() => {
                 logout()
                 navigate('/')
@@ -58,11 +48,13 @@ export function User() {
             >
               <SignOutIcon size={30} />
               Sair
-            </button>
+            </a>
           </li>
         </ul>
       </Menu>
-      <Info>{pages[selectedItem]}</Info>
+      <Info>
+        <Outlet />
+      </Info>
     </Container>
   )
 }
