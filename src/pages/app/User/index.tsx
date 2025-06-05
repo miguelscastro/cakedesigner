@@ -42,7 +42,6 @@ export function User() {
           <li>
             <a
               onClick={() => {
-                navigate('/')
                 logout()
               }}
             >

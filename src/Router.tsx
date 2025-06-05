@@ -2,8 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { DefaultLayout } from './layouts/DefaultLayout'
 import { AuthLayout } from './layouts/AuthLayout'
-
-import { PrivateRoute } from './components/Private'
+import { PrivateRoute } from './layouts/Private'
 
 import { Sign_in } from './pages/auth/Sign-in'
 import { Sign_up } from './pages/auth/Sign-up'

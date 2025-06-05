@@ -4,5 +4,5 @@ import { useAuth } from '../../hooks/useAuth'
 export function PrivateRoute() {
   const { isTokenValid } = useAuth()
 
-  return isTokenValid() ? <Outlet /> : <Navigate to="/auth/sign-in" />
+  return isTokenValid() ? <Outlet /> : <Navigate to="/" />
 }

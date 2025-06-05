@@ -38,26 +38,28 @@ export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [authenticatedUser, setAuthenticatedUser] = useState<User | null>(null)
+
   const navigate = useNavigate()
 
   useEffect(() => {
-    const tokenString = localStorage.getItem('token')
-
-    if (!tokenString) {
-      setAuthenticatedUser(null)
-      return
-    }
-
-    let tokenData: Jwt
-    try {
-      tokenData = JSON.parse(tokenString)
-    } catch {
-      setAuthenticatedUser(null)
-      localStorage.removeItem('token')
-      return
-    }
-
     const fetchUser = async () => {
+      const tokenString = localStorage.getItem('token')
+
+      if (!tokenString) {
+        setAuthenticatedUser(null)
+        return
+      }
+
+      let tokenData: Jwt
+      try {
+        tokenData = JSON.parse(tokenString)
+      } catch (err) {
+        console.error('Erro ao fazer parse do token:', err)
+        localStorage.removeItem('token')
+        setAuthenticatedUser(null)
+        return
+      }
+
       try {
         const response = await fetch('http://localhost:8080/user', {
           headers: {
@@ -70,8 +72,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         }
 
         const userData = await response.json()
-        console.log(userData)
-
         setAuthenticatedUser({
           id: userData.id,
           name: userData.name,
@@ -79,14 +79,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           photoUrl: userData.profileImage,
           role: userData.role,
         })
-      } catch {
-        setAuthenticatedUser(null)
+      } catch (err) {
+        console.error('Erro ao buscar usuário:', err)
         localStorage.removeItem('token')
+        setAuthenticatedUser(null)
       }
     }
-
     fetchUser()
-
     const verifyTokenExpireDate = setInterval(() => {
       if (!isTokenValid()) {
         logout()
@@ -152,7 +151,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       }
 
       const userData = await response.json()
-      console.log(userData)
 
       setAuthenticatedUser({
         id: userData.id,
