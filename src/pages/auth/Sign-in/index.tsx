@@ -54,8 +54,6 @@ export function Sign_in() {
 
   useEffect(() => {
     if (state?.email) {
-      console.log(state.email)
-
       reset({
         email: state.email,
       })

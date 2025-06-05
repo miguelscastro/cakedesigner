@@ -1,21 +1,24 @@
 import { useState } from 'react'
 import { useAuth } from '../../../../../../../../hooks/useAuth'
 import { Container, DataForm } from './styles'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useFormState } from 'react-hook-form'
 import { ChangeUserInfoData } from '../../..'
+import { ErrorText } from '../../../../../../Checkout/components/AddressInfo/styles'
 
 export function ChangeUserInfo() {
-  const { authenticatedUser } = useAuth()
+  const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
 
   const { handleSubmit, register, reset } = useFormContext<ChangeUserInfoData>()
+  const { errors } = useFormState<ChangeUserInfoData>()
 
   function handleToggleEdit() {
     setIsEditing((state) => !state)
+    reset()
   }
 
   function changeUserData(data: ChangeUserInfoData) {
-    console.log(data)
+    updateUserInfo(data)
     handleToggleEdit()
     reset()
   }
@@ -27,12 +30,17 @@ export function ChangeUserInfo() {
         <span>Nome completo</span>
 
         {isEditing ? (
-          <input
-            type="text"
-            {...register('name')}
-            placeholder={authenticatedUser?.name}
-            autoFocus
-          />
+          <>
+            <input
+              type="text"
+              {...register('name')}
+              placeholder={authenticatedUser?.name}
+              autoFocus
+            />
+            {errors.name?.message && (
+              <ErrorText>{errors.name.message}</ErrorText>
+            )}
+          </>
         ) : (
           <p>{authenticatedUser?.name}</p>
         )}

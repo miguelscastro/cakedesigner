@@ -42,8 +42,8 @@ export function User() {
           <li>
             <a
               onClick={() => {
-                logout()
                 navigate('/')
+                logout()
               }}
             >
               <SignOutIcon size={30} />

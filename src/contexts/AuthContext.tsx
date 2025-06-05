@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import { SignInInfoData } from '../pages/auth/Sign-in'
 import { useNavigate } from 'react-router-dom'
 import { SignUpInfoData } from '../pages/auth/Sign-up'
+import { ChangeUserInfoData } from '../pages/app/User/components/MyProfile'
 
 interface User {
   id: string
@@ -26,6 +27,7 @@ interface AuthContextType {
   authLogin: (data: { email: string; password: string }) => Promise<void>
   isTokenValid: () => boolean
   logout: () => void
+  updateUserInfo: (data: { name: string }) => Promise<void>
 }
 
 interface AuthContextProviderProps {
@@ -57,7 +59,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     const fetchUser = async () => {
       try {
-        const response = await fetch('http://localhost:8080/user/profile', {
+        const response = await fetch('http://localhost:8080/user', {
           headers: {
             Authorization: `Bearer ${tokenData.token}`,
           },
@@ -68,6 +70,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         }
 
         const userData = await response.json()
+        console.log(userData)
 
         setAuthenticatedUser({
           id: userData.id,
@@ -111,6 +114,55 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       navigate('/auth/sign-in', {
         state: { email: data.email },
       })
+    }
+  }
+
+  async function updateUserInfo(data: ChangeUserInfoData) {
+    const tokenString = localStorage.getItem('token')
+
+    if (!tokenString) {
+      setAuthenticatedUser(null)
+      return
+    }
+
+    let tokenData: Jwt
+    try {
+      tokenData = JSON.parse(tokenString)
+    } catch {
+      setAuthenticatedUser(null)
+      localStorage.removeItem('token')
+      return
+    }
+
+    try {
+      const response = await fetch(
+        'http://localhost:8080/user/profile/my-data/edit',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${tokenData.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        },
+      )
+
+      if (!response.ok) {
+        throw new Error('Credenciais inválidas')
+      }
+
+      const userData = await response.json()
+      console.log(userData)
+
+      setAuthenticatedUser({
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        photoUrl: userData.profileImage,
+        role: userData.role,
+      })
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -172,6 +224,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         authLogin,
         isTokenValid,
         logout,
+        updateUserInfo,
       }}
     >
       {children}
