@@ -19,6 +19,7 @@ import { MyProfile } from './pages/app/User/components/MyProfile'
 import { PersonalInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo'
 import { AccountInfo } from './pages/app/User/components/MyProfile/components/AccountInfo'
 import { SecuritySettings } from './pages/app/User/components/MyProfile/components/SecuritySettings'
+import { ChangeUserInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo/ChangeUserInfo'
 
 export function Router() {
   return (
@@ -37,9 +38,11 @@ export function Router() {
             <Route path="purchases" element={<Purchases />} />
 
             <Route path="profile" element={<MyProfile />}>
-              <Route path="personal" element={<PersonalInfo />} />
-              <Route path="account" element={<AccountInfo />} />
-              <Route path="security" element={<SecuritySettings />} />
+              <Route path="my-data" element={<PersonalInfo />}>
+                <Route path="edit" element={<ChangeUserInfo />} />
+              </Route>
+              <Route path="account-data" element={<AccountInfo />} />
+              <Route path="security-settings" element={<SecuritySettings />} />
             </Route>
           </Route>
         </Route>

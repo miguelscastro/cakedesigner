@@ -35,7 +35,7 @@ export const InfoContainer = styled.div`
     text-align: start;
     gap: 0.5rem;
 
-    box-shadow: 0.5px 0.5px 0.5px ${({ theme }) => theme.colors['base-text']};
+    box-shadow: 0 2px 6px ${({ theme }) => theme.colors['base-text']}22;
     border-radius: 6px;
 
     width: 300px;
