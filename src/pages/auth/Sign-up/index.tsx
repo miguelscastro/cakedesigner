@@ -60,12 +60,19 @@ export function Sign_up() {
       password: '',
     },
   })
-  const { register, handleSubmit, formState } = LoginInfoForm
+  const { register, handleSubmit, formState, setError } = LoginInfoForm
 
   const { errors } = formState as unknown as ErrorType
 
-  function handleCreateAccount(data: SignUpInfoData) {
-    createAccount(data)
+  async function handleCreateAccount(data: SignUpInfoData) {
+    const result = await createAccount(data)
+
+    if (typeof result == 'string') {
+      setError('email', {
+        type: 'manual',
+        message: result,
+      })
+    }
   }
 
   return (

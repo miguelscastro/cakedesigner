@@ -24,8 +24,11 @@ interface AuthContextType {
     name: string
     email: string
     password: string
-  }) => Promise<void>
-  authLogin: (data: { email: string; password: string }) => Promise<void>
+  }) => Promise<string | undefined>
+  authLogin: (data: {
+    email: string
+    password: string
+  }) => Promise<string | undefined>
   isTokenValid: () => boolean
   logout: () => void
   updateUserInfo: (data: { name: string } | { email: string }) => Promise<void>
@@ -106,14 +109,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       })
 
       if (!response.ok) {
-        throw new Error('Credenciais inválidas')
+        return 'Esse email já esta em uso'
+      } else {
+        navigate('/auth/sign-in', {
+          state: { email: data.email },
+        })
       }
     } catch (error) {
       console.error(error)
-    } finally {
-      navigate('/auth/sign-in', {
-        state: { email: data.email },
-      })
     }
   }
 
@@ -178,7 +181,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       })
 
       if (!response.ok) {
-        throw new Error('Credenciais inválidas')
+        return 'Email ou senha invalidos'
       }
 
       const authData = await response.json()
@@ -192,10 +195,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         photoUrl: user.profileImage,
         role: user.role,
       })
+      navigate('/')
     } catch (error) {
       console.error(error)
-    } finally {
-      navigate('/')
     }
   }
 

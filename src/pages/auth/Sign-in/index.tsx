@@ -57,7 +57,7 @@ export function Sign_in() {
       password: '',
     },
   })
-  const { register, handleSubmit, formState, reset } = LoginInfoForm
+  const { register, handleSubmit, formState, reset, setError } = LoginInfoForm
 
   const { errors } = formState as unknown as ErrorType
 
@@ -69,8 +69,20 @@ export function Sign_in() {
     }
   }, [state, reset])
 
-  function handleAuthLogin(data: SignInInfoData) {
-    authLogin(data)
+  async function handleAuthLogin(data: SignInInfoData) {
+    const result = await authLogin(data)
+
+    if (typeof result == 'string') {
+      setError('email', {
+        type: 'manual',
+        message: result,
+      })
+
+      setError('password', {
+        type: 'manual',
+        message: result,
+      })
+    }
   }
 
   function handleCreateAccount(event: MouseEvent<HTMLButtonElement>) {

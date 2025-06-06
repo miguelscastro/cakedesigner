@@ -3,6 +3,7 @@ import { mixins } from '../../../styles/mixins'
 
 export const Container = styled.main`
   display: flex;
+  background: ${({ theme }) => theme.colors['base-input']};
 `
 export const Menu = styled.aside`
   width: 300px;
@@ -59,7 +60,12 @@ export const Menu = styled.aside`
   }
 `
 export const Info = styled.section`
-  flex: 1;
+  max-width: 1440px;
+  width: 1440px;
+  margin: 0 auto;
   height: calc(100vh - 104px);
-  background: ${({ theme }) => theme.colors['base-input']};
+
+  @media screen and (max-width: 1440px) {
+    width: auto;
+  }
 `
