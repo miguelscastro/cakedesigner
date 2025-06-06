@@ -7,11 +7,10 @@ import {
 import { Container, Info, Menu } from './styles'
 
 import { useAuth } from '../../../hooks/useAuth'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 
 export function User() {
   const { logout } = useAuth()
-  const navigate = useNavigate()
 
   return (
     <Container>
