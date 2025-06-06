@@ -7,34 +7,15 @@ import {
 import { useAuth } from '../../../../../hooks/useAuth'
 import { Container, InfoContainer, ProfileHeader } from './styles'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { z } from 'zod'
-import { FormProvider, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 export interface SectionProps {
   onBack: () => void
 }
 
-const changeUserInfoValidationSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Informe seu nome')
-    .max(60, 'Máximo de 60 caracteres'),
-})
-
-export type ChangeUserInfoData = z.infer<typeof changeUserInfoValidationSchema>
-
 export function MyProfile() {
   const { authenticatedUser } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-
-  const ChangeUserInfoForm = useForm<ChangeUserInfoData>({
-    resolver: zodResolver(changeUserInfoValidationSchema),
-    defaultValues: {
-      name: '',
-    },
-  })
 
   const isSubSection =
     location.pathname.includes('/profile/my-data') ||
@@ -44,9 +25,7 @@ export function MyProfile() {
   if (isSubSection) {
     return (
       <Container>
-        <FormProvider {...ChangeUserInfoForm}>
-          <Outlet />
-        </FormProvider>
+        <Outlet />
       </Container>
     )
   }

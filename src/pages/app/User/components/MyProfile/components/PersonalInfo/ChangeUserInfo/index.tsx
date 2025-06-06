@@ -1,16 +1,33 @@
 import { useState } from 'react'
 import { useAuth } from '../../../../../../../../hooks/useAuth'
 import { Container, DataForm } from './styles'
-import { useFormContext, useFormState } from 'react-hook-form'
-import { ChangeUserInfoData } from '../../..'
+import { useForm, useFormState } from 'react-hook-form'
 import { ErrorText } from '../../../../../../Checkout/components/AddressInfo/styles'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const changeUserInfoValidationSchema = z.object({
+  name: z
+    .string()
+    .min(2, 'Informe seu nome')
+    .max(60, 'Máximo de 60 caracteres'),
+})
+
+export type ChangeUserInfoData = z.infer<typeof changeUserInfoValidationSchema>
 
 export function ChangeUserInfo() {
   const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
 
-  const { handleSubmit, register, reset } = useFormContext<ChangeUserInfoData>()
-  const { errors } = useFormState<ChangeUserInfoData>()
+  const ChangeUserInfoForm = useForm<ChangeUserInfoData>({
+    resolver: zodResolver(changeUserInfoValidationSchema),
+    defaultValues: {
+      name: '',
+    },
+  })
+
+  const { handleSubmit, register, reset, control } = ChangeUserInfoForm
+  const { errors } = useFormState({ control })
 
   function handleToggleEdit() {
     setIsEditing((state) => !state)

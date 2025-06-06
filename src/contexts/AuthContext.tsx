@@ -2,7 +2,8 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 import { SignInInfoData } from '../pages/auth/Sign-in'
 import { useNavigate } from 'react-router-dom'
 import { SignUpInfoData } from '../pages/auth/Sign-up'
-import { ChangeUserInfoData } from '../pages/app/User/components/MyProfile'
+import { ChangeAccountInfoData } from '../pages/app/User/components/MyProfile/components/AccountInfo'
+import { ChangeUserInfoData } from '../pages/app/User/components/MyProfile/components/PersonalInfo/ChangeUserInfo'
 
 interface User {
   id: string
@@ -27,7 +28,7 @@ interface AuthContextType {
   authLogin: (data: { email: string; password: string }) => Promise<void>
   isTokenValid: () => boolean
   logout: () => void
-  updateUserInfo: (data: { name: string }) => Promise<void>
+  updateUserInfo: (data: { name: string } | { email: string }) => Promise<void>
 }
 
 interface AuthContextProviderProps {
@@ -116,7 +117,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
   }
 
-  async function updateUserInfo(data: ChangeUserInfoData) {
+  async function updateUserInfo(
+    data: ChangeUserInfoData | ChangeAccountInfoData,
+  ) {
     const tokenString = localStorage.getItem('token')
 
     if (!tokenString) {
