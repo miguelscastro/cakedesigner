@@ -7,7 +7,15 @@ import { ErrorText } from '../../../../../Checkout/components/AddressInfo/styles
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-const allowedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']
+const allowedDomains = [
+  'gmail.com',
+  'hotmail.com',
+  'outlook.com',
+  'yahoo.com.br',
+  'yahoo.com',
+  'icloud.com',
+  'live.com',
+]
 
 const changeAccountInfoValidationSchema = z.object({
   email: z

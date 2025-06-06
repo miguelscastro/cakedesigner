@@ -8,7 +8,15 @@ import { useAuth } from '../../../hooks/useAuth'
 import { ErrorType } from '../../app/Checkout/components/AddressInfo'
 import { ErrorText } from '../../app/Checkout/components/AddressInfo/styles'
 
-const allowedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']
+const allowedDomains = [
+  'gmail.com',
+  'hotmail.com',
+  'outlook.com',
+  'yahoo.com.br',
+  'yahoo.com',
+  'icloud.com',
+  'live.com',
+]
 const SignInInfoValidationSchema = z.object({
   email: z
     .string({ required_error: 'Informe o e-mail' })
@@ -26,6 +34,7 @@ const SignInInfoValidationSchema = z.object({
   password: z
     .string({ required_error: 'Informe a senha' })
     .min(8, 'A senha deve ter no mínimo 8 caracteres')
+    .max(100, 'A senha deve ter no máximo 100 caracteres')
     .regex(/[A-Z]/, 'A senha deve conter pelo menos uma letra maiúscula')
     .regex(/[a-z]/, 'A senha deve conter pelo menos uma letra minúscula')
     .regex(/[0-9]/, 'A senha deve conter pelo menos um número')

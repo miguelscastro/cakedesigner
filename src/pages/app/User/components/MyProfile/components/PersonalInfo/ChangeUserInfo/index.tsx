@@ -10,7 +10,7 @@ const changeUserInfoValidationSchema = z.object({
   name: z
     .string()
     .min(2, 'Informe seu nome')
-    .max(60, 'Máximo de 60 caracteres'),
+    .max(100, 'Máximo de 100 caracteres'),
 })
 
 export type ChangeUserInfoData = z.infer<typeof changeUserInfoValidationSchema>
