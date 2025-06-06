@@ -38,7 +38,7 @@ export function Router() {
 
             <Route path="profile" element={<MyProfile />}>
               <Route path="my-data" element={<PersonalInfo />}>
-                <Route path="edit" element={<ChangeUserInfo />} />
+                <Route path="personal-data" element={<ChangeUserInfo />} />
               </Route>
               <Route path="account-data" element={<AccountInfo />} />
               <Route path="security-settings" element={<SecuritySettings />} />

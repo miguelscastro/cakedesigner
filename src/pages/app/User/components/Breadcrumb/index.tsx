@@ -34,7 +34,7 @@ export function Breadcrumb() {
 const breadcrumbLabels: Record<string, string> = {
   profile: 'Meu perfil',
   'my-data': 'Minhas informações',
-  edit: 'Dados pessoais',
+  'personal-data': 'Dados pessoais',
   'account-data': 'Dados da conta',
   'security-settings': 'Segurança',
   purchases: 'Compras',

@@ -141,7 +141,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
     try {
       const response = await fetch(
-        'http://localhost:8080/user/profile/my-data/edit',
+        'http://localhost:8080/user/profile/my-data/personal-data',
         {
           method: 'POST',
           headers: {

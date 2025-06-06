@@ -10,7 +10,7 @@ export function PersonalInfo() {
   const location = useLocation()
 
   const isSubSection =
-    location.pathname.includes('/profile/my-data/edit') ||
+    location.pathname.includes('/profile/my-data/personal-data') ||
     location.pathname.includes('/profile/account-data') ||
     location.pathname.includes('/profile/security-settings')
 
@@ -30,7 +30,7 @@ export function PersonalInfo() {
       <Breadcrumb />
       <Container>
         <h2>Gerencie suas informações</h2>
-        <button onClick={() => navigate('edit')}>
+        <button onClick={() => navigate('personal-data')}>
           <div className="user-info">
             <UserSquareIcon />
             <div className="info">
