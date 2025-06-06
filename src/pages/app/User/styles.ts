@@ -66,6 +66,6 @@ export const Info = styled.section`
   height: calc(100vh - 104px);
 
   @media screen and (max-width: 1440px) {
-    width: auto;
+    flex: 1;
   }
 `
