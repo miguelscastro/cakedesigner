@@ -29,6 +29,7 @@ export function Card({ product }: CardProps) {
     if (isTokenValid()) {
       const quantity = 1
       addProductToCart({ ...product, quantity })
+      return
     }
     navigate('/auth/sign-in')
   }
