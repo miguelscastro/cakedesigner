@@ -16,7 +16,7 @@ export function Header() {
           <img src={CompanyLogo} alt="Cakedesigner Logo" id="logo" />
         </NavLink>
         <Aside>
-          {authenticatedUser?.role == 'USER' ? (
+          {authenticatedUser?.role === 'USER' ? (
             <div>
               <NavLink to="/user/profile">
                 <span>
@@ -24,6 +24,19 @@ export function Header() {
                 </span>
                 {authenticatedUser.photoUrl ? (
                   <img src={authenticatedUser.photoUrl} alt="Foto do usuário" />
+                ) : (
+                  <UserCircleIcon size={22} weight="fill" />
+                )}
+              </NavLink>
+            </div>
+          ) : authenticatedUser?.role === 'ADMIN' ? (
+            <div>
+              <NavLink to="/admin/dashboard">
+                <span>
+                  {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
+                </span>
+                {authenticatedUser.photoUrl ? (
+                  <img src={authenticatedUser.photoUrl} alt="Foto do admin" />
                 ) : (
                   <UserCircleIcon size={22} weight="fill" />
                 )}
