@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, DataForm } from './styles'
 import { useForm, useFormState } from 'react-hook-form'
 import { z } from 'zod'
@@ -20,6 +20,19 @@ export type userPersonalInfoData = z.infer<
 export function ChangeUserInfo() {
   const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage(null)
+        handleToggleEdit()
+        reset()
+      }, 3500)
+
+      return () => clearTimeout(timer)
+    }
+  }, [successMessage])
 
   const ChangePersonalInfoForm = useForm<userPersonalInfoData>({
     resolver: zodResolver(userPersonalInfoValidationSchema),
@@ -28,7 +41,7 @@ export function ChangeUserInfo() {
     },
   })
 
-  const { handleSubmit, register, reset, control, setError } =
+  const { handleSubmit, register, reset, control, setError, clearErrors } =
     ChangePersonalInfoForm
   const { errors } = useFormState({ control })
 
@@ -45,9 +58,11 @@ export function ChangeUserInfo() {
         type: 'manual',
         message: result,
       })
+      setSuccessMessage(null)
+      return
     }
-    handleToggleEdit()
-    reset()
+    setSuccessMessage('Dados atualizados com sucesso')
+    clearErrors('name')
   }
 
   return (
@@ -64,9 +79,11 @@ export function ChangeUserInfo() {
               placeholder={authenticatedUser?.name}
               autoFocus
             />
-            {errors.name?.message && (
+            {errors.name?.message ? (
               <ErrorText>{errors.name.message}</ErrorText>
-            )}
+            ) : successMessage ? (
+              <ErrorText success>{successMessage}</ErrorText>
+            ) : null}
           </>
         ) : (
           <p>{authenticatedUser?.name}</p>

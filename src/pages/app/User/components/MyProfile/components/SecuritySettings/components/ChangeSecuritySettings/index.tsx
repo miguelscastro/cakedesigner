@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, DataForm } from './styles'
 import { useForm, useFormState } from 'react-hook-form'
 import { z } from 'zod'
@@ -33,6 +33,19 @@ export type userSettingsInfoData = z.infer<
 export function ChangeUserSecurityInfo() {
   const { updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage(null)
+        handleToggleEdit()
+        reset()
+      }, 3500)
+
+      return () => clearTimeout(timer)
+    }
+  }, [successMessage])
 
   const ChangeUserSecurityInfoForm = useForm<userSettingsInfoData>({
     resolver: zodResolver(userSecuritySettingsValidationSchema),
@@ -41,7 +54,7 @@ export function ChangeUserSecurityInfo() {
     },
   })
 
-  const { handleSubmit, register, reset, control, setError } =
+  const { handleSubmit, register, reset, control, setError, clearErrors } =
     ChangeUserSecurityInfoForm
   const { errors } = useFormState({ control })
 
@@ -57,9 +70,11 @@ export function ChangeUserSecurityInfo() {
         type: 'manual',
         message: result,
       })
+      setSuccessMessage(null)
+      return
     }
-    handleToggleEdit()
-    reset()
+    setSuccessMessage('Dados atualizados com sucesso')
+    clearErrors('password')
   }
 
   return (
@@ -76,9 +91,11 @@ export function ChangeUserSecurityInfo() {
               placeholder="nova senha"
               autoFocus
             />
-            {errors.password?.message && (
+            {errors.password?.message ? (
               <ErrorText>{errors.password.message}</ErrorText>
-            )}
+            ) : successMessage ? (
+              <ErrorText success>{successMessage}</ErrorText>
+            ) : null}
           </>
         ) : (
           <p />

@@ -140,8 +140,9 @@ export const OptionalText = styled.span`
   ${mixins.fonts.textS}
   font-style: italic;
 `
-export const ErrorText = styled.span`
-  color: ${({ theme }) => theme.colors.error};
+export const ErrorText = styled.span<{ success?: boolean }>`
+  color: ${({ success, theme }) =>
+    success ? theme.colors.success : theme.colors.error};
   ${mixins.fonts.titleXS}
   font-size: 0.75rem;
   width: 120%;

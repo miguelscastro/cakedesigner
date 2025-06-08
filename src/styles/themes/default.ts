@@ -23,6 +23,7 @@ export const defaultTheme = {
     background: '#FAFAFA',
 
     error: '#dc2626',
+    success: '#87BC5E',
 
     white: '#FFF',
 

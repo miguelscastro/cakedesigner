@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../../../../../../hooks/useAuth'
 import { Breadcrumb } from '../../../Breadcrumb'
 import { Container, DataForm } from './styles'
@@ -37,6 +37,19 @@ export type accountInfoData = z.infer<typeof accountInfoValidationSchema>
 export function AccountInfo() {
   const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage(null)
+        handleToggleEdit()
+        reset()
+      }, 3500)
+
+      return () => clearTimeout(timer)
+    }
+  }, [successMessage])
 
   const ChangeAccountInfoForm = useForm<accountInfoData>({
     resolver: zodResolver(accountInfoValidationSchema),
@@ -45,7 +58,7 @@ export function AccountInfo() {
     },
   })
 
-  const { handleSubmit, register, reset, control, setError } =
+  const { handleSubmit, register, reset, control, setError, clearErrors } =
     ChangeAccountInfoForm
 
   const { errors } = useFormState({ control })
@@ -63,9 +76,11 @@ export function AccountInfo() {
         type: 'manual',
         message: result,
       })
+      setSuccessMessage(null)
+      return
     }
-    handleToggleEdit()
-    reset()
+    setSuccessMessage('Dados atualizados com sucesso')
+    clearErrors('email')
   }
 
   return (
@@ -84,9 +99,11 @@ export function AccountInfo() {
                 placeholder={authenticatedUser?.email}
                 autoFocus
               />
-              {errors.email?.message && (
+              {errors.email?.message ? (
                 <ErrorText>{errors.email.message}</ErrorText>
-              )}
+              ) : successMessage ? (
+                <ErrorText success>{successMessage}</ErrorText>
+              ) : null}
             </>
           ) : (
             <p>{authenticatedUser?.email}</p>
