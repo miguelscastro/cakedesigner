@@ -7,6 +7,7 @@ import { Address, CartTotal, Container, OrderForm } from './styles'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCart } from '../../../hooks/useCart'
+import { Order } from '../../../contexts/CartContext'
 
 const AddressInfoValidationSchema = z.object({
   cep: z.coerce
@@ -45,14 +46,15 @@ export function Checkout() {
 
   const { handleSubmit, reset } = AddressInfoForm
 
-  const { products, CartSize, clearCart } = useCart()
+  const { products, CartSize, clearCart, addNewOrder } = useCart()
 
   const navigate = useNavigate()
 
   function confirmOrder(data: AddressInfoData) {
     if (CartSize > 0) {
       const address = data
-      const order = { products, address }
+      const order: Order = { products, address }
+      addNewOrder(order)
       reset()
       clearCart()
       navigate('/success', {

@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useEffect, useReducer } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
 import { CartItem, cartReducer } from '../reducers/cart/reducer'
 import {
   addItemToCartAction,
@@ -6,13 +12,20 @@ import {
   clearCartAction,
   removeCartItemAction,
 } from '../reducers/cart/actions'
+import { AddressInfoData } from '../pages/app/Checkout'
 
 interface CartContextProviderProps {
   children: ReactNode
 }
 
+export interface Order {
+  products: CartItem[]
+  address: AddressInfoData
+}
+
 interface CartContextType {
   products: CartItem[]
+  orders: CartItem[][]
   cartItemsTotal: number
   deliveryFee: number
   OrderTotal: number
@@ -24,6 +37,7 @@ interface CartContextType {
   ) => void
   removeCartItem: (productId: string) => void
   clearCart: () => void
+  addNewOrder: (order: Order) => void
 }
 
 export const CartContext = createContext({} as CartContextType)
@@ -43,6 +57,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       return initialState
     },
   )
+
+  const [orders, setOrders] = useState<CartItem[][]>([])
 
   const { products } = cartState
 
@@ -81,10 +97,16 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(clearCartAction())
   }
 
+  function addNewOrder(order: Order) {
+    const orderedProducts = order.products
+    setOrders((state) => [...state, orderedProducts])
+  }
+
   return (
     <CartContext.Provider
       value={{
         products,
+        orders,
         cartItemsTotal,
         deliveryFee,
         OrderTotal,
@@ -93,6 +115,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         changeCartItemQuantity,
         removeCartItem,
         clearCart,
+        addNewOrder,
       }}
     >
       {children}
