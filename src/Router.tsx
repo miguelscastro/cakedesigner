@@ -18,7 +18,8 @@ import { MyProfile } from './pages/app/User/components/MyProfile'
 import { PersonalInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo'
 import { AccountInfo } from './pages/app/User/components/MyProfile/components/AccountInfo'
 import { SecuritySettings } from './pages/app/User/components/MyProfile/components/SecuritySettings'
-import { ChangeUserInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo/ChangeUserInfo'
+import { ChangeUserInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo/components/ChangePersonalInfo'
+import { ChangeUserSecurityInfo } from './pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'
 
 export function Router() {
   return (
@@ -41,7 +42,12 @@ export function Router() {
                 <Route path="personal-data" element={<ChangeUserInfo />} />
               </Route>
               <Route path="account-data" element={<AccountInfo />} />
-              <Route path="security-settings" element={<SecuritySettings />} />
+              <Route path="security-settings" element={<SecuritySettings />}>
+                <Route
+                  path="manage-info"
+                  element={<ChangeUserSecurityInfo />}
+                />
+              </Route>
             </Route>
           </Route>
         </Route>

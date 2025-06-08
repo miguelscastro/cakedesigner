@@ -37,5 +37,6 @@ const breadcrumbLabels: Record<string, string> = {
   'personal-data': 'Dados pessoais',
   'account-data': 'Dados da conta',
   'security-settings': 'Segurança',
+  'manage-info': 'Formas de segurança',
   purchases: 'Compras',
 }
