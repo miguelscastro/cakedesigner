@@ -9,10 +9,7 @@ export function PersonalInfo() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const isSubSection =
-    location.pathname.includes('/profile/my-data/personal-data') ||
-    location.pathname.includes('/profile/account-data') ||
-    location.pathname.includes('/profile/security-settings')
+  const isSubSection = location.pathname.includes('personal-data')
 
   if (isSubSection) {
     return (

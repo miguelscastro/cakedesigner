@@ -1,32 +1,35 @@
 import { useState } from 'react'
-import { useAuth } from '../../../../../../../../hooks/useAuth'
 import { Container, DataForm } from './styles'
 import { useForm, useFormState } from 'react-hook-form'
-import { ErrorText } from '../../../../../../Checkout/components/AddressInfo/styles'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useAuth } from '../../../../../../../../../hooks/useAuth'
+import { ErrorText } from '../../../../../../../Checkout/components/AddressInfo/styles'
 
-const changeUserInfoValidationSchema = z.object({
+const userPersonalInfoValidationSchema = z.object({
   name: z
     .string()
     .min(2, 'Informe seu nome')
     .max(100, 'Máximo de 100 caracteres'),
 })
 
-export type ChangeUserInfoData = z.infer<typeof changeUserInfoValidationSchema>
+export type userPersonalInfoData = z.infer<
+  typeof userPersonalInfoValidationSchema
+>
 
 export function ChangeUserInfo() {
   const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
 
-  const ChangeUserInfoForm = useForm<ChangeUserInfoData>({
-    resolver: zodResolver(changeUserInfoValidationSchema),
+  const ChangePersonalInfoForm = useForm<userPersonalInfoData>({
+    resolver: zodResolver(userPersonalInfoValidationSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  const { handleSubmit, register, reset, control } = ChangeUserInfoForm
+  const { handleSubmit, register, reset, control, setError } =
+    ChangePersonalInfoForm
   const { errors } = useFormState({ control })
 
   function handleToggleEdit() {
@@ -34,8 +37,15 @@ export function ChangeUserInfo() {
     reset()
   }
 
-  function changeUserData(data: ChangeUserInfoData) {
-    updateUserInfo(data)
+  async function handleChangeUserInfoData(data: userPersonalInfoData) {
+    const result = await updateUserInfo(data)
+
+    if (typeof result == 'string') {
+      setError('name', {
+        type: 'manual',
+        message: result,
+      })
+    }
     handleToggleEdit()
     reset()
   }
@@ -43,7 +53,7 @@ export function ChangeUserInfo() {
   return (
     <Container>
       <h2>Dados pessoais</h2>
-      <DataForm onSubmit={handleSubmit(changeUserData)}>
+      <DataForm onSubmit={handleSubmit(handleChangeUserInfoData)}>
         <span>Nome completo</span>
 
         {isEditing ? (

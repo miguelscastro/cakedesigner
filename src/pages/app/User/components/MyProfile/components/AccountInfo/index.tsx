@@ -17,7 +17,7 @@ const allowedDomains = [
   'live.com',
 ]
 
-const changeAccountInfoValidationSchema = z.object({
+const accountInfoValidationSchema = z.object({
   email: z
     .string({ required_error: 'Informe o e-mail' })
     .email('Formato de e-mail inválido')
@@ -32,22 +32,21 @@ const changeAccountInfoValidationSchema = z.object({
     ),
 })
 
-export type ChangeAccountInfoData = z.infer<
-  typeof changeAccountInfoValidationSchema
->
+export type accountInfoData = z.infer<typeof accountInfoValidationSchema>
 
 export function AccountInfo() {
   const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
 
-  const ChangeAccountInfoForm = useForm<ChangeAccountInfoData>({
-    resolver: zodResolver(changeAccountInfoValidationSchema),
+  const ChangeAccountInfoForm = useForm<accountInfoData>({
+    resolver: zodResolver(accountInfoValidationSchema),
     defaultValues: {
       email: '',
     },
   })
 
-  const { handleSubmit, register, reset, control } = ChangeAccountInfoForm
+  const { handleSubmit, register, reset, control, setError } =
+    ChangeAccountInfoForm
 
   const { errors } = useFormState({ control })
 
@@ -56,8 +55,15 @@ export function AccountInfo() {
     reset()
   }
 
-  function changeUserData(data: ChangeAccountInfoData) {
-    updateUserInfo(data)
+  async function handleChangeUserAccountInfoData(data: accountInfoData) {
+    const result = await updateUserInfo(data)
+
+    if (typeof result == 'string') {
+      setError('email', {
+        type: 'manual',
+        message: result,
+      })
+    }
     handleToggleEdit()
     reset()
   }
@@ -67,7 +73,7 @@ export function AccountInfo() {
       <Breadcrumb />
       <Container>
         <h2>Dados da sua conta</h2>
-        <DataForm onSubmit={handleSubmit(changeUserData)}>
+        <DataForm onSubmit={handleSubmit(handleChangeUserAccountInfoData)}>
           <span>E-mail</span>
 
           {isEditing ? (
