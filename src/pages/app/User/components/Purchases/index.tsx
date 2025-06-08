@@ -1,5 +1,5 @@
 import { useCart } from '../../../../../hooks/useCart'
-import { Order } from './components'
+import { Order } from './components/Order'
 import { Container } from './styles'
 
 export function Purchases() {
