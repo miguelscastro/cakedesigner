@@ -8,7 +8,6 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCart } from '../../../hooks/useCart'
 import { Order } from '../../../contexts/CartContext'
-import { useAuth } from '../../../hooks/useAuth'
 
 const AddressInfoValidationSchema = z.object({
   cep: z.coerce
@@ -49,7 +48,6 @@ export function Checkout() {
 
   const { productsInCart, CartSize, clearCart, addNewOrder, deliveryFee } =
     useCart()
-  const { authenticatedUser } = useAuth()
 
   const navigate = useNavigate()
 
@@ -67,13 +65,14 @@ export function Checkout() {
         orderedProducts,
         address,
         deliveryFee,
-        userId: authenticatedUser?.id || '',
       }
       console.log(order)
 
       addNewOrder(order)
       reset()
       clearCart()
+      console.log(order)
+
       navigate('/success', {
         state: order,
       })

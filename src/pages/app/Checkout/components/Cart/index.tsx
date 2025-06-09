@@ -4,17 +4,17 @@ import { SelectedProduct } from '../SelectedProductCard'
 import { Products, Container, Total, WarningMessage } from './styles'
 
 export function Cart() {
-  const { products, cartItemsTotal, deliveryFee, OrderTotal, CartSize } =
+  const { productsInCart, cartItemsTotal, deliveryFee, OrderTotal, CartSize } =
     useCart()
 
   return (
     <>
       <Container>
         <Products>
-          {products.length == 0 ? (
+          {productsInCart.length == 0 ? (
             <WarningMessage>Seu carrinho está vazio</WarningMessage>
           ) : (
-            products.map((products) => {
+            productsInCart.map((products) => {
               return <SelectedProduct key={products.id} product={products} />
             })
           )}

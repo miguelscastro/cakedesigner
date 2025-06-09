@@ -35,6 +35,7 @@ interface AuthContextType {
   updateUserInfo: (
     data: { name: string } | { email: string } | { password: string },
   ) => Promise<void>
+  getJWT: () => Jwt | undefined
 }
 
 interface AuthContextProviderProps {
@@ -48,22 +49,29 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   const navigate = useNavigate()
 
+  function getJWT() {
+    const tokenString = localStorage.getItem('token')
+
+    if (!tokenString) {
+      setAuthenticatedUser(null)
+      return
+    }
+
+    try {
+      const tokenData = JSON.parse(tokenString)
+      return tokenData
+    } catch (err) {
+      console.error('Erro ao fazer parse do token:', err)
+      localStorage.removeItem('token')
+      setAuthenticatedUser(null)
+      return
+    }
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
-      const tokenString = localStorage.getItem('token')
-
-      if (!tokenString) {
-        setAuthenticatedUser(null)
-        return
-      }
-
-      let tokenData: Jwt
-      try {
-        tokenData = JSON.parse(tokenString)
-      } catch (err) {
-        console.error('Erro ao fazer parse do token:', err)
-        localStorage.removeItem('token')
-        setAuthenticatedUser(null)
+      const tokenData = getJWT()
+      if (tokenData == null) {
         return
       }
 
@@ -126,34 +134,20 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function updateUserInfo(
     data: userPersonalInfoData | accountInfoData | userSettingsInfoData,
   ) {
-    const tokenString = localStorage.getItem('token')
-
-    if (!tokenString) {
-      setAuthenticatedUser(null)
-      return
-    }
-
-    let tokenData: Jwt
-    try {
-      tokenData = JSON.parse(tokenString)
-    } catch {
-      setAuthenticatedUser(null)
-      localStorage.removeItem('token')
+    const tokenData = getJWT()
+    if (tokenData == null) {
       return
     }
 
     try {
-      const response = await fetch(
-        'http://localhost:8080/user/profile/my-data/personal-data',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${tokenData.token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      const response = await fetch('http://localhost:8080/user/profile', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${tokenData.token}`,
+          'Content-Type': 'application/json',
         },
-      )
+        body: JSON.stringify(data),
+      })
 
       if (!response.ok) {
         throw new Error('Credenciais inválidas')
@@ -231,6 +225,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         isTokenValid,
         logout,
         updateUserInfo,
+        getJWT,
       }}
     >
       {children}
