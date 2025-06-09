@@ -19,12 +19,14 @@ interface CartContextProviderProps {
 }
 
 export interface Order {
-  products: CartItem[]
+  orderedProducts: { productId: string; quantity: number; price: number }[]
   address: AddressInfoData
+  deliveryFee: number
+  userId: string
 }
 
 interface CartContextType {
-  products: CartItem[]
+  productsInCart: CartItem[]
   orders: CartItem[][]
   cartItemsTotal: number
   deliveryFee: number
@@ -45,7 +47,7 @@ export const CartContext = createContext({} as CartContextType)
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartState, dispatch] = useReducer(
     cartReducer,
-    { products: [] },
+    { productsInCart: [] },
     (initialState) => {
       const storageStateAsJSON = localStorage.getItem(
         '@cakedesigner:cart-state-1.0.0',
@@ -60,9 +62,9 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   const [orders, setOrders] = useState<CartItem[][]>([])
 
-  const { products } = cartState
+  const { productsInCart } = cartState
 
-  const cartItemsTotal = products.reduce((total, cartItem) => {
+  const cartItemsTotal = productsInCart.reduce((total, cartItem) => {
     return total + cartItem.price * cartItem.quantity
   }, 0)
 
@@ -70,7 +72,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   const OrderTotal = cartItemsTotal + deliveryFee
 
-  const CartSize = products.length
+  const CartSize = productsInCart.length
 
   useEffect(() => {
     const stateJSON = JSON.stringify(cartState)
@@ -97,15 +99,15 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(clearCartAction())
   }
 
-  function addNewOrder(order: Order) {
-    const orderedProducts = order.products
-    setOrders((state) => [...state, orderedProducts])
+  async function addNewOrder(order: Order) {
+    // const orderedProducts = order.products
+    // setOrders((state) => [...state, orderedProducts])
   }
 
   return (
     <CartContext.Provider
       value={{
-        products,
+        productsInCart,
         orders,
         cartItemsTotal,
         deliveryFee,

@@ -15,31 +15,31 @@ export interface CartItem extends ProductProps {
 }
 
 interface CartState {
-  products: CartItem[]
+  productsInCart: CartItem[]
 }
 
 export function cartReducer(state: CartState, action: CartActions) {
   switch (action.type) {
     case CartActionTypes.ADD_ITEM_TO_CART: {
-      const productInCart = state.products.findIndex(
+      const productInCart = state.productsInCart.findIndex(
         (product) => product.id === action.payload.productToAdd.id,
       )
       return produce(state, (draft) => {
         if (productInCart < 0) {
-          draft.products.push(action.payload.productToAdd)
+          draft.productsInCart.push(action.payload.productToAdd)
         } else {
-          draft.products[productInCart].quantity +=
+          draft.productsInCart[productInCart].quantity +=
             action.payload.productToAdd.quantity
         }
       })
     }
     case CartActionTypes.CHANGE_CART_ITEM_QUANTITY: {
       return produce(state, (draft) => {
-        const productInCart = state.products.findIndex(
+        const productInCart = state.productsInCart.findIndex(
           (product) => product.id === action.payload.productChanged,
         )
         if (productInCart >= 0) {
-          const product = draft.products[productInCart]
+          const product = draft.productsInCart[productInCart]
           if (action.payload.type === 'decrease' && product.quantity > 1) {
             product.quantity -= 1
           } else if (
@@ -53,11 +53,11 @@ export function cartReducer(state: CartState, action: CartActions) {
     }
     case CartActionTypes.REMOVE_ITEM_FROM_CART: {
       return produce(state, (draft) => {
-        const productToRemove = state.products.findIndex(
+        const productToRemove = state.productsInCart.findIndex(
           (product) => product.id === action.payload.productToRemove,
         )
         if (productToRemove >= 0) {
-          draft.products.splice(productToRemove, 1)
+          draft.productsInCart.splice(productToRemove, 1)
         }
       })
     }

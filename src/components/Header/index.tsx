@@ -6,7 +6,7 @@ import { useCart } from '../../hooks/useCart'
 import { useAuth } from '../../hooks/useAuth'
 
 export function Header() {
-  const { products } = useCart()
+  const { productsInCart } = useCart()
   const { authenticatedUser } = useAuth()
 
   return (
@@ -50,7 +50,9 @@ export function Header() {
 
           <NavLink to="/checkout" className="cart">
             <ShoppingCartIcon size={22} weight="fill" />
-            {products.length > 0 ? <span>{products.length}</span> : null}
+            {productsInCart.length > 0 ? (
+              <span>{productsInCart.length}</span>
+            ) : null}
           </NavLink>
         </Aside>
       </HeaderContainer>
