@@ -13,6 +13,7 @@ import {
   removeCartItemAction,
 } from '../reducers/cart/actions'
 import { AddressInfoData } from '../pages/app/Checkout'
+import { useAuth } from '../hooks/useAuth'
 
 interface CartContextProviderProps {
   children: ReactNode
@@ -22,7 +23,6 @@ export interface Order {
   orderedProducts: { productId: string; quantity: number; price: number }[]
   address: AddressInfoData
   deliveryFee: number
-  userId: string
 }
 
 interface CartContextType {
@@ -59,6 +59,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       return initialState
     },
   )
+
+  const { getJWT } = useAuth()
 
   const [orders, setOrders] = useState<CartItem[][]>([])
 
@@ -100,8 +102,30 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   async function addNewOrder(order: Order) {
-    // const orderedProducts = order.products
-    // setOrders((state) => [...state, orderedProducts])
+    const tokenData = getJWT()
+    if (tokenData == null) {
+      return 'nulo'
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/orders/user', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${tokenData.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+      })
+
+      if (!response.ok) {
+        throw new Error('Pedido não recebido')
+      }
+
+      const userOrders = await response.json()
+      setOrders((state) => [...state, userOrders])
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
