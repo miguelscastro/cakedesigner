@@ -16,6 +16,25 @@ export const Container = styled.div`
       margin-bottom: 1rem;
     }
 
+    > div {
+      margin-top: 3rem;
+      padding: 5rem 5rem 4rem;
+      text-align: center;
+      box-shadow: 0 2px 6px ${({ theme }) => theme.colors['base-text']}22;
+      opacity: 0.5;
+
+      border: 2px solid black;
+      border-radius: 2rem;
+
+      > svg {
+        width: 220px;
+        height: 220px;
+
+        margin-top: 4rem;
+
+        color: ${({ theme }) => theme.colors.error};
+      }
+    }
     &::-webkit-scrollbar {
       width: 0.5rem;
     }
