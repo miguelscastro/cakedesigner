@@ -2,9 +2,6 @@ import { createContext, useEffect, useState } from 'react'
 import { SignInInfoData } from '../pages/auth/Sign-in'
 import { useNavigate } from 'react-router-dom'
 import { SignUpInfoData } from '../pages/auth/Sign-up'
-import { accountInfoData } from '../pages/app/User/components/MyProfile/components/AccountInfo'
-import { userPersonalInfoData } from '../pages/app/User/components/MyProfile/components/PersonalInfo/components/ChangePersonalInfo'
-import { userSettingsInfoData } from '../pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'
 import { authUser, createUser, verifyUserToken } from '../http/auth'
 import { updateUser } from '../http/user'
 import {
@@ -13,6 +10,9 @@ import {
   Jwt,
   User,
 } from '../@types/authContext'
+import { userPersonalInfoData } from '../components/Personal/Profile/PersonalInfo/components/ChangePersonalInfo'
+import { userSettingsInfoData } from '../components/Personal/Profile/SecuritySettings/components/ChangeSecuritySettings'
+import { accountInfoData } from '../components/Personal/Profile/AccountInfo'
 
 export const AuthContext = createContext({} as AuthContextType)
 

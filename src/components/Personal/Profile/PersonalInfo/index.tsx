@@ -1,8 +1,8 @@
 import { Container } from './styles'
-import { Breadcrumb } from '../../../Breadcrumb'
 import { CaretRightIcon, UserSquareIcon } from '@phosphor-icons/react'
-import { useAuth } from '../../../../../../../hooks/useAuth'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../../hooks/useAuth'
+import { Breadcrumb } from '../../Breadcrumb'
 
 export function PersonalInfo() {
   const { authenticatedUser } = useAuth()

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { mixins } from '../../../../../../../styles/mixins'
+import { mixins } from '../../../../styles/mixins'
 
 export const Container = styled.div`
   padding: 4rem 10rem 1rem;
@@ -28,8 +28,8 @@ export const Container = styled.div`
       color: ${({ theme }) => theme.colors['base-text']};
 
       svg {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
       }
 
       .info {

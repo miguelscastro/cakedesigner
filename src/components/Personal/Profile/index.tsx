@@ -4,7 +4,7 @@ import {
   UserCircleIcon,
   UserIcon,
 } from '@phosphor-icons/react'
-import { useAuth } from '../../../../../hooks/useAuth'
+import { useAuth } from '../../../hooks/useAuth'
 import { Container, InfoContainer, ProfileHeader } from './styles'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ export interface SectionProps {
   onBack: () => void
 }
 
-export function MyProfile() {
+export function Profile() {
   const { authenticatedUser } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()

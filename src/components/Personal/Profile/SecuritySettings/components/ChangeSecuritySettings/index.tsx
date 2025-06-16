@@ -3,22 +3,35 @@ import { Container, DataForm } from './styles'
 import { useForm, useFormState } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAuth } from '../../../../../../../../../hooks/useAuth'
-import { ErrorText } from '../../../../../../../Checkout/components/AddressInfo/styles'
+import { ErrorText } from '../../../../../../pages/app/Checkout/components/AddressInfo/styles'
+import { useAuth } from '../../../../../../hooks/useAuth'
 
-const userPersonalInfoValidationSchema = z.object({
-  name: z
+const userSecuritySettingsValidationSchema = z.object({
+  password: z
     .string()
-    .min(2, 'Informe seu nome')
-    .max(100, 'Máximo de 100 caracteres'),
+    .nonempty({ message: 'A senha é obrigatória' })
+    .min(8, { message: 'A senha deve ter no mínimo 8 caracteres' })
+    .max(100, { message: 'A senha deve ter no máximo 100 caracteres' })
+    .regex(/[A-Z]/, {
+      message: 'A senha deve conter pelo menos uma letra maiúscula',
+    })
+    .regex(/[a-z]/, {
+      message: 'A senha deve conter pelo menos uma letra minúscula',
+    })
+    .regex(/\d/, {
+      message: 'A senha deve conter pelo menos um número',
+    })
+    .regex(/[^A-Za-z0-9]/, {
+      message: 'A senha deve conter pelo menos um caractere especial',
+    }),
 })
 
-export type userPersonalInfoData = z.infer<
-  typeof userPersonalInfoValidationSchema
+export type userSettingsInfoData = z.infer<
+  typeof userSecuritySettingsValidationSchema
 >
 
-export function ChangeUserInfo() {
-  const { authenticatedUser, updateUserInfo } = useAuth()
+export function ChangeUserSecurityInfo() {
+  const { updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
@@ -34,27 +47,26 @@ export function ChangeUserInfo() {
     }
   }, [successMessage])
 
-  const ChangePersonalInfoForm = useForm<userPersonalInfoData>({
-    resolver: zodResolver(userPersonalInfoValidationSchema),
+  const ChangeUserSecurityInfoForm = useForm<userSettingsInfoData>({
+    resolver: zodResolver(userSecuritySettingsValidationSchema),
     defaultValues: {
-      name: '',
+      password: '',
     },
   })
 
   const { handleSubmit, register, reset, control, setError, clearErrors } =
-    ChangePersonalInfoForm
+    ChangeUserSecurityInfoForm
   const { errors } = useFormState({ control })
 
   function handleToggleEdit() {
     setIsEditing((state) => !state)
     reset()
   }
-
-  async function handleChangeUserInfoData(data: userPersonalInfoData) {
+  async function handleChangeUserSecurityInfoData(data: userSettingsInfoData) {
     const result = await updateUserInfo(data)
 
     if (typeof result == 'string') {
-      setError('name', {
+      setError('password', {
         type: 'manual',
         message: result,
       })
@@ -62,31 +74,31 @@ export function ChangeUserInfo() {
       return
     }
     setSuccessMessage('Dados atualizados com sucesso')
-    clearErrors('name')
+    clearErrors('password')
   }
 
   return (
     <Container>
-      <h2>Dados pessoais</h2>
-      <DataForm onSubmit={handleSubmit(handleChangeUserInfoData)}>
-        <span>Nome completo</span>
+      <h2>Formas de segurança</h2>
+      <DataForm onSubmit={handleSubmit(handleChangeUserSecurityInfoData)}>
+        <span>Senha</span>
 
         {isEditing ? (
           <>
             <input
               type="text"
-              {...register('name')}
-              placeholder={authenticatedUser?.name}
+              {...register('password')}
+              placeholder="nova senha"
               autoFocus
             />
-            {errors.name?.message ? (
-              <ErrorText>{errors.name.message}</ErrorText>
+            {errors.password?.message ? (
+              <ErrorText>{errors.password.message}</ErrorText>
             ) : successMessage ? (
               <ErrorText success>{successMessage}</ErrorText>
             ) : null}
           </>
         ) : (
-          <p>{authenticatedUser?.name}</p>
+          <p />
         )}
 
         <div>

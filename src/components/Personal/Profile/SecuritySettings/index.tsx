@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { Breadcrumb } from '../../../Breadcrumb'
 import { Container } from './styles'
 import { CaretRightIcon, KeyIcon } from '@phosphor-icons/react'
+import { Breadcrumb } from '../../Breadcrumb'
 
 export function SecuritySettings() {
   const navigate = useNavigate()

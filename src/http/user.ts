@@ -1,7 +1,7 @@
 import { Jwt } from '../@types/authContext'
-import { accountInfoData } from '../pages/app/User/components/MyProfile/components/AccountInfo'
-import { userPersonalInfoData } from '../pages/app/User/components/MyProfile/components/PersonalInfo/components/ChangePersonalInfo'
-import { userSettingsInfoData } from '../pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'
+import { accountInfoData } from '../components/Personal/Profile/AccountInfo'
+import { userPersonalInfoData } from '../components/Personal/Profile/PersonalInfo/components/ChangePersonalInfo'
+import { userSettingsInfoData } from '../components/Personal/Profile/SecuritySettings/components/ChangeSecuritySettings'
 
 export const updateUser = async (
   tokenData: Jwt,

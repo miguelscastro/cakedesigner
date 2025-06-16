@@ -3,35 +3,22 @@ import { Container, DataForm } from './styles'
 import { useForm, useFormState } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAuth } from '../../../../../../../../../hooks/useAuth'
-import { ErrorText } from '../../../../../../../Checkout/components/AddressInfo/styles'
+import { useAuth } from '../../../../../../hooks/useAuth'
+import { ErrorText } from '../../../../../../pages/app/Checkout/components/AddressInfo/styles'
 
-const userSecuritySettingsValidationSchema = z.object({
-  password: z
+const userPersonalInfoValidationSchema = z.object({
+  name: z
     .string()
-    .nonempty({ message: 'A senha é obrigatória' })
-    .min(8, { message: 'A senha deve ter no mínimo 8 caracteres' })
-    .max(100, { message: 'A senha deve ter no máximo 100 caracteres' })
-    .regex(/[A-Z]/, {
-      message: 'A senha deve conter pelo menos uma letra maiúscula',
-    })
-    .regex(/[a-z]/, {
-      message: 'A senha deve conter pelo menos uma letra minúscula',
-    })
-    .regex(/\d/, {
-      message: 'A senha deve conter pelo menos um número',
-    })
-    .regex(/[^A-Za-z0-9]/, {
-      message: 'A senha deve conter pelo menos um caractere especial',
-    }),
+    .min(2, 'Informe seu nome')
+    .max(100, 'Máximo de 100 caracteres'),
 })
 
-export type userSettingsInfoData = z.infer<
-  typeof userSecuritySettingsValidationSchema
+export type userPersonalInfoData = z.infer<
+  typeof userPersonalInfoValidationSchema
 >
 
-export function ChangeUserSecurityInfo() {
-  const { updateUserInfo } = useAuth()
+export function ChangeUserInfo() {
+  const { authenticatedUser, updateUserInfo } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
@@ -47,26 +34,27 @@ export function ChangeUserSecurityInfo() {
     }
   }, [successMessage])
 
-  const ChangeUserSecurityInfoForm = useForm<userSettingsInfoData>({
-    resolver: zodResolver(userSecuritySettingsValidationSchema),
+  const ChangePersonalInfoForm = useForm<userPersonalInfoData>({
+    resolver: zodResolver(userPersonalInfoValidationSchema),
     defaultValues: {
-      password: '',
+      name: '',
     },
   })
 
   const { handleSubmit, register, reset, control, setError, clearErrors } =
-    ChangeUserSecurityInfoForm
+    ChangePersonalInfoForm
   const { errors } = useFormState({ control })
 
   function handleToggleEdit() {
     setIsEditing((state) => !state)
     reset()
   }
-  async function handleChangeUserSecurityInfoData(data: userSettingsInfoData) {
+
+  async function handleChangeUserInfoData(data: userPersonalInfoData) {
     const result = await updateUserInfo(data)
 
     if (typeof result == 'string') {
-      setError('password', {
+      setError('name', {
         type: 'manual',
         message: result,
       })
@@ -74,31 +62,31 @@ export function ChangeUserSecurityInfo() {
       return
     }
     setSuccessMessage('Dados atualizados com sucesso')
-    clearErrors('password')
+    clearErrors('name')
   }
 
   return (
     <Container>
-      <h2>Formas de segurança</h2>
-      <DataForm onSubmit={handleSubmit(handleChangeUserSecurityInfoData)}>
-        <span>Senha</span>
+      <h2>Dados pessoais</h2>
+      <DataForm onSubmit={handleSubmit(handleChangeUserInfoData)}>
+        <span>Nome completo</span>
 
         {isEditing ? (
           <>
             <input
               type="text"
-              {...register('password')}
-              placeholder="nova senha"
+              {...register('name')}
+              placeholder={authenticatedUser?.name}
               autoFocus
             />
-            {errors.password?.message ? (
-              <ErrorText>{errors.password.message}</ErrorText>
+            {errors.name?.message ? (
+              <ErrorText>{errors.name.message}</ErrorText>
             ) : successMessage ? (
               <ErrorText success>{successMessage}</ErrorText>
             ) : null}
           </>
         ) : (
-          <p />
+          <p>{authenticatedUser?.name}</p>
         )}
 
         <div>

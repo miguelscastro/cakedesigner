@@ -5,7 +5,9 @@ export function Breadcrumb() {
   const location = useLocation()
   const paths = location.pathname.split('/').filter(Boolean)
 
-  const visiblePaths = paths.filter((segment) => segment !== 'user')
+  const visiblePaths = paths.filter(
+    (segment) => segment !== 'user' && segment !== 'admin',
+  )
 
   return (
     <Container>

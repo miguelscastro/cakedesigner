@@ -31,7 +31,7 @@ export function Header() {
             </div>
           ) : authenticatedUser?.role === 'ADMIN' ? (
             <div>
-              <NavLink to="/admin/dashboard">
+              <NavLink to="/admin/profile">
                 <span>
                   {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
                 </span>

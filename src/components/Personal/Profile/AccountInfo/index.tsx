@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../../../../../../../hooks/useAuth'
-import { Breadcrumb } from '../../../Breadcrumb'
 import { Container, DataForm } from './styles'
 import { useForm, useFormState } from 'react-hook-form'
-import { ErrorText } from '../../../../../Checkout/components/AddressInfo/styles'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ErrorText } from '../../../../pages/app/Checkout/components/AddressInfo/styles'
+import { useAuth } from '../../../../hooks/useAuth'
+import { Breadcrumb } from '../../Breadcrumb'
 
 const allowedDomains = [
   'gmail.com',
