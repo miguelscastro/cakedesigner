@@ -6,7 +6,7 @@ export const Container = styled.main`
   background: ${({ theme }) => theme.colors['base-input']};
 `
 export const Menu = styled.aside`
-  width: 300px;
+  min-width: 300px;
   height: calc(100vh - 104px);
   background: ${({ theme }) => theme.colors['base-card']};
 
@@ -61,7 +61,6 @@ export const Menu = styled.aside`
 `
 export const Info = styled.section`
   max-width: 1440px;
-  width: 1440px;
   margin: 0 auto;
   height: calc(100vh - 104px);
 

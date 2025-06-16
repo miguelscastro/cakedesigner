@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { mixins } from '../../../../../styles/mixins'
 
-export const Container = styled.div``
+export const Container = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+`
 export const ProfileHeader = styled.header`
   display: flex;
   align-items: center;

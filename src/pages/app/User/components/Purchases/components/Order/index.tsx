@@ -26,7 +26,7 @@ export function Order({ order }: OrderProps) {
             <div>
               <ProductLink>
                 <h3>{item.title}</h3>{' '}
-                <a onClick={() => handleSeeMore(item)}>Ver produto</a>
+                <button onClick={() => handleSeeMore(item)}>Ver produto</button>
               </ProductLink>
               <p>{item.description}</p>
             </div>

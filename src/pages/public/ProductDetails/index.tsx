@@ -55,7 +55,7 @@ export function ProductDetails() {
           />
         </div>
         <button type="submit" onClick={handleAddToCart}>
-          CONFIRMAR PEDIDO
+          Adicionar ao carrinho
         </button>
       </AddToCart>
     </Container>

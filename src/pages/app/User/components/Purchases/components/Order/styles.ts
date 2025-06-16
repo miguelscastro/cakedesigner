@@ -60,7 +60,7 @@ export const ProductLink = styled.div`
     ${mixins.fonts.titleXS}
   }
 
-  a {
+  button {
     cursor: pointer;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.link};

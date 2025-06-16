@@ -1,47 +1,20 @@
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react'
-import { CartItem, cartReducer } from '../reducers/cart/reducer'
+import { createContext, useEffect, useReducer, useState } from 'react'
+import { cartReducer } from '../reducers/cart/reducer'
 import {
   addItemToCartAction,
   changeCartItemQuantityAction,
   clearCartAction,
   removeCartItemAction,
 } from '../reducers/cart/actions'
-import { AddressInfoData } from '../pages/app/Checkout'
 import { useAuth } from '../hooks/useAuth'
-import { newOrder } from '../http/orders'
-
-interface CartContextProviderProps {
-  children: ReactNode
-}
-
-export interface Order {
-  orderedProducts: { productId: string; quantity: number; price: number }[]
-  address: AddressInfoData
-  deliveryFee: number
-}
-
-interface CartContextType {
-  productsInCart: CartItem[]
-  orders: CartItem[][]
-  cartItemsTotal: number
-  deliveryFee: number
-  OrderTotal: number
-  CartSize: number
-  addProductToCart: (product: CartItem) => void
-  changeCartItemQuantity: (
-    productId: string,
-    type: 'increase' | 'decrease',
-  ) => void
-  removeCartItem: (productId: string) => void
-  clearCart: () => void
-  addNewOrder: (order: Order) => void
-}
+import { getUserOrders, newOrder } from '../http/orders'
+import { fetchProducts } from '../http/products'
+import {
+  CartContextProviderProps,
+  CartContextType,
+  newOrderType,
+} from '../@types/cartContext'
+import { CartItem } from '../@types/cart/reducer'
 
 export const CartContext = createContext({} as CartContextType)
 
@@ -102,21 +75,88 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(clearCartAction())
   }
 
-  async function addNewOrder(order: Order) {
+  async function addNewOrder(order: newOrderType) {
     const tokenData = getJWT()
     if (tokenData == null) {
       return 'nulo'
     }
 
     try {
-      const response = await newOrder(tokenData, order)
+      const orderResponse = await newOrder(tokenData, order)
+      const productsResponse = await fetchProducts()
 
-      if (!response.ok) {
+      if (!orderResponse) {
         throw new Error('Pedido não recebido')
       }
+      if (!productsResponse) {
+        throw new Error('Produtos não disponíveis')
+      }
 
-      const userOrders = await response.json()
-      setOrders((state) => [...state, userOrders])
+      const newUserOrder = orderResponse
+      const products = productsResponse
+
+      const detailedProducts = newUserOrder.orderProducts.map((orderedItem) => {
+        const productDetails = products.find(
+          (product) => product.id === orderedItem.product.id,
+        )
+
+        if (!productDetails) {
+          throw new Error(`Produto com ID ${orderedItem.id} não encontrado`)
+        }
+
+        return {
+          ...productDetails,
+          quantity: orderedItem.quantity,
+          price: orderedItem.price,
+        }
+      })
+
+      setOrders((state) => [...state, detailedProducts])
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function getOrders() {
+    const tokenData = getJWT()
+    if (tokenData == null) {
+      return 'nulo'
+    }
+    try {
+      const userOrdersResponse = await getUserOrders(tokenData)
+      const productsResponse = await fetchProducts()
+
+      if (!userOrdersResponse) {
+        throw new Error('Pedido não recebido')
+      }
+      if (!productsResponse) {
+        throw new Error('Produtos não disponíveis')
+      }
+
+      const userOrders = userOrdersResponse
+      const products = productsResponse
+
+      const detailedOrders = userOrders.map((order) => {
+        const detailedProducts = order.products.map((orderedProduct) => {
+          const productDetails = products.find(
+            (product) => product.id === orderedProduct.productId,
+          )
+
+          if (!productDetails) {
+            throw new Error(
+              `Produto com ID ${orderedProduct.productId} não encontrado`,
+            )
+          }
+          return {
+            ...productDetails,
+            quantity: orderedProduct.quantity,
+            price: orderedProduct.price,
+          }
+        })
+        return detailedProducts
+      })
+
+      setOrders(detailedOrders)
     } catch (error) {
       console.error(error)
     }
@@ -136,6 +176,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         removeCartItem,
         clearCart,
         addNewOrder,
+        getOrders,
       }}
     >
       {children}
