@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { SignInInfoData } from '../pages/auth/Sign-in'
 import { useNavigate } from 'react-router-dom'
 import { SignUpInfoData } from '../pages/auth/Sign-up'
@@ -7,42 +7,12 @@ import { userPersonalInfoData } from '../pages/app/User/components/MyProfile/com
 import { userSettingsInfoData } from '../pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'
 import { authUser, createUser, verifyUserToken } from '../http/auth'
 import { updateUser } from '../http/user'
-
-interface User {
-  id: string
-  name: string
-  email: string
-  photoUrl?: string
-  role: string
-}
-
-export interface Jwt {
-  token: string
-  expires_in: string
-}
-
-interface AuthContextType {
-  authenticatedUser: User | null
-  createAccount: (data: {
-    name: string
-    email: string
-    password: string
-  }) => Promise<string | undefined>
-  authLogin: (data: {
-    email: string
-    password: string
-  }) => Promise<string | undefined>
-  isTokenValid: () => boolean
-  logout: () => void
-  updateUserInfo: (
-    data: { name: string } | { email: string } | { password: string },
-  ) => Promise<void>
-  getJWT: () => Jwt | undefined
-}
-
-interface AuthContextProviderProps {
-  children: ReactNode
-}
+import {
+  AuthContextProviderProps,
+  AuthContextType,
+  Jwt,
+  User,
+} from '../@types/authContext'
 
 export const AuthContext = createContext({} as AuthContextType)
 

@@ -7,7 +7,7 @@ import { Address, CartTotal, Container, OrderForm } from './styles'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCart } from '../../../hooks/useCart'
-import { Order } from '../../../contexts/CartContext'
+import { newOrderType } from '../../../@types/cartContext'
 
 const AddressInfoValidationSchema = z.object({
   cep: z.coerce
@@ -61,12 +61,11 @@ export function Checkout() {
           price: product.price,
         }
       })
-      const order: Order = {
+      const order: newOrderType = {
         orderedProducts,
         address,
         deliveryFee,
       }
-      console.log(order)
 
       addNewOrder(order)
       reset()

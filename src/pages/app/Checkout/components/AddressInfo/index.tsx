@@ -19,14 +19,8 @@ import {
 } from './styles'
 import { useFormContext } from 'react-hook-form'
 import { ChangeEvent, useState } from 'react'
+import { ErrorType } from '../../../../../@types/error'
 
-export interface ErrorType {
-  errors: {
-    [key: string]: {
-      message: string
-    }
-  }
-}
 export function AddressInfo() {
   const [isCepRight, setIsCepRight] = useState(false)
   const { register, watch, formState, reset } = useFormContext()

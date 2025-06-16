@@ -1,22 +1,6 @@
 import { produce } from 'immer'
 import { CartActions, CartActionTypes } from './actions'
-
-export interface ProductProps {
-  id: string
-  title: string
-  description: string
-  tags: string[]
-  price: number
-  image: string
-}
-
-export interface CartItem extends ProductProps {
-  quantity: number
-}
-
-interface CartState {
-  productsInCart: CartItem[]
-}
+import { CartState } from '../../@types/cart/reducer'
 
 export function cartReducer(state: CartState, action: CartActions) {
   switch (action.type) {

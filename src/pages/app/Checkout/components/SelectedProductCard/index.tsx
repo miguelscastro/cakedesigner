@@ -1,6 +1,6 @@
+import { CartItem } from '../../../../../@types/cart/reducer'
 import { QuantityInput } from '../../../../../components/Form/QuantityInput'
 import { useCart } from '../../../../../hooks/useCart'
-import { CartItem } from '../../../../../reducers/cart/reducer'
 import { formatMoney } from '../../../../../utils/formatMoney'
 import {
   ProductContainer,
