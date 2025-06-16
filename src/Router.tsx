@@ -14,14 +14,26 @@ import { Home } from './pages/public/Home'
 import { ProductDetails } from './pages/public/ProductDetails'
 import { User } from './pages/app/User'
 import { Purchases } from './pages/app/User/components/Purchases'
-import { MyProfile } from './pages/app/User/components/MyProfile'
-import { PersonalInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo'
-import { AccountInfo } from './pages/app/User/components/MyProfile/components/AccountInfo'
-import { SecuritySettings } from './pages/app/User/components/MyProfile/components/SecuritySettings'
-import { ChangeUserInfo } from './pages/app/User/components/MyProfile/components/PersonalInfo/components/ChangePersonalInfo'
-import { ChangeUserSecurityInfo } from './pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'
+import { Admin } from './pages/app/Admin'
+import { PersonalInfo } from './components/Personal/Profile/PersonalInfo'
+import { ChangeUserInfo } from './components/Personal/Profile/PersonalInfo/components/ChangePersonalInfo'
+import { SecuritySettings } from './components/Personal/Profile/SecuritySettings'
+import { ChangeUserSecurityInfo } from './components/Personal/Profile/SecuritySettings/components/ChangeSecuritySettings'
+import { Profile } from './components/Personal/Profile'
+import { AccountInfo } from './components/Personal/Profile/AccountInfo'
 
 export function Router() {
+  const profileRoutes = (
+    <Route path="profile" element={<Profile />}>
+      <Route path="my-data" element={<PersonalInfo />}>
+        <Route path="personal-data" element={<ChangeUserInfo />} />
+      </Route>
+      <Route path="account-data" element={<AccountInfo />} />
+      <Route path="security-settings" element={<SecuritySettings />}>
+        <Route path="manage-info" element={<ChangeUserSecurityInfo />} />
+      </Route>
+    </Route>
+  )
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
@@ -37,18 +49,11 @@ export function Router() {
 
             <Route path="purchases" element={<Purchases />} />
 
-            <Route path="profile" element={<MyProfile />}>
-              <Route path="my-data" element={<PersonalInfo />}>
-                <Route path="personal-data" element={<ChangeUserInfo />} />
-              </Route>
-              <Route path="account-data" element={<AccountInfo />} />
-              <Route path="security-settings" element={<SecuritySettings />}>
-                <Route
-                  path="manage-info"
-                  element={<ChangeUserSecurityInfo />}
-                />
-              </Route>
-            </Route>
+            {profileRoutes}
+          </Route>
+          <Route path="/admin" element={<Admin />}>
+            <Route index element={<Navigate to="profile" />} />
+            {profileRoutes}
           </Route>
         </Route>
       </Route>
