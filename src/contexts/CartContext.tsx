@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer, useState } from 'react'
-import { cartReducer } from '../reducers/cart/reducer'
+import { CartItem, cartReducer } from '../reducers/cart/reducer'
 import {
   addItemToCartAction,
   changeCartItemQuantityAction,
@@ -14,7 +14,6 @@ import {
   CartContextType,
   newOrderType,
 } from '../@types/cartContext'
-import { CartItem } from '../@types/cart/reducer'
 
 export const CartContext = createContext({} as CartContextType)
 

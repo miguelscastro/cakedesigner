@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-import { ErrorType } from '../../app/Checkout/components/AddressInfo'
 import { ErrorText } from '../../app/Checkout/components/AddressInfo/styles'
+import { ErrorType } from '../../../@types/error'
 
 const allowedDomains = [
   'gmail.com',

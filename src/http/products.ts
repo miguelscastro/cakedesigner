@@ -1,4 +1,4 @@
-import { CartItem } from '../@types/cart/reducer'
+import { CartItem } from '../reducers/cart/reducer'
 
 export const fetchProducts = async (): Promise<CartItem[]> => {
   const response = await fetch('http://localhost:8080/manage/product')

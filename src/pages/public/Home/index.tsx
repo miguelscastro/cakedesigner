@@ -20,7 +20,7 @@ import { Card } from './components/Card'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FilterProducts } from './components/FilterProducts'
 import { fetchProducts } from '../../../http/products'
-import { ProductProps } from '../../../@types/cart/reducer'
+import { ProductProps } from '../../../reducers/cart/reducer'
 
 export function Home() {
   const [productsData, setProductsData] = useState<ProductProps[]>([])

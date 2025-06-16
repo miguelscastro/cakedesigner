@@ -1,4 +1,4 @@
-import { Jwt } from '../contexts/AuthContext'
+import { Jwt } from '../@types/authContext'
 import { accountInfoData } from '../pages/app/User/components/MyProfile/components/AccountInfo'
 import { userPersonalInfoData } from '../pages/app/User/components/MyProfile/components/PersonalInfo/components/ChangePersonalInfo'
 import { userSettingsInfoData } from '../pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'

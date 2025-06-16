@@ -1,4 +1,4 @@
-import { Jwt } from '../contexts/AuthContext'
+import { Jwt } from '../@types/authContext'
 import { SignInInfoData } from '../pages/auth/Sign-in'
 import { SignUpInfoData } from '../pages/auth/Sign-up'
 

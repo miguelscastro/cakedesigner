@@ -1,6 +1,6 @@
-import { CartItem } from '../../../../../@types/cart/reducer'
 import { QuantityInput } from '../../../../../components/Form/QuantityInput'
 import { useCart } from '../../../../../hooks/useCart'
+import { CartItem } from '../../../../../reducers/cart/reducer'
 import { formatMoney } from '../../../../../utils/formatMoney'
 import {
   ProductContainer,
@@ -9,7 +9,7 @@ import {
   Controller,
   RemoveProduct,
 } from './styles'
-import { Trash } from '@phosphor-icons/react'
+import { TrashIcon } from '@phosphor-icons/react'
 
 interface SelectedProductProps {
   product: CartItem
@@ -40,7 +40,7 @@ export function SelectedProduct({ product }: SelectedProductProps) {
                 incrementQuantity={handleIncrementQuantity}
               />
               <RemoveProduct onClick={handleRemoveProduct}>
-                <Trash />
+                <TrashIcon />
                 <p>REMOVER</p>
               </RemoveProduct>
             </Controller>
