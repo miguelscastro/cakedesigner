@@ -14,6 +14,7 @@ import {
 } from '../reducers/cart/actions'
 import { AddressInfoData } from '../pages/app/Checkout'
 import { useAuth } from '../hooks/useAuth'
+import { newOrder } from '../http/orders'
 
 interface CartContextProviderProps {
   children: ReactNode
@@ -108,14 +109,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/orders/user', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${tokenData.token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(order),
-      })
+      const response = await newOrder(tokenData, order)
 
       if (!response.ok) {
         throw new Error('Pedido não recebido')

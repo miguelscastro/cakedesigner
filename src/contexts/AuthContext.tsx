@@ -5,6 +5,8 @@ import { SignUpInfoData } from '../pages/auth/Sign-up'
 import { accountInfoData } from '../pages/app/User/components/MyProfile/components/AccountInfo'
 import { userPersonalInfoData } from '../pages/app/User/components/MyProfile/components/PersonalInfo/components/ChangePersonalInfo'
 import { userSettingsInfoData } from '../pages/app/User/components/MyProfile/components/SecuritySettings/components/ChangeSecuritySettings'
+import { authUser, createUser, verifyUserToken } from '../http/auth'
+import { updateUser } from '../http/user'
 
 interface User {
   id: string
@@ -14,7 +16,7 @@ interface User {
   role: string
 }
 
-interface Jwt {
+export interface Jwt {
   token: string
   expires_in: string
 }
@@ -76,13 +78,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       }
 
       try {
-        const response = await fetch('http://localhost:8080/user', {
-          headers: {
-            Authorization: `Bearer ${tokenData.token}`,
-          },
-        })
+        const response = await verifyUserToken(tokenData)
 
-        if (!response.ok) {
+        if (!response || !response.ok) {
           throw new Error('Token inválido ou expirado')
         }
 
@@ -111,23 +109,17 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function createAccount(data: SignUpInfoData) {
     try {
-      const response = await fetch('http://localhost:8080/auth/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      const response = await createUser(data)
 
       if (!response.ok) {
-        return 'Esse email já esta em uso'
-      } else {
-        navigate('/auth/sign-in', {
-          state: { email: data.email },
-        })
+        return 'Esse email já está em uso'
       }
-    } catch (error) {
-      console.error(error)
+      navigate('/auth/sign-in', {
+        state: { email: data.email },
+      })
+    } catch {
+      console.error()
+      return 'Erro ao criar conta. Tente novamente.'
     }
   }
 
@@ -140,14 +132,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/user/profile', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${tokenData.token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      const response = await updateUser(tokenData, data)
 
       if (!response.ok) {
         throw new Error('Credenciais inválidas')
@@ -169,13 +154,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function authLogin(data: SignInInfoData) {
     try {
-      const response = await fetch('http://localhost:8080/auth/sign-in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      const response = await authUser(data)
 
       if (!response.ok) {
         return 'Email ou senha invalidos'

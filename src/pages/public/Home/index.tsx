@@ -19,15 +19,7 @@ import backgroundEffect from '../../../assets/images/banner/background-effect.pn
 import { Card } from './components/Card'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FilterProducts } from './components/FilterProducts'
-
-export interface ItemProps {
-  id: string
-  title: string
-  description: string
-  tags: string[]
-  price: number
-  image: string
-}
+import { fetchProducts, ItemProps } from '../../../http/products'
 
 export function Home() {
   const [productsData, setProductsData] = useState<ItemProps[]>([])
@@ -37,14 +29,12 @@ export function Home() {
   const [visibleCount, setVisibleCount] = useState(10)
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await fetch('http://localhost:8080/manage/product')
-      // const response = await fetch('/products.json')
-      const data = await response.json()
-
+    const loadProducts = async () => {
+      const data = await fetchProducts()
       setProductsData(data)
     }
-    fetchProducts()
+
+    loadProducts()
   }, [])
 
   useEffect(() => {
