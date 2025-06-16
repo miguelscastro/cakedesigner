@@ -50,7 +50,7 @@ export function Header() {
 
           <NavLink to="/checkout" className="cart">
             <ShoppingCartIcon size={22} weight="fill" />
-            {productsInCart.length > 0 ? (
+            {authenticatedUser?.role === 'USER' && productsInCart.length > 0 ? (
               <span>{productsInCart.length}</span>
             ) : null}
           </NavLink>

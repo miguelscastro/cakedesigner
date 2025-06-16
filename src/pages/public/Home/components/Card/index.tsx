@@ -22,7 +22,7 @@ interface CardProps {
 
 export function Card({ product }: CardProps) {
   const { addProductToCart } = useCart()
-  const { isTokenValid } = useAuth()
+  const { isTokenValid, authenticatedUser } = useAuth()
   const navigate = useNavigate()
 
   function handleAddToCart() {
@@ -60,7 +60,10 @@ export function Card({ product }: CardProps) {
 
         <Order>
           <GoToProductPage onClick={handleSeeMore}>VER MAIS</GoToProductPage>
-          <AddToCartButton onClick={handleAddToCart}>
+          <AddToCartButton
+            onClick={handleAddToCart}
+            disabled={authenticatedUser?.role === 'ADMIN'}
+          >
             <ShoppingCartSimpleIcon weight="fill" size={22} />
           </AddToCartButton>
         </Order>

@@ -40,17 +40,17 @@ export function Router() {
         <Route index element={<Home />} />
         <Route path="product/:id" element={<ProductDetails />} />
 
-        <Route element={<PrivateRoute />}>
+        <Route element={<PrivateRoute allowedRoles={['USER']} />}>
           <Route path="checkout" element={<Checkout />} />
           <Route path="success" element={<Success />} />
 
           <Route path="/user" element={<User />}>
             <Route index element={<Navigate to="profile" />} />
-
             <Route path="purchases" element={<Purchases />} />
-
             {profileRoutes}
           </Route>
+        </Route>
+        <Route element={<PrivateRoute allowedRoles={['ADMIN']} />}>
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Navigate to="profile" />} />
             {profileRoutes}
