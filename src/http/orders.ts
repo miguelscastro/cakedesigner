@@ -1,10 +1,14 @@
-import { Jwt } from '../contexts/AuthContext'
-import { Order } from '../contexts/CartContext'
+import { Jwt } from '../@types/authContext'
+import {
+  newOrderType,
+  OrderResponse,
+  OrdersResponse,
+} from '../@types/cartContext'
 
 export const newOrder = async (
   tokenData: Jwt,
-  order: Order,
-): Promise<Response> => {
+  order: newOrderType,
+): Promise<OrderResponse> => {
   const response = await fetch('http://localhost:8080/orders/user', {
     method: 'POST',
     headers: {
@@ -13,5 +17,19 @@ export const newOrder = async (
     },
     body: JSON.stringify(order),
   })
-  return response
+  const data = await response.json()
+  return data
+}
+
+export const getUserOrders = async (
+  tokenData: Jwt,
+): Promise<OrdersResponse> => {
+  const response = await fetch('http://localhost:8080/orders/user', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${tokenData.token}`,
+    },
+  })
+  const data = response.json()
+  return data
 }

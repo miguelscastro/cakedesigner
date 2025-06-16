@@ -19,18 +19,20 @@ import backgroundEffect from '../../../assets/images/banner/background-effect.pn
 import { Card } from './components/Card'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FilterProducts } from './components/FilterProducts'
-import { fetchProducts, ItemProps } from '../../../http/products'
+import { fetchProducts } from '../../../http/products'
+import { ProductProps } from '../../../@types/cart/reducer'
 
 export function Home() {
-  const [productsData, setProductsData] = useState<ItemProps[]>([])
+  const [productsData, setProductsData] = useState<ProductProps[]>([])
   const [displayedProductsData, setDisplayedProductsData] = useState<
-    ItemProps[]
+    ProductProps[]
   >([])
   const [visibleCount, setVisibleCount] = useState(10)
 
   useEffect(() => {
     const loadProducts = async () => {
-      const data = await fetchProducts()
+      const response = await fetchProducts()
+      const data = response
       setProductsData(data)
     }
 
