@@ -21,6 +21,10 @@ import { SecuritySettings } from './components/Personal/Profile/SecuritySettings
 import { ChangeUserSecurityInfo } from './components/Personal/Profile/SecuritySettings/components/ChangeSecuritySettings'
 import { Profile } from './components/Personal/Profile'
 import { AccountInfo } from './components/Personal/Profile/AccountInfo'
+import { Dashboard } from './pages/app/Admin/components/Dashboard'
+import { Products } from './pages/app/Admin/components/Products'
+import { Orders } from './pages/app/Admin/components/Orders'
+import { ManageAdmins } from './pages/app/Admin/components/ManageAdmins'
 
 export function Router() {
   const profileRoutes = (
@@ -46,14 +50,20 @@ export function Router() {
 
           <Route path="/user" element={<User />}>
             <Route index element={<Navigate to="profile" />} />
-            <Route path="purchases" element={<Purchases />} />
             {profileRoutes}
+
+            <Route path="purchases" element={<Purchases />} />
           </Route>
         </Route>
         <Route element={<PrivateRoute allowedRoles={['ADMIN']} />}>
           <Route path="/admin" element={<Admin />}>
             <Route index element={<Navigate to="profile" />} />
             {profileRoutes}
+
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="products" element={<Products />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="manage-admins" element={<ManageAdmins />} />
           </Route>
         </Route>
       </Route>
