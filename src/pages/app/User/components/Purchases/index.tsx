@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useCart } from "../../../../../hooks/useCart";
 import { Order } from "./components/Order";
 import { Container, EmptyOrders } from "./styles";
 import { EmptyIcon } from "@phosphor-icons/react";
+import { useUser } from "../../../../../hooks/useUser";
 
 export function Purchases() {
-  const { orders, getOrders } = useCart();
+  const { orders, getOrders } = useUser();
 
   useEffect(() => {
     if (orders.length === 0) {
