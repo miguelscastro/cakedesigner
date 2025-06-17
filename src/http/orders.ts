@@ -1,3 +1,4 @@
+import type { AllOrdersResponse } from "../@types/adminContext";
 import { Jwt } from "../@types/authContext";
 import {} from "../@types/cartContext";
 import type {
@@ -35,7 +36,9 @@ export const getUserOrders = async (
   return data;
 };
 
-export const getAllOrders = async (tokenData: Jwt): Promise<OrdersResponse> => {
+export const getAllOrders = async (
+  tokenData: Jwt
+): Promise<AllOrdersResponse> => {
   const response = await fetch("http://localhost:8080/orders", {
     method: "GET",
     headers: {

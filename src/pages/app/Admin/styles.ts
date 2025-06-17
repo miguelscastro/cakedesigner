@@ -1,14 +1,14 @@
-import styled from 'styled-components'
-import { mixins } from '../../../styles/mixins'
+import styled from "styled-components";
+import { mixins } from "../../../styles/mixins";
 
 export const Container = styled.main`
   display: flex;
-  background: ${({ theme }) => theme.colors['base-input']};
-`
+  background: ${({ theme }) => theme.colors["base-input"]};
+`;
 export const Menu = styled.aside`
   min-width: 300px;
   height: calc(100vh - 104px);
-  background: ${({ theme }) => theme.colors['base-card']};
+  background: ${({ theme }) => theme.colors["base-card"]};
 
   > div {
     display: flex;
@@ -33,7 +33,7 @@ export const Menu = styled.aside`
       border-left: 5px solid transparent;
 
       &:hover {
-        border-left-color: ${({ theme }) => theme.colors['brown-dark']};
+        border-left-color: ${({ theme }) => theme.colors["brown-dark"]};
       }
 
       > a {
@@ -50,15 +50,15 @@ export const Menu = styled.aside`
 
         transition: border-color 0.1s;
 
-        color: ${({ theme }) => theme.colors['base-text']};
+        color: ${({ theme }) => theme.colors["base-text"]};
 
         &.active svg {
-          color: ${({ theme }) => theme.colors['brown-dark']};
+          color: ${({ theme }) => theme.colors["brown-dark"]};
         }
       }
     }
   }
-`
+`;
 export const Info = styled.section`
   max-width: 1440px;
   margin: 0 auto;
@@ -67,4 +67,4 @@ export const Info = styled.section`
   @media screen and (max-width: 1440px) {
     flex: 1;
   }
-`
+`;
