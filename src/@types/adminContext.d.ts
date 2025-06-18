@@ -17,6 +17,14 @@ export interface AdminContextType {
   }) => Promise<
     "token invalido ou expirado" | "Tipo adicionado com sucesso" | undefined
   >;
+  addNewProduct: (data: {
+    type: { id: string; name?: string };
+    name: string;
+    description: string;
+    image?: any;
+  }) => Promise<
+    "token invalido ou expirado" | "Produto adicionado com sucesso" | undefined
+  >;
 }
 
 export interface OrderProduct {

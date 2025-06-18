@@ -8,8 +8,15 @@ import type {
 import { getAllOrders } from "../http/orders";
 import { useAuth } from "../hooks/useAuth";
 import type { AllOrdersResponse } from "../@types/adminContext";
-import { createProductType, getAllProductTypes } from "../http/products";
-import type { productTypeInfoData } from "../pages/app/Admin/components/Products";
+import {
+  createProduct,
+  createProductType,
+  getAllProductTypes,
+} from "../http/products";
+import type {
+  productInfoData,
+  productTypeInfoData,
+} from "../pages/app/Admin/components/Products";
 
 export const AdminContext = createContext({} as AdminContextType);
 
@@ -113,6 +120,25 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
     }
   }
 
+  async function addNewProduct(data: productInfoData) {
+    const tokenData = getJWT();
+    if (tokenData == null) {
+      return "token invalido ou expirado";
+    }
+
+    try {
+      const response = await createProduct(tokenData, data);
+
+      if (!response) {
+        throw new Error("Fala ao adicionar produto");
+      }
+
+      return "Produto adicionado com sucesso";
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <AdminContext.Provider
       value={{
@@ -124,6 +150,7 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
         fetchAllProductTypes,
         groupOrdersByDay,
         addNewProductType,
+        addNewProduct,
       }}
     >
       {children}

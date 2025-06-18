@@ -6,13 +6,13 @@ import { ErrorText } from "../../../Checkout/components/AddressInfo/styles";
 import { useAdmin } from "../../../../../hooks/useAdmin";
 import { useEffect, useState } from "react";
 
-// Schemas de validação
+// Schema do produto com type.name opcional
 const productInfoValidationSchema = z.object({
   name: z.string().min(1, "Nome do produto é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
   type: z.object({
     id: z.string().uuid("Tipo inválido"),
-    name: z.string(),
+    name: z.string().optional(),
   }),
   image: z
     .any()
@@ -23,17 +23,17 @@ const productInfoValidationSchema = z.object({
     ),
 });
 
+// Schema para o tipo de produto
 const productTypeInfoValidationSchema = z.object({
   name: z.string().min(1, "Type name is required"),
 });
 
-// Tipos derivados dos schemas
 export type productTypeInfoData = z.infer<
   typeof productTypeInfoValidationSchema
 >;
 export type productInfoData = z.infer<typeof productInfoValidationSchema>;
 
-// Tipos de erro baseados nos schemas
+// Tipos para os erros
 type ProductFormErrors = z.inferFlattenedErrors<
   typeof productInfoValidationSchema
 >["fieldErrors"];
@@ -42,8 +42,12 @@ type ProductTypeFormErrors = z.inferFlattenedErrors<
 >["fieldErrors"];
 
 export function Products() {
-  const { allProducTypes, fetchAllProductTypes, addNewProductType } =
-    useAdmin();
+  const {
+    allProducTypes,
+    fetchAllProductTypes,
+    addNewProductType,
+    addNewProduct,
+  } = useAdmin();
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const productInfoForm = useForm<productInfoData>({
@@ -59,6 +63,8 @@ export function Products() {
     formState: formStateProduct,
     handleSubmit: handleSubmitProduct,
     reset: resetProduct,
+    setError: setErrorProduct,
+    clearErrors: clearErrorsProduct,
   } = productInfoForm;
 
   const {
@@ -66,12 +72,16 @@ export function Products() {
     formState: formStateType,
     handleSubmit: handleSubmitType,
     reset: resetType,
-    setError,
-    clearErrors,
+    setError: setErrorType,
+    clearErrors: clearErrorsType,
   } = productTypeInfoForm;
 
   const errorsProduct = formStateProduct.errors as ProductFormErrors;
   const errorsType = formStateType.errors as ProductTypeFormErrors;
+
+  useEffect(() => {
+    fetchAllProductTypes();
+  }, []);
 
   useEffect(() => {
     if (successMessage) {
@@ -84,15 +94,11 @@ export function Products() {
     }
   }, [successMessage]);
 
-  useEffect(() => {
-    fetchAllProductTypes();
-  }, [successMessage]);
-
   async function handleAddNewProductType(data: productTypeInfoData) {
     const result = await addNewProductType(data);
 
     if (result !== "Tipo adicionado com sucesso") {
-      setError("name", {
+      setErrorType("name", {
         type: "manual",
         message: result ?? "Erro desconhecido",
       });
@@ -101,7 +107,32 @@ export function Products() {
     }
 
     setSuccessMessage("Novo tipo de produto criado com sucesso!");
-    clearErrors();
+    clearErrorsType();
+    await fetchAllProductTypes();
+  }
+
+  async function handleAddNewProduct(data: productInfoData) {
+    // Envia só o id do tipo, omitindo name
+    const payload = {
+      ...data,
+      type: {
+        id: data.type.id,
+      },
+    };
+
+    const result = await addNewProduct(payload);
+
+    if (result !== "Produto adicionado com sucesso") {
+      setErrorProduct("name", {
+        type: "manual",
+        message: result ?? "Erro desconhecido",
+      });
+      setSuccessMessage(null);
+      return;
+    }
+
+    setSuccessMessage("Novo produto criado com sucesso!");
+    clearErrorsProduct();
   }
 
   return (
@@ -109,7 +140,10 @@ export function Products() {
       <ContainerHeader>
         <div>
           <h2>Insira as informações do novo produto</h2>
-          <DataForm id="add_product">
+          <DataForm
+            id="add_product"
+            onSubmit={handleSubmitProduct(handleAddNewProduct)}
+          >
             <InputWrapper>
               <span>Nome</span>
               <input type="text" {...registerProduct("name")} autoFocus />
@@ -117,6 +151,7 @@ export function Products() {
                 <ErrorText>{errorsProduct.name[0]}</ErrorText>
               )}
             </InputWrapper>
+
             <InputWrapper>
               <span>Descrição</span>
               <input type="text" {...registerProduct("description")} />
@@ -124,14 +159,15 @@ export function Products() {
                 <ErrorText>{errorsProduct.description[0]}</ErrorText>
               )}
             </InputWrapper>
+
             <InputWrapper>
               <span>Tipo do produto</span>
-              <select defaultValue="" {...registerProduct("type")}>
+              <select defaultValue="" {...registerProduct("type.id")}>
                 <option value="" disabled>
                   Selecione o tipo
                 </option>
                 {allProducTypes.map((type) => (
-                  <option key={type.id} value={type.name}>
+                  <option key={type.id} value={type.id}>
                     {type.name}
                   </option>
                 ))}
@@ -140,13 +176,16 @@ export function Products() {
                 <ErrorText>{errorsProduct.type[0]}</ErrorText>
               )}
             </InputWrapper>
+
             <InputWrapper>
               <span>Imagem</span>
               <input type="file" {...registerProduct("image")} />
               {errorsProduct.image?.[0] && (
                 <ErrorText>{errorsProduct.image[0]}</ErrorText>
               )}
+              {/* Se quiser enviar arquivos, o fetch deve usar FormData em vez de JSON */}
             </InputWrapper>
+
             <div className="submit-message">
               <button type="submit" form="add_product">
                 Adicionar produto
@@ -169,6 +208,7 @@ export function Products() {
                 <ErrorText>{errorsType.name[0]}</ErrorText>
               )}
             </InputWrapper>
+
             <div className="submit-message">
               <button type="submit" form="add_product_type">
                 Adicionar tipo
