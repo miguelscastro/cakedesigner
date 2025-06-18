@@ -68,7 +68,15 @@ export function Sign_up() {
     const result = await createAccount(data);
 
     if (typeof result == "string") {
+      setError("name", {
+        type: "manual",
+        message: result,
+      });
       setError("email", {
+        type: "manual",
+        message: result,
+      });
+      setError("password", {
         type: "manual",
         message: result,
       });

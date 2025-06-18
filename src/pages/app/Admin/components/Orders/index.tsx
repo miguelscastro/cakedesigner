@@ -7,7 +7,7 @@ import { fetchProducts } from "../../../../../http/products";
 import type { CartItem } from "../../../../../reducers/cart/reducer";
 
 export function Orders() {
-  const { allOrders } = useAdmin();
+  const { allOrders, fetchAllOrders } = useAdmin();
   const [productsData, setProductsData] = useState<CartItem[]>([]);
 
   useEffect(() => {
@@ -15,6 +15,7 @@ export function Orders() {
       const productsData = await fetchProducts();
       setProductsData(productsData);
     };
+    fetchAllOrders();
     fetchData();
   }, []);
 

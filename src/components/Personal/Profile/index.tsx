@@ -3,31 +3,31 @@ import {
   LockIcon,
   UserCircleIcon,
   UserIcon,
-} from '@phosphor-icons/react'
-import { useAuth } from '../../../hooks/useAuth'
-import { Container, InfoContainer, ProfileHeader } from './styles'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+} from "@phosphor-icons/react";
+import { useAuth } from "../../../hooks/useAuth";
+import { Container, InfoContainer, ProfileHeader } from "./styles";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export interface SectionProps {
-  onBack: () => void
+  onBack: () => void;
 }
 
 export function Profile() {
-  const { authenticatedUser } = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { authenticatedUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const isSubSection =
-    location.pathname.includes('/profile/my-data') ||
-    location.pathname.includes('/profile/account-data') ||
-    location.pathname.includes('/profile/security-settings')
+    location.pathname.includes("/profile/my-data") ||
+    location.pathname.includes("/profile/account-data") ||
+    location.pathname.includes("/profile/security-settings");
 
   if (isSubSection) {
     return (
       <Container>
         <Outlet />
       </Container>
-    )
+    );
   }
 
   return (
@@ -44,22 +44,22 @@ export function Profile() {
         </div>
       </ProfileHeader>
       <InfoContainer>
-        <button onClick={() => navigate('my-data')}>
+        <button onClick={() => navigate("my-data")}>
           <IdentificationCardIcon size={22} />
           <h3>Informações pessoais</h3>
           <p>Aqui você pode verificar ou alterar seu nome completo</p>
         </button>
-        <button onClick={() => navigate('account-data')}>
+        <button onClick={() => navigate("account-data")}>
           <UserIcon size={22} />
           <h3>Dados da sua conta</h3>
           <p>Dados que representam sua conta aqui com a gente.</p>
         </button>
-        <button onClick={() => navigate('security-settings')}>
+        <button onClick={() => navigate("security-settings")}>
           <LockIcon size={22} />
           <h3>Segurança</h3>
-          <p>Aqui você pode trocar sua senha</p>
+          <p>Informações sensíveis da sua conta</p>
         </button>
       </InfoContainer>
     </Container>
-  )
+  );
 }

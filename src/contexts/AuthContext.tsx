@@ -81,9 +81,18 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function createAccount(data: SignUpInfoData | newAdminInfoData) {
     const tokenData = getJWT();
     if (tokenData == null) {
-      return;
-    }
+      const response = await createUser(data);
 
+      if (!response.ok) {
+        return "Algo deu errado, tente novamente";
+      }
+
+      await response.json();
+
+      navigate("/auth/sign-in", {
+        state: { email: data.email },
+      });
+    }
     try {
       const isAdmin = "role" in data && data.role === "ADMIN";
 

@@ -25,6 +25,7 @@ import { Dashboard } from "./pages/app/Admin/components/Dashboard";
 import { Products } from "./pages/app/Admin/components/Products";
 import { ManageAdmins } from "./pages/app/Admin/components/ManageAdmins";
 import { Orders } from "./pages/app/Admin/components/Orders";
+import { DeleteAccount } from "./components/Personal/Profile/SecuritySettings/components/DeleteAccount";
 
 export function Router() {
   const profileRoutes = (
@@ -35,6 +36,7 @@ export function Router() {
       <Route path="account-data" element={<AccountInfo />} />
       <Route path="security-settings" element={<SecuritySettings />}>
         <Route path="manage-info" element={<ChangeUserSecurityInfo />} />
+        <Route path="delete-account" element={<DeleteAccount />} />
       </Route>
     </Route>
   );

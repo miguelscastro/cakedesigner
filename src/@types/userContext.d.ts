@@ -8,6 +8,10 @@ export interface UserContextType {
   orders: CartItem[][];
   addNewOrder: (order: newOrderType) => void;
   getOrders: () => void;
+  deleteUser: (data: {
+    confirmation: "confirmo a exclusão da minha conta";
+    password: string;
+  }) => Promise<"nulo" | Response | undefined>;
 }
 
 export interface newOrderType {

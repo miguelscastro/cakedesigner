@@ -8,6 +8,8 @@ import type { CartItem } from "../reducers/cart/reducer";
 import { useAuth } from "../hooks/useAuth";
 import { getUserOrders, newOrder } from "../http/orders";
 import { fetchProducts } from "../http/products";
+import { deleteUserAccount } from "../http/user";
+import type { deleteUserInfoData } from "../components/Personal/Profile/SecuritySettings/components/DeleteAccount";
 
 export const UserContext = createContext({} as UserContextType);
 
@@ -102,8 +104,29 @@ export function UserContextProvider({ children }: UserContextProviderProps) {
     }
   }
 
+  async function deleteUser(data: deleteUserInfoData) {
+    const tokenData = getJWT();
+    if (tokenData == null) {
+      return "nulo";
+    }
+
+    try {
+      const response = await deleteUserAccount(tokenData, data);
+
+      if (!response) {
+        throw new Error("Não conseguimos excluir sua conta, tente novamente");
+      }
+
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ orders, addNewOrder, getOrders }}>
+    <UserContext.Provider
+      value={{ orders, addNewOrder, getOrders, deleteUser }}
+    >
       {children}
     </UserContext.Provider>
   );

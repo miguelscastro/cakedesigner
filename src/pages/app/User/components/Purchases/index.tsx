@@ -8,9 +8,7 @@ export function Purchases() {
   const { orders, getOrders } = useUser();
 
   useEffect(() => {
-    if (orders.length === 0) {
-      getOrders();
-    }
+    getOrders();
   }, []);
 
   return (
