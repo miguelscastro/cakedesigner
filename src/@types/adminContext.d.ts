@@ -4,12 +4,19 @@ export interface AdminContextProviderProps {
 
 export interface AdminContextType {
   allOrders: AllOrdersResponse;
+  allProducTypes: ProductType[];
   MonthTotalOrders: number;
   MonthTotalProfit: number;
   fetchAllOrders: () => void;
+  fetchAllProductTypes: () => Promise<"token invalido ou expirado" | undefined>;
   groupOrdersByDay: (
     allOrders: AllOrdersResponse
   ) => { date: string; count: number }[];
+  addNewProductType: (data: {
+    name: string;
+  }) => Promise<
+    "token invalido ou expirado" | "Tipo adicionado com sucesso" | undefined
+  >;
 }
 
 export interface OrderProduct {
@@ -43,3 +50,18 @@ export interface OrderType {
 }
 
 export type AllOrdersResponse = OrderType[];
+
+export interface ProductType {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string | null;
+}
+
+export interface Product {
+  name: string;
+  description: string;
+  price: number;
+  image?: File | string;
+  productType: ProductType;
+}

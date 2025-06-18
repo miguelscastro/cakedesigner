@@ -3,15 +3,20 @@ import type {
   AdminContextProviderProps,
   AdminContextType,
   OrderType,
+  ProductType,
 } from "../@types/adminContext";
 import { getAllOrders } from "../http/orders";
 import { useAuth } from "../hooks/useAuth";
 import type { AllOrdersResponse } from "../@types/adminContext";
+import { createProductType, getAllProductTypes } from "../http/products";
+import type { productTypeInfoData } from "../pages/app/Admin/components/Products";
 
 export const AdminContext = createContext({} as AdminContextType);
 
 export function AdminContextProvider({ children }: AdminContextProviderProps) {
   const [allOrders, setAllOrders] = useState<AllOrdersResponse>([]);
+  const [allProducTypes, setAllProductTypes] = useState<ProductType[]>([]);
+
   const { getJWT } = useAuth();
 
   const pastMonth = new Date();
@@ -70,14 +75,55 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
     }
   }
 
+  async function fetchAllProductTypes() {
+    const tokenData = getJWT();
+    if (tokenData == null) {
+      return "token invalido ou expirado";
+    }
+
+    try {
+      const productTypes = await getAllProductTypes(tokenData);
+
+      if (!productTypes) {
+        throw new Error("Pedido não recebido");
+      }
+
+      setAllProductTypes(productTypes);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function addNewProductType(data: productTypeInfoData) {
+    const tokenData = getJWT();
+    if (tokenData == null) {
+      return "token invalido ou expirado";
+    }
+
+    try {
+      const response = await createProductType(tokenData, data);
+
+      if (!response) {
+        throw new Error("Fala ao adicionar tipo");
+      }
+
+      return "Tipo adicionado com sucesso";
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <AdminContext.Provider
       value={{
         allOrders,
+        allProducTypes,
         MonthTotalOrders,
         MonthTotalProfit,
         fetchAllOrders,
+        fetchAllProductTypes,
         groupOrdersByDay,
+        addNewProductType,
       }}
     >
       {children}
