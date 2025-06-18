@@ -23,8 +23,8 @@ export interface newOrderType {
 export interface OrderResponse {
   id: string;
   user: User;
-  address: OrderAddress;
   deliveryFee: number;
+  address: OrderAddress;
   orderProducts: OrderProductResponseType[];
   createdAt: string;
   updatedAt: string;

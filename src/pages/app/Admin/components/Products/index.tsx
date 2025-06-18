@@ -1,3 +1,12 @@
+import { Container, ManageProducts } from "./styles";
+
 export function Products() {
-  return <h1>Products</h1>
+  return (
+    <Container>
+      <ManageProducts>
+        <input type="file" />
+        <button>Enviar</button>
+      </ManageProducts>
+    </Container>
+  );
 }

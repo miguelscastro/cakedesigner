@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { Order } from "./components/Order";
 import { Container, EmptyOrders } from "./styles";
 import { EmptyIcon } from "@phosphor-icons/react";
 import { useUser } from "../../../../../hooks/useUser";
+import { Order } from "./components/Order";
 
 export function Purchases() {
   const { orders, getOrders } = useUser();
