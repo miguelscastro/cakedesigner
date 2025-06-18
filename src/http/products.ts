@@ -45,15 +45,22 @@ export const createProduct = async (
   tokenData: Jwt,
   product: productInfoData
 ): Promise<Response> => {
-  console.log(product);
+  const formData = new FormData();
+  formData.append("name", product.name);
+  formData.append("description", product.description);
+  formData.append("productTypeId", product.type.id);
+
+  if (product.image && product.image.length > 0) {
+    formData.append("image", product.image[0]);
+  }
 
   const response = await fetch("http://localhost:8080/manage/product", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${tokenData.token}`,
-      "Content-Type": "application/json",
     },
-    body: JSON.stringify(product),
+    body: formData,
   });
+
   return response;
 };

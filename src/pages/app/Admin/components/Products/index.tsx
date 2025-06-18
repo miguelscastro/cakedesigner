@@ -6,7 +6,6 @@ import { ErrorText } from "../../../Checkout/components/AddressInfo/styles";
 import { useAdmin } from "../../../../../hooks/useAdmin";
 import { useEffect, useState } from "react";
 
-// Schema do produto com type.name opcional
 const productInfoValidationSchema = z.object({
   name: z.string().min(1, "Nome do produto é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
@@ -18,12 +17,15 @@ const productInfoValidationSchema = z.object({
     .any()
     .optional()
     .refine(
-      (file) => !file || (file instanceof File && file.size <= 5_000_000),
+      (file) =>
+        !file ||
+        (file instanceof FileList &&
+          file.length === 1 &&
+          file[0].size <= 5_000_000),
       "Arquivo deve ter no máximo 5MB"
     ),
 });
 
-// Schema para o tipo de produto
 const productTypeInfoValidationSchema = z.object({
   name: z.string().min(1, "Type name is required"),
 });
@@ -33,7 +35,6 @@ export type productTypeInfoData = z.infer<
 >;
 export type productInfoData = z.infer<typeof productInfoValidationSchema>;
 
-// Tipos para os erros
 type ProductFormErrors = z.inferFlattenedErrors<
   typeof productInfoValidationSchema
 >["fieldErrors"];
@@ -112,7 +113,6 @@ export function Products() {
   }
 
   async function handleAddNewProduct(data: productInfoData) {
-    // Envia só o id do tipo, omitindo name
     const payload = {
       ...data,
       type: {
@@ -179,11 +179,14 @@ export function Products() {
 
             <InputWrapper>
               <span>Imagem</span>
-              <input type="file" {...registerProduct("image")} />
+              <input
+                type="file"
+                {...registerProduct("image")}
+                accept="image/*"
+              />
               {errorsProduct.image?.[0] && (
                 <ErrorText>{errorsProduct.image[0]}</ErrorText>
               )}
-              {/* Se quiser enviar arquivos, o fetch deve usar FormData em vez de JSON */}
             </InputWrapper>
 
             <div className="submit-message">
