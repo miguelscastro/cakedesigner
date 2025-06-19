@@ -16,7 +16,6 @@ export const TableOfProducts = styled.table`
   td {
     ${mixins.fonts.textXS}
     padding-top: 0.5rem;
-    border-top: 1px solid black;
   }
 
   button {

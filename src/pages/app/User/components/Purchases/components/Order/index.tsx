@@ -31,7 +31,10 @@ export function Order({ order }: OrderProps) {
               <p>{item.description}</p>
             </div>
           </div>
-          <span>R$ {formatMoney(item.price)}</span>
+          <div className="total">
+            <span>R$ {formatMoney(item.price)}</span>
+            <span>quantidade: {item.quantity}</span>
+          </div>
         </ItemContainer>
       ))}
     </Container>

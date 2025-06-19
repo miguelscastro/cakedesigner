@@ -47,8 +47,16 @@ export const ItemContainer = styled.div`
       border-radius: 100%;
     }
   }
-  span {
-    ${mixins.fonts.titleS}
+  div.total {
+    flex-direction: column;
+    align-items: flex-end;
+
+    span:first-of-type {
+      ${mixins.fonts.titleS};
+    }
+
+    span:last-of-type {
+    }
   }
 `;
 export const ProductLink = styled.div`

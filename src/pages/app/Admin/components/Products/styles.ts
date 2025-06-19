@@ -23,4 +23,26 @@ export const ContainerHeader = styled.div`
   }
 `;
 
-export const ContainerBody = styled.div``;
+export const ContainerBody = styled.div`
+  max-height: 440px;
+  overflow-y: auto;
+  margin-top: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors["base-hover"]};
+    margin-left: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors["base-text"]};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${({ theme }) => theme.colors["brown-dark"]};
+  }
+`;
