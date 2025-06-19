@@ -10,11 +10,7 @@ export const Container = styled.div`
 `;
 
 export const ContainerHeader = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.colors["brown-dark"]};
-  padding-bottom: 1rem;
-
   display: flex;
-  justify-content: space-between;
 
   > div {
     display: flex;
@@ -26,3 +22,5 @@ export const ContainerHeader = styled.div`
     }
   }
 `;
+
+export const ContainerBody = styled.div``;

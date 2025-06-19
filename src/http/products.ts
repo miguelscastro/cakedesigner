@@ -1,9 +1,8 @@
 import type { ProductType } from "../@types/adminContext";
 import type { Jwt } from "../@types/authContext";
-import type {
-  productInfoData,
-  productTypeInfoData,
-} from "../pages/app/Admin/components/Products";
+import type {} from "../pages/app/Admin/components/Products";
+import type { productInfoData } from "../pages/app/Admin/components/Products/components/ProductForm";
+import type { productTypeInfoData } from "../pages/app/Admin/components/Products/components/ProductTypeForm";
 import { CartItem } from "../reducers/cart/reducer";
 
 export const fetchProducts = async (): Promise<CartItem[]> => {
@@ -57,6 +56,32 @@ export const createProduct = async (
 
   const response = await fetch("http://localhost:8080/manage/product", {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${tokenData.token}`,
+    },
+    body: formData,
+  });
+
+  return response;
+};
+
+export const changeProduct = async (
+  tokenData: Jwt,
+  product: productInfoData
+): Promise<Response> => {
+  const formData = new FormData();
+  formData.append("id", product.id ?? "");
+  formData.append("name", product.name);
+  formData.append("description", product.description);
+  formData.append("price", String(product.price));
+  formData.append("typeId", product.type.id);
+
+  if (product.image && product.image.length > 0) {
+    formData.append("image", product.image[0]);
+  }
+
+  const response = await fetch("http://localhost:8080/manage/product", {
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${tokenData.token}`,
     },

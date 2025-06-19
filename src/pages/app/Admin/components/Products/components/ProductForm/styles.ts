@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { mixins } from "../../../../../../../styles/mixins";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  width: 50%;
+`;
 
 export const ProductDataForm = styled.form`
   justify-content: center;

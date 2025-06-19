@@ -7,6 +7,7 @@ import { Container, InputWrapper, ProductDataForm } from "./styles";
 import { ErrorText } from "../../../../../Checkout/components/AddressInfo/styles";
 
 const productInfoValidationSchema = z.object({
+  id: z.string().uuid().optional(),
   name: z.string().min(1, "Nome do produto é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
   price: z.number().positive("Preço tem que ser maior que 0"),
@@ -33,15 +34,25 @@ type ProductFormErrors = z.inferFlattenedErrors<
   typeof productInfoValidationSchema
 >["fieldErrors"];
 
-export function ProductForm() {
-  const { allProducTypes, fetchAllProductTypes, addNewProduct } = useAdmin();
+interface ProductFormProps {
+  editingProduct: productInfoData | null;
+  saveProduct: (data: productInfoData) => Promise<void>;
+  cancelEdit?: () => void;
+}
+
+export function ProductForm({
+  editingProduct,
+  saveProduct,
+  cancelEdit,
+}: ProductFormProps) {
+  const { allProducTypes, fetchAllProductTypes } = useAdmin();
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const productInfoForm = useForm<productInfoData>({
     resolver: zodResolver(productInfoValidationSchema),
   });
 
-  const { register, formState, handleSubmit, reset, setError, clearErrors } =
+  const { register, formState, handleSubmit, reset, clearErrors } =
     productInfoForm;
 
   const errorsProduct = formState.errors as ProductFormErrors;
@@ -60,35 +71,31 @@ export function ProductForm() {
     }
   }, [successMessage]);
 
-  async function handleAddNewProduct(data: productInfoData) {
-    const payload = {
-      ...data,
-      type: {
-        id: data.type.id,
-      },
-    };
-
-    const result = await addNewProduct(payload);
-
-    if (result !== "Produto adicionado com sucesso") {
-      setError("name", {
-        type: "manual",
-        message: result ?? "Erro desconhecido",
-      });
-      setSuccessMessage(null);
-      return;
+  useEffect(() => {
+    if (editingProduct) {
+      reset(editingProduct);
+    } else {
+      reset();
     }
+  }, [editingProduct, reset]);
 
-    setSuccessMessage("Novo produto criado com sucesso!");
+  async function handleSaveProduct(data: productInfoData) {
+    await saveProduct(data);
+    reset();
+    setSuccessMessage(
+      editingProduct
+        ? "Produto atualizado com sucesso!"
+        : "Novo produto criado com sucesso!"
+    );
     clearErrors();
   }
 
   return (
     <Container>
-      <h2>Insira as informações do novo produto</h2>
+      <h2>{editingProduct ? "Editar produto" : "Novo produto"}</h2>
       <ProductDataForm
         id="add_product"
-        onSubmit={handleSubmit(handleAddNewProduct)}
+        onSubmit={handleSubmit(handleSaveProduct)}
       >
         <InputWrapper>
           <span>Nome</span>
@@ -145,8 +152,19 @@ export function ProductForm() {
 
         <div className="submit-message">
           <button type="submit" form="add_product">
-            Adicionar produto
+            {editingProduct ? "Atualizar produto" : "Adicionar produto"}
           </button>
+          {editingProduct && cancelEdit && (
+            <button
+              type="button"
+              onClick={() => {
+                cancelEdit();
+                reset();
+              }}
+            >
+              Cancelar
+            </button>
+          )}
           {successMessage && <span>{successMessage}</span>}
         </div>
       </ProductDataForm>

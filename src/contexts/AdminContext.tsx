@@ -9,14 +9,14 @@ import { getAllOrders } from "../http/orders";
 import { useAuth } from "../hooks/useAuth";
 import type { AllOrdersResponse } from "../@types/adminContext";
 import {
+  changeProduct,
   createProduct,
   createProductType,
   getAllProductTypes,
 } from "../http/products";
-import type {
-  productInfoData,
-  productTypeInfoData,
-} from "../pages/app/Admin/components/Products";
+import type {} from "../pages/app/Admin/components/Products";
+import type { productInfoData } from "../pages/app/Admin/components/Products/components/ProductForm";
+import type { productTypeInfoData } from "../pages/app/Admin/components/Products/components/ProductTypeForm";
 
 export const AdminContext = createContext({} as AdminContextType);
 
@@ -111,7 +111,7 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
       const response = await createProductType(tokenData, data);
 
       if (!response) {
-        throw new Error("Fala ao adicionar tipo");
+        throw new Error("Falha ao adicionar tipo");
       }
 
       return "Tipo adicionado com sucesso";
@@ -139,6 +139,27 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
     }
   }
 
+  async function updateProduct(data: productInfoData) {
+    const tokenData = getJWT();
+    if (tokenData == null) {
+      return "token invalido ou expirado";
+    }
+
+    try {
+      const response = await changeProduct(tokenData, data);
+
+      if (!response) {
+        throw new Error("Falha ao atualizar produto");
+      }
+
+      return "Produto atualizado com sucesso";
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function deleteProduct(id: string) {}
+
   return (
     <AdminContext.Provider
       value={{
@@ -151,6 +172,7 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
         groupOrdersByDay,
         addNewProductType,
         addNewProduct,
+        updateProduct,
       }}
     >
       {children}
