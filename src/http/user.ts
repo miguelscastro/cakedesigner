@@ -9,7 +9,7 @@ export const updateUser = async (
   data: userPersonalInfoData | accountInfoData | userSettingsInfoData
 ): Promise<Response> => {
   const response = await fetch("http://localhost:8080/user/profile", {
-    method: "POST",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${tokenData.token}`,
       "Content-Type": "application/json",

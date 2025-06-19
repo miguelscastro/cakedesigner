@@ -13,6 +13,7 @@ import {
   createProduct,
   createProductType,
   getAllProductTypes,
+  removeProduct,
 } from "../http/products";
 import type {} from "../pages/app/Admin/components/Products";
 import type { productInfoData } from "../pages/app/Admin/components/Products/components/ProductForm";
@@ -158,7 +159,24 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
     }
   }
 
-  async function deleteProduct(id: string) {}
+  async function deleteProduct(id: string) {
+    const tokenData = getJWT();
+    if (tokenData == null) {
+      return "token invalido ou expirado";
+    }
+
+    try {
+      const response = await removeProduct(tokenData, id);
+
+      if (!response) {
+        throw new Error("Falha ao atualizar produto");
+      }
+
+      return "Produto deletado com sucesso";
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <AdminContext.Provider
@@ -173,6 +191,7 @@ export function AdminContextProvider({ children }: AdminContextProviderProps) {
         addNewProductType,
         addNewProduct,
         updateProduct,
+        deleteProduct,
       }}
     >
       {children}

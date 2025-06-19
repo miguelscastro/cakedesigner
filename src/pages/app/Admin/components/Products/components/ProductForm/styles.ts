@@ -11,6 +11,7 @@ export const ProductDataForm = styled.form`
 
   .submit-message {
     display: flex;
+    flex-direction: column;
     align-items: center;
 
     button {
@@ -41,7 +42,6 @@ export const ProductDataForm = styled.form`
 
       border-radius: 6px;
       padding: 0.75rem;
-      margin-right: 4rem;
 
       ${mixins.fonts.titleXS}
     }

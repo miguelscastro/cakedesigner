@@ -90,3 +90,17 @@ export const changeProduct = async (
 
   return response;
 };
+
+export const removeProduct = async (
+  tokenData: Jwt,
+  id: string
+): Promise<Response> => {
+  const response = await fetch(`http://localhost:8080/manage/product/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${tokenData.token}`,
+    },
+  });
+
+  return response;
+};

@@ -36,6 +36,11 @@ export interface AdminContextType {
   }) => Promise<
     "Produto atualizado com sucesso" | "token invalido ou expirado" | undefined
   >;
+  deleteProduct: (
+    id: string
+  ) => Promise<
+    "Produto deletado com sucesso" | "token invalido ou expirado" | undefined
+  >;
 }
 
 export interface OrderProduct {

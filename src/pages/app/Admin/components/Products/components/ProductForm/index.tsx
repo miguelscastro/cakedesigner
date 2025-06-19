@@ -66,7 +66,7 @@ export function ProductForm({
       const timer = setTimeout(() => {
         setSuccessMessage(null);
         reset();
-      }, 3500);
+      }, 3500000);
       return () => clearTimeout(timer);
     }
   }, [successMessage]);
