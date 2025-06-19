@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 const productInfoValidationSchema = z.object({
   name: z.string().min(1, "Nome do produto é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
+  price: z.number().positive("Preço tem que ser maior que 0"),
   type: z.object({
     id: z.string().uuid("Tipo inválido"),
     name: z.string().optional(),
@@ -96,6 +97,8 @@ export function Products() {
   }, [successMessage]);
 
   async function handleAddNewProductType(data: productTypeInfoData) {
+    console.log(data);
+
     const result = await addNewProductType(data);
 
     if (result !== "Tipo adicionado com sucesso") {
@@ -157,6 +160,18 @@ export function Products() {
               <input type="text" {...registerProduct("description")} />
               {errorsProduct.description?.[0] && (
                 <ErrorText>{errorsProduct.description[0]}</ErrorText>
+              )}
+            </InputWrapper>
+
+            <InputWrapper>
+              <span>Preço</span>
+              <input
+                type="number"
+                step="0.01"
+                {...registerProduct("price", { valueAsNumber: true })}
+              />
+              {errorsProduct.price?.[0] && (
+                <ErrorText>{errorsProduct.price[0]}</ErrorText>
               )}
             </InputWrapper>
 

@@ -48,6 +48,7 @@ export const createProduct = async (
   const formData = new FormData();
   formData.append("name", product.name);
   formData.append("description", product.description);
+  formData.append("price", String(product.price));
   formData.append("productTypeId", product.type.id);
 
   if (product.image && product.image.length > 0) {

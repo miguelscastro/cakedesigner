@@ -3,8 +3,8 @@ import {
   PackageIcon,
   ShoppingCartIcon,
   TimerIcon,
-} from '@phosphor-icons/react'
-import { useTheme } from 'styled-components'
+} from "@phosphor-icons/react";
+import { useTheme } from "styled-components";
 
 import {
   Banner,
@@ -13,75 +13,75 @@ import {
   BannerContent,
   ProductList,
   Products,
-} from './styles'
-import coffeDeliveryBanner from '../../../assets/images/banner/cakedesigner-banner.png'
-import backgroundEffect from '../../../assets/images/banner/background-effect.png'
-import { Card } from './components/Card'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { FilterProducts } from './components/FilterProducts'
-import { fetchProducts } from '../../../http/products'
-import { ProductProps } from '../../../reducers/cart/reducer'
+} from "./styles";
+import coffeDeliveryBanner from "../../../assets/images/banner/cakedesigner-banner.png";
+import backgroundEffect from "../../../assets/images/banner/background-effect.png";
+import { Card } from "./components/Card";
+import { ChangeEvent, useEffect, useState } from "react";
+import { FilterProducts } from "./components/FilterProducts";
+import { fetchProducts } from "../../../http/products";
+import { ProductProps } from "../../../reducers/cart/reducer";
 
 export function Home() {
-  const [productsData, setProductsData] = useState<ProductProps[]>([])
+  const [productsData, setProductsData] = useState<ProductProps[]>([]);
   const [displayedProductsData, setDisplayedProductsData] = useState<
     ProductProps[]
-  >([])
-  const [visibleCount, setVisibleCount] = useState(10)
+  >([]);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   useEffect(() => {
     const loadProducts = async () => {
-      const response = await fetchProducts()
-      const data = response
-      setProductsData(data)
-    }
+      const response = await fetchProducts();
+      const data = response;
+      setProductsData(data);
+    };
 
-    loadProducts()
-  }, [])
+    loadProducts();
+  }, []);
 
   useEffect(() => {
     if (productsData.length > 0) {
-      displaySelectedProducts('/')
+      displaySelectedProducts("/");
     }
-  }, [productsData])
+  }, [productsData]);
 
   useEffect(() => {
     const handleScroll = () => {
       const bottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
 
       if (bottom) {
-        setVisibleCount((prev) => prev + 10) // carrega mais 10
+        setVisibleCount((prev) => prev + 10);
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const theme = useTheme()
+  const theme = useTheme();
 
   function displaySelectedProducts(
-    input: ChangeEvent<HTMLSelectElement> | string,
+    input: ChangeEvent<HTMLSelectElement> | string
   ) {
     const selectedTypeOfProduct =
-      typeof input === 'string' ? input : input.target.value
+      typeof input === "string" ? input : input.target.value;
 
     const typesOfProduct: { [key: string]: string } = {
-      '/bolos': 'BOLO',
-      '/bolos-de-pote': 'BOLO DE POTE',
-      '/doces': 'DOCE',
-      '/cupcakes': 'CUPCAKE',
-    }
+      "/bolos": "BOLO",
+      "/bolos-de-pote": "BOLO DE POTE",
+      "/doces": "DOCE",
+      "/cupcakes": "CUPCAKE",
+    };
 
-    const selectedType = typesOfProduct[selectedTypeOfProduct]
+    const selectedType = typesOfProduct[selectedTypeOfProduct];
 
     const filteredProducts =
       selectedType != undefined
         ? productsData.filter((product) => product.tags.includes(selectedType))
-        : productsData
+        : productsData;
 
-    setDisplayedProductsData(filteredProducts)
+    setDisplayedProductsData(filteredProducts);
   }
 
   return (
@@ -102,7 +102,7 @@ export function Home() {
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
-                  style={{ backgroundColor: theme.colors['yellow-dark'] }}
+                  style={{ backgroundColor: theme.colors["yellow-dark"] }}
                 />
                 Compra simples e segura
               </li>
@@ -111,7 +111,7 @@ export function Home() {
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
-                  style={{ backgroundColor: theme.colors['base-text'] }}
+                  style={{ backgroundColor: theme.colors["base-text"] }}
                 />
                 Produtos bem protegidos até a entrega.
               </li>
@@ -120,7 +120,7 @@ export function Home() {
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
-                  style={{ backgroundColor: theme.colors['yellow'] }}
+                  style={{ backgroundColor: theme.colors["yellow"] }}
                 />
                 Agendamento com, no mínimo, 3 dias de antecedência.
               </li>
@@ -129,7 +129,7 @@ export function Home() {
                   weight="fill"
                   size={32}
                   color={theme.colors.background}
-                  style={{ backgroundColor: theme.colors['purple'] }}
+                  style={{ backgroundColor: theme.colors["purple"] }}
                 />
                 Ingredientes frescos e de qualidade
               </li>
@@ -146,10 +146,10 @@ export function Home() {
         </div>
         <Products>
           {displayedProductsData.slice(0, visibleCount).map((product) => {
-            return <Card key={product.id} product={product} />
+            return <Card key={product.id} product={product} />;
           })}
         </Products>
       </ProductList>
     </>
-  )
+  );
 }
