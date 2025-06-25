@@ -30,7 +30,7 @@ export const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem 1rem 1rem;
+  padding: 1rem;
 
   &:not(:last-of-type) {
     padding-bottom: 1rem;
@@ -47,8 +47,16 @@ export const ItemContainer = styled.div`
       border-radius: 100%;
     }
   }
-  span {
-    ${mixins.fonts.titleS}
+  div.total {
+    flex-direction: column;
+    align-items: flex-end;
+
+    span:first-of-type {
+      ${mixins.fonts.titleS};
+    }
+
+    span:last-of-type {
+    }
   }
 `;
 export const ProductLink = styled.div`
