@@ -1,8 +1,8 @@
-import { ShoppingCartSimpleIcon } from '@phosphor-icons/react'
+import { PlaceholderIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
-import { useCart } from '../../../../../hooks/useCart'
-import { useAuth } from '../../../../../hooks/useAuth'
-import { ProductProps } from '../../../../../reducers/cart/reducer'
+import { useCart } from "../../../../../hooks/useCart";
+import { useAuth } from "../../../../../hooks/useAuth";
+import { ProductProps } from "../../../../../reducers/cart/reducer";
 
 import {
   AddToCartButton,
@@ -12,37 +12,41 @@ import {
   Order,
   Price,
   GoToProductPage,
-} from './styles'
-import { useNavigate } from 'react-router-dom'
-import { formatMoney } from '../../../../../utils/formatMoney'
+} from "./styles";
+import { useNavigate } from "react-router-dom";
+import { formatMoney } from "../../../../../utils/formatMoney";
 
 interface CardProps {
-  product: ProductProps
+  product: ProductProps;
 }
 
 export function Card({ product }: CardProps) {
-  const { addProductToCart } = useCart()
-  const { isTokenValid, authenticatedUser } = useAuth()
-  const navigate = useNavigate()
+  const { addProductToCart, loaded } = useCart();
+  const { isTokenValid, authenticatedUser } = useAuth();
+  const navigate = useNavigate();
 
   function handleAddToCart() {
     if (isTokenValid()) {
-      const quantity = 1
-      addProductToCart({ ...product, quantity })
-      return
+      const quantity = 1;
+      addProductToCart({ ...product, quantity });
+      return;
     }
-    navigate('/auth/sign-in')
+    navigate("/auth/sign-in");
   }
 
   function handleSeeMore() {
     navigate(`/product/${product.id}`, {
       state: product,
-    })
+    });
   }
 
   return (
     <CardContainer>
-      <img src={product.image} alt={product.title} loading="lazy" />
+      {loaded ? (
+        <img src={product.image} alt={product.title} loading="lazy" />
+      ) : (
+        <PlaceholderIcon size={32} />
+      )}
 
       <Tags>
         {product.tags.map((tag) => (
@@ -62,12 +66,12 @@ export function Card({ product }: CardProps) {
           <GoToProductPage onClick={handleSeeMore}>VER MAIS</GoToProductPage>
           <AddToCartButton
             onClick={handleAddToCart}
-            disabled={authenticatedUser?.role === 'ADMIN'}
+            disabled={authenticatedUser?.role === "ADMIN"}
           >
             <ShoppingCartSimpleIcon weight="fill" size={22} />
           </AddToCartButton>
         </Order>
       </Controler>
     </CardContainer>
-  )
+  );
 }

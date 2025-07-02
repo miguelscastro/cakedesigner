@@ -21,9 +21,11 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { FilterProducts } from "./components/FilterProducts";
 import { fetchProducts } from "../../../http/products";
 import { ProductProps } from "../../../reducers/cart/reducer";
+import { useCart } from "../../../hooks/useCart";
 
 export function Home() {
   const [productsData, setProductsData] = useState<ProductProps[]>([]);
+  const { changeIsLoaded } = useCart();
   const [displayedProductsData, setDisplayedProductsData] = useState<
     ProductProps[]
   >([]);
@@ -32,7 +34,11 @@ export function Home() {
   useEffect(() => {
     const loadProducts = async () => {
       const response = await fetchProducts();
+      if (!response) {
+        changeIsLoaded(false);
+      }
       const data = response;
+
       setProductsData(data);
     };
 

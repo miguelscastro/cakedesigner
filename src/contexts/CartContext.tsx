@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { CartItem, cartReducer } from "../reducers/cart/reducer";
 import {
   addItemToCartAction,
@@ -33,6 +33,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   const { productsInCart } = cartState;
 
+  const [loaded, setIsLoaded] = useState(false);
+
   const cartItemsTotal = Array.isArray(productsInCart)
     ? productsInCart.reduce(
         (total, cartItem) => total + cartItem.price * cartItem.quantity,
@@ -51,6 +53,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
     localStorage.setItem("@cakedesigner:cart-state-1.0.0", stateJSON);
   }, [cartState]);
+
+  function changeIsLoaded(state: boolean) {
+    setIsLoaded(state);
+  }
 
   function addProductToCart(productToAdd: CartItem) {
     dispatch(addItemToCartAction(productToAdd));
@@ -79,10 +85,13 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         deliveryFee,
         OrderTotal,
         CartSize,
+        loaded,
         addProductToCart,
         changeCartItemQuantity,
         removeCartItem,
         clearCart,
+
+        changeIsLoaded,
       }}
     >
       {children}

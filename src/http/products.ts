@@ -9,9 +9,9 @@ export const fetchProducts = async (): Promise<CartItem[]> => {
   const response = await fetch(
     "https://cakedesigner.onrender.com/manage/product"
   );
-  // const response = await fetch("http://localhost:8080/manage/product");
   // const response = await fetch("/products.json");
   const data = response.json();
+
   return data;
 };
 

@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { mixins } from '../../../../../styles/mixins'
+import styled from "styled-components";
+import { mixins } from "../../../../../styles/mixins";
 
 export const CardContainer = styled.div`
   display: flex;
@@ -11,9 +11,9 @@ export const CardContainer = styled.div`
   align-items: center;
   text-align: center;
 
-  border: 1px solid ${({ theme }) => theme.colors['yellow-light']};
+  border: 1px solid ${({ theme }) => theme.colors["yellow-light"]};
 
-  background-color: ${({ theme }) => theme.colors['base-card']};
+  background-color: ${({ theme }) => theme.colors["base-card"]};
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
 
@@ -39,6 +39,16 @@ export const CardContainer = styled.div`
     margin: 0.5rem 0 2.0625rem;
   }
 
+  > svg {
+    padding: 0 4.25rem;
+
+    width: 15rem;
+    height: 6.25rem;
+
+    border-radius: 100%;
+    transform: translateY(-20%);
+  }
+
   @media screen and (max-width: 1440px) {
     width: 14.0625rem;
     height: 16.25rem;
@@ -56,7 +66,7 @@ export const CardContainer = styled.div`
       padding: 0 0.5rem;
     }
   }
-`
+`;
 
 export const Tags = styled.div`
   display: flex;
@@ -68,12 +78,12 @@ export const Tags = styled.div`
 
   span {
     ${mixins.fonts.tag}
-    color: ${({ theme }) => theme.colors['yellow-dark']};
-    background-color: ${({ theme }) => theme.colors['yellow-light']};
+    color: ${({ theme }) => theme.colors["yellow-dark"]};
+    background-color: ${({ theme }) => theme.colors["yellow-light"]};
     border-radius: 10px;
     padding: 0.25rem 0.5rem;
   }
-`
+`;
 
 export const Controler = styled.div`
   display: flex;
@@ -82,7 +92,7 @@ export const Controler = styled.div`
   align-items: center;
   gap: 0.5rem;
   flex-direction: column;
-`
+`;
 export const Price = styled.div`
   display: flex;
   align-items: baseline;
@@ -90,14 +100,14 @@ export const Price = styled.div`
 
   span:first-child {
     ${mixins.fonts.textXS}
-    color: ${({ theme }) => theme.colors['base-text']};
+    color: ${({ theme }) => theme.colors["base-text"]};
   }
 
   span:last-child {
     ${mixins.fonts.titleS};
-    color: ${({ theme }) => theme.colors['base-text']};
+    color: ${({ theme }) => theme.colors["base-text"]};
   }
-`
+`;
 
 export const Order = styled.div`
   display: flex;
@@ -107,8 +117,8 @@ export const Order = styled.div`
   width: 100%;
   z-index: 1;
 
-  background: ${({ theme }) => theme.colors['brown-dark']};
-`
+  background: ${({ theme }) => theme.colors["brown-dark"]};
+`;
 
 export const GoToProductPage = styled.button`
   ${mixins.fonts.textS}
@@ -124,7 +134,7 @@ export const GoToProductPage = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.brown};
   }
-`
+`;
 
 export const AddToCartButton = styled.button`
   display: flex;
@@ -135,11 +145,11 @@ export const AddToCartButton = styled.button`
     padding: 0.5rem;
     height: 2rem;
     width: 2rem;
-    color: ${({ theme }) => theme.colors['base-card']};
+    color: ${({ theme }) => theme.colors["base-card"]};
     transition: 0.2s;
 
     &:hover {
       background: ${({ theme }) => theme.colors.brown};
     }
   }
-`
+`;
