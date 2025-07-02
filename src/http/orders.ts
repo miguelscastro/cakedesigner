@@ -11,14 +11,17 @@ export const newOrder = async (
   tokenData: Jwt,
   order: newOrderType
 ): Promise<OrderResponse> => {
-  const response = await fetch("http://localhost:8080/orders/user", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(order),
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/orders/user",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    }
+  );
   const data = await response.json();
   return data;
 };
@@ -26,12 +29,15 @@ export const newOrder = async (
 export const getUserOrders = async (
   tokenData: Jwt
 ): Promise<OrdersResponse> => {
-  const response = await fetch("http://localhost:8080/orders/user", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-    },
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/orders/user",
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+      },
+    }
+  );
   const data = response.json();
   return data;
 };
@@ -39,7 +45,7 @@ export const getUserOrders = async (
 export const getAllOrders = async (
   tokenData: Jwt
 ): Promise<AllOrdersResponse> => {
-  const response = await fetch("http://localhost:8080/orders", {
+  const response = await fetch("https://cakedesigner.onrender.com/orders", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${tokenData.token}`,

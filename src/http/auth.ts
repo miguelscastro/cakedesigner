@@ -15,30 +15,36 @@ export const createUser = async (
     headers["Authorization"] = `Bearer ${tokenData.token}`;
   }
 
-  const response = await fetch("http://localhost:8080/auth/sign-up", {
-    method: "POST",
-    headers,
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/auth/sign-up",
+    {
+      method: "POST",
+      headers,
+      body: JSON.stringify(data),
+    }
+  );
 
   return response;
 };
 
 export const authUser = async (data: SignInInfoData): Promise<Response> => {
-  const response = await fetch("http://localhost:8080/auth/sign-in", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/auth/sign-in",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
   return response;
 };
 
 export const verifyUserToken = async (
   tokenData: Jwt
 ): Promise<Response | void> => {
-  const response = await fetch("http://localhost:8080/user", {
+  const response = await fetch("https://cakedesigner.onrender.com/user", {
     headers: {
       Authorization: `Bearer ${tokenData.token}`,
     },

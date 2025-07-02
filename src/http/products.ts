@@ -6,8 +6,11 @@ import type { productTypeInfoData } from "../pages/app/Admin/components/Products
 import { CartItem } from "../reducers/cart/reducer";
 
 export const fetchProducts = async (): Promise<CartItem[]> => {
-  const response = await fetch("http://localhost:8080/manage/product");
-  // const response = await fetch('/products.json')
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/manage/product"
+  );
+  // const response = await fetch("http://localhost:8080/manage/product");
+  // const response = await fetch("/products.json");
   const data = response.json();
   return data;
 };
@@ -15,12 +18,15 @@ export const fetchProducts = async (): Promise<CartItem[]> => {
 export const getAllProductTypes = async (
   tokenData: Jwt
 ): Promise<ProductType[]> => {
-  const response = await fetch("http://localhost:8080/manage/product-types", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-    },
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/manage/product-types",
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+      },
+    }
+  );
   const data = response.json();
   return data;
 };
@@ -29,14 +35,17 @@ export const createProductType = async (
   tokenData: Jwt,
   productType: productTypeInfoData
 ): Promise<Response> => {
-  const response = await fetch("http://localhost:8080/manage/product-types", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(productType),
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/manage/product-types",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productType),
+    }
+  );
   return response;
 };
 
@@ -54,13 +63,16 @@ export const createProduct = async (
     formData.append("image", product.image[0]);
   }
 
-  const response = await fetch("http://localhost:8080/manage/product", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-    },
-    body: formData,
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/manage/product",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+      },
+      body: formData,
+    }
+  );
 
   return response;
 };
@@ -80,13 +92,16 @@ export const changeProduct = async (
     formData.append("image", product.image[0]);
   }
 
-  const response = await fetch("http://localhost:8080/manage/product", {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-    },
-    body: formData,
-  });
+  const response = await fetch(
+    "https://cakedesigner.onrender.com/manage/product",
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+      },
+      body: formData,
+    }
+  );
 
   return response;
 };
@@ -95,12 +110,15 @@ export const removeProduct = async (
   tokenData: Jwt,
   id: string
 ): Promise<Response> => {
-  const response = await fetch(`http://localhost:8080/manage/product/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${tokenData.token}`,
-    },
-  });
+  const response = await fetch(
+    `https://cakedesigner.onrender.com/manage/product/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${tokenData.token}`,
+      },
+    }
+  );
 
   return response;
 };
