@@ -20,11 +20,15 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     { productsInCart: [] },
     (initialState) => {
       if (typeof window !== "undefined") {
-        const storageStateAsJSON = localStorage.getItem(
-          "@cakedesigner:cart-state-1.0.0"
-        );
-        if (storageStateAsJSON) {
-          return JSON.parse(storageStateAsJSON);
+        const data = localStorage.getItem("@cakedesigner:cart-state-1.0.0");
+        if (data) {
+          const parsed = JSON.parse(data);
+          return {
+            ...initialState,
+            productsInCart: Array.isArray(parsed.productsInCart)
+              ? parsed.productsInCart
+              : [],
+          };
         }
       }
       return initialState;

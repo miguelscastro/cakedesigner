@@ -1,13 +1,13 @@
-import { Aside, Container, HeaderContainer } from './styles'
-import CompanyLogo from '../../assets/images/logo/logo-cakedesigner.png'
-import { ShoppingCartIcon, UserCircleIcon } from '@phosphor-icons/react'
-import { NavLink } from 'react-router-dom'
-import { useCart } from '../../hooks/useCart'
-import { useAuth } from '../../hooks/useAuth'
+import { Aside, Container, HeaderContainer } from "./styles";
+import CompanyLogo from "../../assets/images/logo/logo-cakedesigner.png";
+import { ShoppingCartIcon, UserCircleIcon } from "@phosphor-icons/react";
+import { NavLink } from "react-router-dom";
+import { useCart } from "../../hooks/useCart";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Header() {
-  const { productsInCart } = useCart()
-  const { authenticatedUser } = useAuth()
+  const { productsInCart } = useCart();
+  const { authenticatedUser } = useAuth();
 
   return (
     <Container>
@@ -16,11 +16,11 @@ export function Header() {
           <img src={CompanyLogo} alt="Cakedesigner Logo" id="logo" />
         </NavLink>
         <Aside>
-          {authenticatedUser?.role === 'USER' ? (
+          {authenticatedUser?.role === "USER" ? (
             <div>
               <NavLink to="/user/profile">
                 <span>
-                  {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
+                  {authenticatedUser.name.trim().split(/\s+/)[0] || ""}
                 </span>
                 {authenticatedUser.photoUrl ? (
                   <img src={authenticatedUser.photoUrl} alt="Foto do usuário" />
@@ -29,11 +29,11 @@ export function Header() {
                 )}
               </NavLink>
             </div>
-          ) : authenticatedUser?.role === 'ADMIN' ? (
+          ) : authenticatedUser?.role === "ADMIN" ? (
             <div>
               <NavLink to="/admin/profile">
                 <span>
-                  {authenticatedUser.name.trim().split(/\s+/)[0] || ''}
+                  {authenticatedUser.name.trim().split(/\s+/)[0] || ""}
                 </span>
                 {authenticatedUser.photoUrl ? (
                   <img src={authenticatedUser.photoUrl} alt="Foto do admin" />
@@ -50,12 +50,14 @@ export function Header() {
 
           <NavLink to="/checkout" className="cart">
             <ShoppingCartIcon size={22} weight="fill" />
-            {authenticatedUser?.role === 'USER' && productsInCart.length > 0 ? (
+            {authenticatedUser?.role === "USER" &&
+            Array.isArray(productsInCart) &&
+            productsInCart.length > 0 ? (
               <span>{productsInCart.length}</span>
             ) : null}
           </NavLink>
         </Aside>
       </HeaderContainer>
     </Container>
-  )
+  );
 }
