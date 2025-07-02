@@ -19,22 +19,26 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     cartReducer,
     { productsInCart: [] },
     (initialState) => {
-      const storageStateAsJSON = localStorage.getItem(
-        "@cakedesigner:cart-state-1.0.0"
-      );
-      if (storageStateAsJSON) {
-        return JSON.parse(storageStateAsJSON);
+      if (typeof window !== "undefined") {
+        const storageStateAsJSON = localStorage.getItem(
+          "@cakedesigner:cart-state-1.0.0"
+        );
+        if (storageStateAsJSON) {
+          return JSON.parse(storageStateAsJSON);
+        }
       }
-
       return initialState;
     }
   );
 
   const { productsInCart } = cartState;
 
-  const cartItemsTotal = productsInCart.reduce((total, cartItem) => {
-    return total + cartItem.price * cartItem.quantity;
-  }, 0);
+  const cartItemsTotal = Array.isArray(productsInCart)
+    ? productsInCart.reduce(
+        (total, cartItem) => total + cartItem.price * cartItem.quantity,
+        0
+      )
+    : 0;
 
   const deliveryFee = 3.5;
 
