@@ -44,7 +44,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   const OrderTotal = cartItemsTotal + deliveryFee;
 
-  const CartSize = productsInCart.length;
+  const CartSize = Array.isArray(productsInCart) ? productsInCart.length : 0;
 
   useEffect(() => {
     const stateJSON = JSON.stringify(cartState);
