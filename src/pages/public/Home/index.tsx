@@ -36,11 +36,11 @@ export function Home() {
       const response = await fetchProducts();
       if (!response) {
         changeIsLoaded(false);
+      } else {
+        changeIsLoaded(true);
       }
       const data = response;
-
       setProductsData(data);
-      changeIsLoaded(true);
     };
 
     loadProducts();
