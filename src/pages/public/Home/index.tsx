@@ -40,6 +40,7 @@ export function Home() {
       const data = response;
 
       setProductsData(data);
+      changeIsLoaded(true);
     };
 
     loadProducts();
