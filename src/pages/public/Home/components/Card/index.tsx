@@ -18,10 +18,11 @@ import { formatMoney } from "../../../../../utils/formatMoney";
 
 interface CardProps {
   product: ProductProps;
+  loaded: boolean;
 }
 
-export function Card({ product }: CardProps) {
-  const { addProductToCart, loaded } = useCart();
+export function Card({ product, loaded }: CardProps) {
+  const { addProductToCart } = useCart();
   const { isTokenValid, authenticatedUser } = useAuth();
   const navigate = useNavigate();
 

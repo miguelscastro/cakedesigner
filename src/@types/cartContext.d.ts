@@ -14,7 +14,6 @@ export interface CartContextType {
   deliveryFee: number;
   OrderTotal: number;
   CartSize: number;
-  loaded: boolean;
   addProductToCart: (product: CartItem) => void;
   changeCartItemQuantity: (
     productId: string,
@@ -22,5 +21,4 @@ export interface CartContextType {
   ) => void;
   removeCartItem: (productId: string) => void;
   clearCart: () => void;
-  changeIsLoaded: (state: boolean) => void;
 }
